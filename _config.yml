@@ -24,8 +24,8 @@ description: Graduate Student | Machine Learning Enthusiast
 # List of links in the navigation bar
 navbar-links:
   Blog: "blog"
-  About Me: "aboutme"
   Projects: "projects"
+  About Me: "aboutme"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
@@ -39,7 +39,7 @@ author:
   name: Aqib Saeed
   github: aqibsaeed    # eg. daattali
   twitter: aqibsaeedahmed   # eg. daattali
-  linkedin: aqibsaeed  # eg. "pub/dean-attali/8/946/143"
+  linkedin: in/aqibsaeed  # eg. "pub/dean-attali/8/946/143"
  
 # Select which links to show in the footer
 footer-links-active:
