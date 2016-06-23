@@ -23,7 +23,7 @@ description: Graduate Student
 
 # List of links in the navigation bar
 navbar-links:
-  Home: "home"
+  Home: ""
   Projects: "projects"
   About Me: "aboutme"
 
