@@ -1,8 +1,14 @@
 ---
 layout: post
 title: Implementing K-Means in Octave/Matlab
+published: true
 ---
-
-<div style="text-justify">
+<style>
+div {
+    text-align: justify;
+    text-justify: inter-word;
+}
+</style>
+<div>
 The K-means algorithm is the well-known partitional clustering algorithm. Given a set of data points and the required number of k clusters (k is specified by the user), this algorithm iteratively partitions the data into k clusters based on a distance function. Concretely, with a set of data points x1,…xn. The K-means algorithm groups the data into k cohesive clusters. Each cluster has a cluster center, called centroid. The cluster centroid is used to represent the cluster and it is the mean of all the data points that belongs to the cluster. The intuition behind K-means is an iterative procedure that starts by randomly assigning k data points as initial centroids. Then, the distance is computed between each centroid and every data point. Each data point is assigned to the cluster (centroid) with the lowest distance. After the assignment of every data points to the clusters, the centroids are re-computed using the data points of the newly created clusters. These steps of cluster assignment and centroid re-computation are  repeated until the convergence criteria is met. 
 </div>
