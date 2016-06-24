@@ -26,13 +26,19 @@ div {
 </ol>
 
 <p>After that, step 2 and 3 will be repeated in a loop until convergence. So let's get started by implementing first method for random initalization of K centroids.</p>
+
 <p>
 <code>
   function centroids = initCentroids(X, K)
-   	centroids = zeros(K,size(X,2)); 
+   	
+    centroids = zeros(K,size(X,2)); 
+  
     randidx = randperm(size(X,1));
+  
     centroids = X(randidx(1:K), :);
+  
   end
+  
 </code>
 </p>
 
