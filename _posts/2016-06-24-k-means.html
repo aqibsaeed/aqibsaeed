@@ -25,7 +25,7 @@ div {
 <li>Re-computing K centroids</li>
 </ol>
 
-<p>After that, step 2 and 3 will be repeated in a loop until convergence. So let's get started by implementing first method for random initalization of K centroids.</p>
+<p>Step 1 will be performed in the start of the training process. Whereas, step 2 and 3 will be repeated in a loop until convergence. So let's get started by implementing first method for random initalization of K centroids.</p>
 
 <p>
 <script src="https://gist.github.com/aqibsaeed/b1c7f5a7ad2767b0fb8d27ef9d3b7858.js"></script>
@@ -35,10 +35,21 @@ div {
 
 <p><script src="https://gist.github.com/aqibsaeed/9253b7b9a1deedf7b2a7fdd8a4a1492f.js"></script></p>
 
+<p><code>getClosestCentroids</code> method will compute euclidean distance of every data point to each cluster centroid and assign the data point to the one with lowest distance.</p> 
+
+<p>The last method that we need to implement is to re-compute the cluster centroids. For this purpose we will compute the mean of all the data points in each cluster and assign the calculated mean as new centroid of the cluster.</p>
   
+<p><script src="https://gist.github.com/aqibsaeed/a7ff0a4ba1a38a9087f1b7cda82a6185.js"></script></p>
+ 
+<p>That's it, now we have all the pieces required to implement the K-Means. The final piece of code will execute above defined methods until maximum iterations are reached. For stoping criteria you can use other techniques (e.g. no assignment of data points to different clusters) but here for simplicity I am using maximum number of iterations.</p>
+
+<p><script src="https://gist.github.com/aqibsaeed/a64633887114ebc548fe928e52dfa1ac.js"></script></p>
+  
+<p>For learning more about K-Means, check the resources mentioned below:</p> 
+<ul>
+  <li><a href="https://www.coursera.org/learn/machine-learning">Machine learning course by Andrew Ng</a></li>
+  <li>Chapter 4 of <i>Web Data Mining: Exploring Hyperlinks, Contents, and Usage Data</i> by Bing Liu</li>
+</ul>
   
 </div>
-
-
-
 
