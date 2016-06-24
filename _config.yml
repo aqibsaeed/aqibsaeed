@@ -61,7 +61,7 @@ footer-links-active:
 disqus: "aaqibsaeed"
 
 # Fill in your Google Analytics ID to track your website using GA
-#google_analytics: ""
+google_analytics: "UA-79826043-1"
 
 #pagination
 gems: [jekyll-paginate]
