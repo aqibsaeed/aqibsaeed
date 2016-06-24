@@ -28,18 +28,7 @@ div {
 <p>After that, step 2 and 3 will be repeated in a loop until convergence. So let's get started by implementing first method for random initalization of K centroids.</p>
 
 <p>
-<code>
-  function centroids = initCentroids(X, K)
-   	
-    centroids = zeros(K,size(X,2)); 
-  
-    randidx = randperm(size(X,1));
-  
-    centroids = X(randidx(1:K), :);
-  
-  end
-  
-</code>
+<script src="https://gist.github.com/aqibsaeed/b1c7f5a7ad2767b0fb8d27ef9d3b7858.js"></script>
 </p>
 
 <p><code>initCentroids</code> method defined above will return K random indices from X as centroids. <code>randperm</code> method will randomly reorder the indices of the dataset (X).</p>
