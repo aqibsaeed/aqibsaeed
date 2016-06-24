@@ -11,29 +11,36 @@ div {
 </style>
 
 <div>
-The K-means algorithm is the well-known partitional clustering algorithm. Given a set of data points and the required number of k clusters (k is specified by the user), this algorithm iteratively partitions the data into k clusters based on a distance function. Concretely, with a set of data points x1,…xn. The K-means algorithm groups the data into k cohesive clusters. Each cluster has a cluster center, called centroid. The cluster centroid is used to represent the cluster and it is the mean of all the data points that belongs to the cluster. 
+<p>The K-means algorithm is the well-known partitional clustering algorithm. Given a set of data points and the required number of k clusters (k is specified by the user), this algorithm iteratively partitions the data into k clusters based on a distance function. Concretely, with a set of data points x1,…xn. The K-means algorithm groups the data into k cohesive clusters. Each cluster has a cluster center, called centroid. The cluster centroid is used to represent the cluster and it is the mean of all the data points that belongs to the cluster.</p>
 
-The intuition behind K-means is an iterative procedure that starts by randomly assigning k data points as initial centroids. Then, the distance is computed between each centroid and every data point. Each data point is assigned to the cluster (centroid) with the lowest distance. After the assignment of every data points to the clusters, the centroids are re-computed using the data points of the newly created clusters. These steps of cluster assignment and centroid re-computation are  repeated until the convergence criteria is met. 
+<p>The intuition behind K-means is an iterative procedure that starts by randomly assigning k data points as initial centroids. Then, the distance is computed between each centroid and every data point. Each data point is assigned to the cluster (centroid) with the lowest distance. After the assignment of every data points to the clusters, the centroids are re-computed using the data points of the newly created clusters. These steps of cluster assignment and centroid re-computation are  repeated until the convergence criteria is met.</p>
 </div>
 
-<div>
-We need to implement three methods to perform following tasks:
-  1. Randomly initializing K centroids
-  2. Assigning data points to K clusters
-  3. Re-computing K centroids
 
-After that, step 2 and 3 will be repeated in a loop until convergence. So let's get started by implementing first method for random initalization of K centroids.
-  
+<div>
+<p>We need to implement three methods to perform following tasks:</p>
+  <ol>
+    <li>Randomly initializing K centroids</li>
+    <li>Assigning data points to K clusters</li>
+    <li>Re-computing K centroids</li>
+  <ol>
+
+
+    
+<p>After that, step 2 and 3 will be repeated in a loop until convergence. So let's get started by implementing first method for random initalization of K centroids.</p>
+
+ <p>
 <code>
    function centroids = initCentroids(X, K)
    	centroids = zeros(K,size(X,2)); 
     randidx = randperm(size(X,1));
     centroids = X(randidx(1:K), :);
    end
-</code>
+</code></p>
 
-<code>initCentroids</code> method defined above will return K random indices from X as centroids. <code>randperm</code> method will randomly reorder the indices of the dataset (X).
-  
+<p><code>initCentroids</code> method defined above will return K random indices from X as centroids. <code>randperm</code> method will randomly reorder the indices of the dataset (X).</p>
+
+
   
   
 </div>
