@@ -24,7 +24,7 @@ description: Graduate Student
 # List of links in the navigation bar
 navbar-links:
   Home: ""
-  Projects: "projects"
+  #Projects: "projects"
   About Me: "aboutme"
 
 # Image to show in the navigation bar - image must be a square (width = height)
