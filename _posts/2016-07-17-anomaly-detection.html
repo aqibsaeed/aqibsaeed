@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Anomaly Detection, a short tutorial using Python
-published: false
+published: true
 ---
 <div class="text-justify">
   <p>
@@ -18,7 +18,7 @@ For training set, we will first learn the gaussian distribution of each feature 
 </p>
   <p style="text-align:center"><img src="../img/g-eq.png" alt="Gaussian distribution equation" /></p>
 <p>
-The complete code is available as Python notebook below. Five different methods are defined to perform functions defined above i.e. from reading dataset to calculating the mean and estimating gaussian etc. One method that needs explanation is <code>selectThresholdByCV</code>, it is used to find the optimal value for threshold (epsilon) that can be used to differentiate between normal and anomalous data points. For learning the optimal value of epsilon we will try different values in a range of learned probabilities on a cross validation set. F-score will be calculated by for predicted anomalies based on the ground truth data available. The epsilon value with highest f-score will be selected as threshold i.e. the probabilities that lie below this threshold will be considered anomalous.
+  The complete code (Python notebook) and dataset is available at the following link: <b><a href="https://github.com/aqibsaeed/AnomalyDetection">Code and Dataset</a></b>. Five different methods are defined to perform functions defined above i.e. from reading dataset to calculating the mean and estimating gaussian etc. One method that needs explanation is <code>selectThresholdByCV</code>, it is used to find the optimal value for threshold (epsilon) that can be used to differentiate between normal and anomalous data points. For learning the optimal value of epsilon we will try different values in a range of learned probabilities on a cross validation set. F-score will be calculated by for predicted anomalies based on the ground truth data available. The epsilon value with highest f-score will be selected as threshold i.e. the probabilities that lie below this threshold will be considered anomalous.
 </p>  
 </div>
 <div class="text-justify">
