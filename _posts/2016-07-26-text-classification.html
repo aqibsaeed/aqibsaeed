@@ -18,17 +18,13 @@ published: false
 <div class="text-justify">
 <p>The dataset consists of 2507 short research paper titles, largely technology related. They have been pre classified manually into 5 categories (by conferences). Figure 1, summarizes the distribution of research papers by different conferences.</p>
 
-<p style="text-align:center"><img src="tc-dataset-distribution.png" alt="Dataset distribution"/>
-  <span>Figure 1: Dataset distribution</span>
-</p>
+<p style="text-align:center"><img src="img/tc-dataset-distribution.png" alt="Dataset distribution"/></p>
   
  <p>
 <code>loadData</code> method will be used to read the dataset from text file and return titles and conference names. Similarly, <code> preProcessing</code> method will take titles as parameter and will perform text pre-processing steps. By iterating over titles it will convert the text into lowercase and remove the stop words (that are provided in corpus of NLTK library). You can uncomment one line code in this method, if you wish to remove punctuation and numbers from the titles. Few research paper titles and corresponding conferences are show in Figure 2.</p>
 <script src="https://gist.github.com/aqibsaeed/1b2747fdd2162b80bd734f28186a8bf0.js" ></script>
   
-<p style="text-align:center"><img src="tc-dataset-sample.png" alt="Paper titles and conferences"/>
-  <span>Figure 2: Paper titles and conferences</span>
-</p>
+<p style="text-align:center"><img src="img/tc-dataset-sample.png" alt="Paper titles and conferences"/></p>
   
 <p>Machine learning algorithms requires numeric feature vectors to learn the underlying representation of the dataset. For this purpose we need to convert our text into some numeric form. There are couple of different ways to do this. We will use Term frequency-inverse document frequency or TF-IDF. It is the measure of how important the term is, for a particular document in a corpus. If the term is frequent in the document and appear less frequently in the corpus, then term is of high importance for the document. It is computed by the product of two terms as follows: the first computes the term frequency (tf), aka. Number of times a word appears in a document, divided by the total number of words in that document; the second term is the inverse document frequency (idf), computed as the logarithm of the number of the documents in the corpus divided by the number of documents where the specific term appears. Hence, terms in the document with a high tf-idf score occur frequently in the document and provide the most information about that specific document.</p>
   
@@ -49,23 +45,18 @@ published: false
 <p>We will use three classification algorithms to categorize research papers. 1) Support vector machine with linear kernel 2) Random forest and 3) Multinomial Naïve Bayes. For evaluating/comparing how well the models are performing stratified k-fold cross validation will be used. It seeks to ensure that each fold is a good representative of whole. Generally, this is used to evaluate performance of supervised learning algorithms and aims to ensure, each class has (approximately) equal representation across each fold. Weighted average precision, recall and f-score will be calculated that can be used for final classifier selection. <code>crossValidate</code> method will perform above discussed steps of model training and evaluation. It takes document term matrix, class labels, classifier name and number of folds for cross validation and returns averaged precision, recall and f-score.</p>
   
 <script src="https://gist.github.com/aqibsaeed/35c7ccb39874c5f04a4afab567af8588.js"></script>
-  
 </div>
-
 
 <div class="text-justify">
 <p>We came a long way and have all the required pieces to achieve the goal of research papers categorization by conferences. Now we just need to call above defined methods in the order shown by Figure 3, it shows typical steps of machine learning pipeline. We will perform these steps systematically and see which techniques/classifiers are working well.</p>
   
-<p style="text-align:center"><img src="tc-ml-pipiline.png" alt="Machine learning pipeline"/>
-  <span>Figure 3: Machine learning pipeline</span>
-</p>  
+<p style="text-align:center"><img src="img/tc-ml-pipiline.png" alt="Machine learning pipeline"/></p>  
   
 <script src="https://gist.github.com/aqibsaeed/42507c5195c461c38993c2b196aa02cd.js"></script>
   
 <p>Results achieved by combining different approaches are shown below in Table 1. Default hyper parameters values are used for all the classifiers. I would recommend to try different text processing technique, number of features, optimize hyper parameter values and even use some different classification algorithm. </p>
   
-<p style="text-align:center"><img src="tc-results.png" alt="Classification results"/>
-  <span>Table 1: Classification results</span>
+<p style="text-align:center"><img src="img/tc-results.png" alt="Classification results"/>
 </p>    
 
 <p>In this tutorial, we evaluated performance of different classifiers using 10-fold stratified cross validation technique after applying text pre-processing, feature selection along with dimensionality reduction methods for text classification problem, which is to determine most suitable conference for a research paper based on its title. If you want to learn more about these methods, please consult the papers mentioned below.</p>
