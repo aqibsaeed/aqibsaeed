@@ -34,21 +34,27 @@ published: true
 <p>We will use <a href="https://github.com/scikit-learn-contrib/imbalanced-learn">“imbalanced-learn”</a> package implementing SMOTE and several other variants of it, to counter data imbalance problem.  The package can be downloaded via pip: <code>pip install -U imbalanced-learn</code> or Anaconda Cloud platform distribution by: <code>conda install -c glemaitre imbalanced-learn</code>.</p>
 
 <p>Let’s get started with implementing logistic regression to predict anomalies. </p>
-  
+ 
+<p>Load the required libraries and define some helper functions.</p>
 <script src="https://gist.github.com/aqibsaeed/f2c24516be800850a442c6d54ed1260f.js"></script>
 
+<p>Load and visualize the original dataset.</p>
 <script src="https://gist.github.com/aqibsaeed/7dbf8edf229a92486b39b36bc782b16b.js"></script>
   
 <p style="text-align:center"><img src="../img/lg-tf-original-data.png" alt="Original data"/></p>
-  
+
+<p>Apply SMOTE algorithm to generate 10% additional data and visualize it.</p>
 <script src="https://gist.github.com/aqibsaeed/a8a349176fa911008348666b2f023877.js"></script>
   
 <p style="text-align:center"><img src="../img/lg-tf-smotted-data.png" alt="Smotted data"/></p>
-  
+
+<p>Initalize required variables and split the data set into train and test set.</p>
 <script src="https://gist.github.com/aqibsaeed/609fb6456da5948ad7bdabb9377a5dd5.js"></script>
-  
+
+<p>Define sigmoid and cost function to optimize.</p>
 <script src="https://gist.github.com/aqibsaeed/6a4c6fc3aeb5f29e83d183f072e9843d.js"></script>
-  
+
+<p>Training the classifier and visualize the cost.</p>
 <script src="https://gist.github.com/aqibsaeed/836cc5d071bf748730d9d1ca14b6d6d7.js"></script>
 
 <p>The resulting accruacy of the classifier is around 93%.</p>
