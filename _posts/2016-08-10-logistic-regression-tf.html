@@ -14,15 +14,15 @@ published: false
 <p>We have seen in linear regression W<sup>T</sup>X results in real value output but to get the discrete output, we need to use some function which can squash the range of W<sup>T</sup>X between 0 and 1. One such squashing function is a sigmoid or logistic function, a graph of which is shown in Figure 1. It looks like a smooth S which increases slowly as it moves towards the origin, crosses the origin at 0.5 and then flattens out. 
 </p>
   
-<p style="text-align:center"><img src="" alt="Sigmoid Graph"/></p>
+<p style="text-align:center"><img src="../img/" alt="Sigmoid Graph"/></p>
 
 <p>In short, we want to learn a function of the form:</p>
   
-<p style="text-align:center"><img src="" alt="Sigmoid Equation"/><p>  
+<p style="text-align:center"><img src="../img/lg-tf-sigmoid.png" alt="Sigmoid Equation"/><b>----(i)</b><p>  
   
 <p>To determine, how well we are learning to classify the training examples with binary labels we have to use cost function which can be minimise using some optimisation algorithm like gradient descent. Equation 2 shows the cost function that we will be minimising to learn the optimal weight vector.</p>
 
-<p style="text-align:center"><img src="" alt="Sigmoid Equation"/></p>
+  <p style="text-align:center"><img src="../img/lg-tf-cost-function.png" alt="Cost Function"/><b>----(ii)</b></p>
  
 <p>To get deeper an intuition for the selection of this cost function please consult following <a href="http://cs229.stanford.edu/notes/cs229-notes1.pdf ">resource</a>.</p>
 
@@ -36,8 +36,35 @@ published: false
 <p>We will use <a href="https://github.com/scikit-learn-contrib/imbalanced-learn">“imbalanced-learn”</a> package implementing SMOTE and several other variants of it, to counter data imbalance problem.  The package can be downloaded via pip: <code>pip install -U imbalanced-learn</code> or Anaconda Cloud platform distribution by: <code>conda install -c glemaitre imbalanced-learn</code>.</p>
 
 <p>Let’s get started with implementing logistic regression to predict anomalies. </p>
+  
+<script src="https://gist.github.com/aqibsaeed/f2c24516be800850a442c6d54ed1260f.js"></script>
 
+<script src="https://gist.github.com/aqibsaeed/7dbf8edf229a92486b39b36bc782b16b.js"></script>
+  
+<p style="text-align:center"><img src="../img/lg-tf-original-data.png" alt="Original data"/></p>
+  
+<script src="https://gist.github.com/aqibsaeed/a8a349176fa911008348666b2f023877.js"></script>
+  
+<p style="text-align:center"><img src="../img/lg-tf-smotted-data.png" alt="Smotted data"/></p>
+  
+<script src="https://gist.github.com/aqibsaeed/609fb6456da5948ad7bdabb9377a5dd5.js"></script>
+  
+<script src="https://gist.github.com/aqibsaeed/6a4c6fc3aeb5f29e83d183f072e9843d.js"></script>
+  
+<script src="https://gist.github.com/aqibsaeed/836cc5d071bf748730d9d1ca14b6d6d7.js"></script>
+
+<p>The resulting accruacy of the classifier is around 93%.</p>
+<p style="text-align:center"><img src="../img/lg-tf-cost.png" alt="Cost"/></p>
+  
 </div>
 
+<div class="text-justify">
+  
+<p>
+  Python notebook and dataset is available at the following <a href="">link</a>
+<p>
+
+<p style="font-size:8px"><i>Equations adapted from: http://ufldl.stanford.edu/tutorial/supervised/LogisticRegression/</i></p>
+</div>
 
 
