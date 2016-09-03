@@ -1,0 +1,77 @@
+---
+layout: post
+title: Urban Sound Classification
+subtitle: Part 1: Feature extraction from sound and classification using Neural Networks.
+published: false
+---
+<div class="text-justify">
+<p>We all got exposed to different sounds every day. Like, the sound of car horns, siren and music etc. How about teaching computer to classify such sounds automatically into categories! </p>
+  
+<p>In this blog post, we will learn techniques to classify urban sounds into categories using machine learning. Earlier blog posts covered classification problems where data can be easily expressed in vector form.  For example, in the textual dataset, each word in the corpus becomes feature and tf-idf score becomes its value. Likewise, in <a href="http://aqibsaeed.github.io/2016-08-10-logistic-regression-tf/" target="_blank">anomaly detection dataset</a><em>&nbsp;</em>we saw two features &ldquo;throughput&rdquo; and &ldquo;latency&rdquo; that fed into a classifier. But when it comes to sound, feature extraction is not quite straightforward. Today, we will first see what features can be extracted from sound data and how easy it is to extract such features in Python using open source library called <a href="librosa.github.io" target="_blank">Librosa</a>.</p>
+<p>To get started with this tutorial, please make sure you have following tools installed:</p>
+<ul>
+<li><a href="tensorflow.org" target="_blank">Tensorflow</a></li>
+<li><a href="librosa.github.io" target="_blank">Librosa</a>&nbsp;</li>
+<li>Numpy</li>
+<li>Matplotlib</li>
+</ul>
+</div>
+
+<div class="text-justify">
+<h2>Dataset</h2>
+<p>We need a labelled dataset that we can feed into machine learning algorithm. Fortunately, some researchers published <a href="https://serv.cusp.nyu.edu/projects/urbansounddataset/" target="_blank"> urban sound dataset.</a> It contains 8,732 labelled sound clips (4 seconds each) from ten classes: <em>air conditioner, car horn, children playing, dog bark, drilling, engine idling, gunshot, jackhammer, siren, and street music. </em>The dataset by default is divided into 10-folds. To get the dataset please visit the following <a href="https://serv.cusp.nyu.edu/projects/urbansounddataset/urbansound8k.html" target="_blank">link</a>&nbsp;and if you want to use this dataset in your research kindly don&rsquo;t forget to acknowledge. In this dataset, the sound files are in <em>.wav</em> format but if you have files in another format such as <em>.mp3</em>, then it&rsquo;s good to convert them into <em>.wav</em> format. It&rsquo;s because <em>.mp3</em> is lossy music compression technique, check this <a href="http://www.premiumbeat.com/blog/when-to-use-wav-files-when-to-use-mp3-files-what-is-the-difference-between-the-two-formats/" target="_blank">link</a>&nbsp;for more information. To keep things simple, we will use sound files from only one fold.</p>
+<p>Let&rsquo;s read some sound files and visualise to understand how different each sound clip is from other. Matplotlib&rsquo;s <em>specgram</em> method performs all the required calculation and plotting of the spectrum. Likewise, Librosa provide handy method for wave and log power spectrogram plotting. By looking at the plots shown in Figure 1, 2 and 3, we can see apparent differences between sound clips of different classes.</p>
+<script src="https://gist.github.com/aqibsaeed/9cbd0ff2d9d0ea70945c0ffad86c8e11.js"></script>
+ 
+ <script src="https://gist.github.com/aqibsaeed/4d82ea289ef5d2de4d5c19969423fefd.js"></script>
+
+<p style="text-align:center"><img src="../img/urban-sound-wave-plot.png" alt="Sound Wave Plot"/></p> 
+  
+<p style="text-align:center"><img src="../img/urban-sound-spectrogram.png" alt="Sound Spectrogram"/></p> 
+ 
+ <p style="text-align:center"><img src="../img/urban-sound-logpower-spectrogram.png" alt="Sound Log Power Spectrogram"/></p> 
+  
+</div> 
+  
+<div class="text-justify">
+<h2>Feature Extraction</h2>
+<p>To extract the useful features from sound data, we will use <em>Librosa</em> library. It provides several methods to extract different features from the sound clips. We are going to use below mentioned methods to extract various features:</p>
+<ul>
+<li><em>melspectrogram</em>: Compute a Mel-scaled power spectrogram</li>
+<li><em>mfcc</em>: Mel-frequency cepstral coefficients</li>
+<li><em>chorma-stft</em>: Compute a chromagram from a waveform or power spectrogram</li>
+<li><em>spectral_contrast</em>: Compute spectral contrast, using method defined in [<a href="http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=1035731" target="_blank">1</a>]</li>
+<li><em>tonnetz</em>: Computes the tonal centroid features (tonnetz), following the method of [<a href="http://dl.acm.org/citation.cfm?id=1178727" target="_blank">2</a>]</li>
+</ul>
+<p>To make the process of feature extraction from sound clips easy, two helper methods are defined. First <em>parse_audio_files </em>which takes parent directory name, subdirectories within parent directory and file extension (default is .wav) as input. It then iterates over all the files within subdirectories and call second helper function <em>extract_feature.</em> It takes file path as input, read the file by calling <em>librosa.load </em>method, extract and return features discussed above. These two methods are all we required to convert raw sound clips into informative features (along with a class label for each sound clip) that we can directly feed into our classifier. Remember, the class label of each sound clip is in the file name. For example, if the file name is <em>108041-9-0-4.wav </em>then the class label will be 9. Doing string split by &ndash; and taking the second item of the array will give us the class label.</p>
+<script src="https://gist.github.com/aqibsaeed/c9f7ecaf504b8e529efcb0a729d1a1a3.js"></script>
+ <script src="https://gist.github.com/aqibsaeed/40ee89383e0f3ff4a5c12f567ea60506.js"></script>
+</div>  
+
+<div class="text-justify">
+<h2>Classification using Multilayer Neural Network</h2>
+<p><em>Note: If you want to use scikit-learn or any other library for training classifier, feel free to use that. The goal of this tutorial is to provide an implementation of the neural network in Tensorflow for classification tasks. </em></p>
+<p>Now we have our dataset ready, let&rsquo;s implement two layers neural network in Tensorflow to classify each sound clip into a different category. But before starting with that, let&rsquo;s encode class labels into one hot vector using the method <em>one_hot_encode </em>and divide the dataset into a train and test sets by using following code.</p>
+  
+<script src="https://gist.github.com/aqibsaeed/20f3ed2176e6a45bb713e2396a453f7b.js"></script>
+  
+<p>The code provided below defines configuration parameters required by neural network model. Such as training epochs, a number of neurones in each hidden layer and learning rate.</p>
+<script src="https://gist.github.com/aqibsaeed/363019b6c0ce9830147e14a3a752d1ee.js"></script>
+  
+<p>Now define placeholders for features and class labels, which tensor flow will fill with the data at runtime. Furthermore, define weights and biases for hidden and output layers of the network. For non-linearity, we use the sigmoid function in the first hidden layer and tanh in the second hidden layer. The output layer has softmax as non-linearity as we are dealing with multiclass classification problem. </p>
+  
+<script src="https://gist.github.com/aqibsaeed/c6a135d88a6fb4c6f243529f8bb5d332.js"></script>
+  
+<p>The cross-entropy cost function will be minimised using gradient descent optimizer, the code provided below initialize cost function and optimizer. Also, define and initialize variables for accuracy calculation of the prediction by model.</p>
+  
+<script src="https://gist.github.com/aqibsaeed/9ca8abb1e0b283419b613c657fe2a641.js"></script>
+  
+<p>We have all the required pieces in place. Now let&rsquo;s train neural network model, visualise whether cost is decreasing with each epoch and make prediction on the test set, using following code:</p>
+  
+<script src="https://gist.github.com/aqibsaeed/ccdbb2ca059e2ce4e738521932f995bb.js"></script>
+  
+ <p style="text-align:center"><img src="../img/urban-sound-nn-cost.png" alt="NN Cost Per Epoch"/></p> 
+  
+<p>In this tutorial, we saw how to extract features from a sound dataset and train a two layer neural network model in Tensorflow to categories sounds, without much tuning the above NN architecture achieved around <b>82%</b> accuracy on fold1 of the Urban8K dataset. I would encourage you to check the documentation of Librosa and experiment with different neural network configurations i.e. by changing number of neurons, number of hidden layers and introducing dropout etc.</p>
+<p>The python notebook is available at the following <strong><span style="text-decoration: underline;"><a href="https://github.com/aqibsaeed/Urban-Sound-Classification" target="_blank">link</a></span></strong>. If you have any question or feedback please comment below.</p>
+</div>
