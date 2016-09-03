@@ -1,22 +1,23 @@
 ---
 layout: post
-title: Urban Sound Classification 
-subtitle: Part 1, Feature extraction from sound and classification using Neural Networks.
+title: Urban Sound Classification
+subtitle: >-
+  Part 1, Feature extraction from sound and classification using Neural
+  Networks.
 published: true
 ---
 <div class="text-justify">
 <p>We all got exposed to different sounds every day. Like, the sound of car horns, siren and music etc. How about teaching computer to classify such sounds automatically into categories! </p>
   
-<p>In this blog post, we will learn techniques to classify urban sounds into categories using machine learning. Earlier blog posts covered classification problems where data can be easily expressed in vector form.  For example, in the textual dataset, each word in the corpus becomes feature and tf-idf score becomes its value. Likewise, in <a href="http://aqibsaeed.github.io/2016-08-10-logistic-regression-tf/" target="_blank">anomaly detection dataset</a><em>&nbsp;</em>we saw two features &ldquo;throughput&rdquo; and &ldquo;latency&rdquo; that fed into a classifier. But when it comes to sound, feature extraction is not quite straightforward. Today, we will first see what features can be extracted from sound data and how easy it is to extract such features in Python using open source library called <a href="librosa.github.io" target="_blank">Librosa</a>.</p>
+<p>In this blog post, we will learn techniques to classify urban sounds into categories using machine learning. Earlier blog posts covered classification problems where data can be easily expressed in vector form.  For example, in the textual dataset, each word in the corpus becomes feature and tf-idf score becomes its value. Likewise, in <a href="http://aqibsaeed.github.io/2016-08-10-logistic-regression-tf/" target="_blank">anomaly detection dataset</a><em>&nbsp;</em>we saw two features &ldquo;throughput&rdquo; and &ldquo;latency&rdquo; that fed into a classifier. But when it comes to sound, feature extraction is not quite straightforward. Today, we will first see what features can be extracted from sound data and how easy it is to extract such features in Python using open source library called <a href="librosa.github.io">Librosa</a>.</p>
 <p>To get started with this tutorial, please make sure you have following tools installed:</p>
 <ul>
-<li><a href="www.tensorflow.org" target="_blank">Tensorflow</a></li>
-<li><a href="www.librosa.github.io" target="_blank">Librosa</a>&nbsp;</li>
+<li>Tensorflow</li>
+<li>Librosa</li>
 <li>Numpy</li>
 <li>Matplotlib</li>
 </ul>
 </div>
-
 <div class="text-justify">
 <h2>Dataset</h2>
 <p>We need a labelled dataset that we can feed into machine learning algorithm. Fortunately, some researchers published <a href="https://serv.cusp.nyu.edu/projects/urbansounddataset/" target="_blank"> urban sound dataset.</a> It contains 8,732 labelled sound clips (4 seconds each) from ten classes: <em>air conditioner, car horn, children playing, dog bark, drilling, engine idling, gunshot, jackhammer, siren, and street music. </em>The dataset by default is divided into 10-folds. To get the dataset please visit the following <a href="https://serv.cusp.nyu.edu/projects/urbansounddataset/urbansound8k.html" target="_blank">link</a>&nbsp;and if you want to use this dataset in your research kindly don&rsquo;t forget to acknowledge. In this dataset, the sound files are in <em>.wav</em> format but if you have files in another format such as <em>.mp3</em>, then it&rsquo;s good to convert them into <em>.wav</em> format. It&rsquo;s because <em>.mp3</em> is lossy music compression technique, check this <a href="http://www.premiumbeat.com/blog/when-to-use-wav-files-when-to-use-mp3-files-what-is-the-difference-between-the-two-formats/" target="_blank">link</a>&nbsp;for more information. To keep things simple, we will use sound files from only one fold.</p>
