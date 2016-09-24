@@ -14,13 +14,13 @@ published: false
 
 <p> In part one, we learnt to extract various features from audio clips. Also, we trained a two layer neural network to classify each sound into a predefined category. Today, we will go one step further and see how we can apply Convolution Neural Network (CNN) to perform the same task of urban sound classification. </p>
 
-<p><i>The python notebook is available at the following link</i>.</p>
+<p>The python notebook is available at the following <a href="">link</a>.</p>
 
-<p>Note: If you want to get in depth understanding of how CNN works. Kindly consult following resources:<a href=http://cs231n.github.io/convolutional-networks/>[1]</a>, <a href=http://arxiv.org/pdf/1603.07285v1.pdf>[2]</a> and <a href=http://www.deeplearningbook.org/contents/convnets.html>[3]</a>.</p>
+<p>Note: If you want to get in-depth understanding of how CNN works. Kindly consult following resources:<a href=http://cs231n.github.io/convolutional-networks/>[1]</a>, <a href=http://arxiv.org/pdf/1603.07285v1.pdf>[2]</a> and <a href=http://www.deeplearningbook.org/contents/convnets.html>[3]</a>.</p>
 </div>
 
 <div class="text-justify">
-<p>The well-known application of CNN is image classification, where a fixed dimension image is fed into a network along with different channels (RGB in case of a color image) and after various steps of convolution, pooling and fully connected layers, network outputs class probabilities for the image.  We want to do the same but here instead of image, we have sound clips. A quick search on Google Scholar can provide a lot of research papers, applying CNN on sound dataset. A paper I found interesting and quite relevant is <a href=" http://ieeexplore.ieee.org/document/7324337/ "<i>Environmental sound classification with convolutional neural networks</i></a> by <i>Karol J. Piczak</i>. I borrowed the idea of dataset (feature extraction) preparation for CNN from this paper. For example: how to get equal size segments from varying length audio clips and which audio feature(s) we can feed as a separate channel (just like RGB of a color image) into the network. Once we have the initial dataset ready for the CNN. We can train as deep network (composed of different layers) as we want! </p>
+<p>The well-known application of CNN is image classification, where a fixed dimension image is fed into a network along with different channels (RGB in the case of a color image) and after various steps of convolution, pooling and fully connected layers, network outputs class probabilities for the image.  We want to do the same but here instead of an image, we have sound clips. A quick search on Google Scholar can provide a lot of research papers, applying CNN on a sound dataset. A paper I found interesting and quite relevant is <a href=" http://ieeexplore.ieee.org/document/7324337/ "<i>Environmental sound classification with convolutional neural networks</i></a> by <i>Karol J. Piczak</i>. I borrowed the idea of dataset (feature extraction) preparation for CNN from this paper. For example: how to get equal size segments from varying length audio clips and which audio feature(s) we can feed as a separate channel (just like RGB of a color image) into the network. Once we have the initial dataset ready for the CNN. We can train as deep network (composed of different layers) as we want! </p>
 <p>Let's define a function to calculate log scaled mel-spectrograms and their corresponding deltas from a sound clip.  Regarding fixed size input, we will divide each sound clip into segments of 60x41 (60 rows and 41 columns). The mel-spec and their deltas will become two channels, which we will be fed into CNN. Other features can be calculated in the same way, which can be used as a separate input channel. </p>
 
 <pre><code class="language-python">
@@ -73,7 +73,7 @@ def one_hot_encode(labels):
     return one_hot_encode
 </code></pre>
 
-<p><code>extract_feature</code> and <code></code>windows</code> are the two methods we need to prepare the data (both features and labels) for CNN. <code>extract_features</code> iterates over all the files with in sub directories of a particular parent directory, calculate above mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them in corresponding variables. Also, convert labels into one hot vector using <code>one_hot_encode</code> method and split dataset into training and testing sets, with 70/30 ratio.</p>
+<p><code>extract_feature</code> and <code></code>windows</code> are the two methods we need to prepare the data (both features and labels) for CNN. <code>extract_features</code> iterates over all the files within subdirectories of a particular parent directory, calculate above-mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them in corresponding variables. Also, convert labels into one hot vector using <code>one_hot_encode</code> method and split dataset into training and testing sets, with 70/30 ratio.</p>
 
 <pre><code class="language-python">
 
@@ -98,7 +98,7 @@ test_y = labels[~rnd_indices]
 </div>
 
 <div class="text-justify">
-<p>Now we define some helper functions for the implementation of CNN. The method named <code>weight_variable</code> and <code>bias_variable</code> will return Tensorflow variable of defined shapes, where bias variable is initialized with all ones and weight variable with zero mean and standard deviation of 0.1. Conv2d method is just a wrapper over Tensorflow conv2d function. It will be called by <code>apply_convolution</code> function, which takes input data, kernel/filer size, number of channels in the input and output depth or number of channels in the output. It then get weight and bias variables, apply convolution, add the bias to the results and finally apply non-linearity (RELU). Max Pooling can be applied using <code>apply_max_pool</code> function. It takes input data (usually output of convolution layer), kernel and stride size. I used the SAME padding, you can change it to VALID padding, if you want.</p>
+<p>Now we define some helper functions for the implementation of CNN. The method named <code>weight_variable</code> and <code>bias_variable</code> will return Tensorflow variable of defined shapes, where bias variable is initialized with all ones and weight variable with zero mean and standard deviation of 0.1. The <code>Conv2d</code> method is just a wrapper over Tensorflow conv2d function. It will be called by <code>apply_convolution</code> function, which takes input data, kernel/filer size, a number of channels in the input and output depth or number of channels in the output. It then gets weight and bias variables, applies convolution, adds the bias to the results and finally applies non-linearity (RELU). Max-Pooling can be applied using <code>apply_max_pool</code> function. It takes input data (usually output of convolution layer), kernel and stride size. I used the SAME padding, you can change it to VALID padding if you want.</p>
 
 <pre><code class="language-python">
 
@@ -145,7 +145,7 @@ training_epochs = 2000
 
 </code></pre>
 
-<p>Tensorflow placeholder for input and output data are defined next. A convolution function is applied with filter size of 30 and depth of 20 (number of channels, we will get as output from convolution layer). Next the convolution output is flattened out for the fully connected layer input. There are 200 neurons in the fully connected layer as defined by the above configuration. Sigmoid function is used as non-linearity in this layer. Lastly, the Softmax layer is defined to output probabilities of the class labels.</p>
+<p>Tensorflow placeholder for input and output data are defined next. A convolution function is applied with a filter size of 30 and depth of 20 (number of channels, we will get as output from convolution layer). Next, the convolution output is flattened out for the fully connected layer input. There are 200 neurons in the fully connected layer as defined by the above configuration. The Sigmoid function is used as non-linearity in this layer. Lastly, the Softmax layer is defined to output probabilities of the class labels.</p>
 
 <pre><code class="language-python">
 
@@ -168,7 +168,7 @@ y_ = tf.nn.softmax(tf.matmul(f, out_weights) + out_biases)
 </code></pre>
 
 
-<p>The cross-entropy cost function will be minimized using Adam optimizer, the code provided below initialize cost function and optimizer. Also, define the code for accuracy calculation of the prediction by model.</p>
+<p>The cross-entropy cost function will be minimised using Adam optimizer, the code provided below initialize cost function and optimizer. Also, define the code for accuracy calculation of the prediction by model.</p>
 
 <pre><code class="language-python">
 
@@ -179,7 +179,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 </code></pre>
 
-<p>Now the following code will train the CNN model using batch size of 50 for 2000 training epochs. After the training, it classify testing set and print out the achieved accuracy of the model along with plotting cost as a function of number of iterations. </p>
+<p>Now the following code will train the CNN model using a batch size of 50 for 2000 training epochs. After the training, it classifies testing set and prints out the achieved accuracy of the model along with plotting cost as a function of a number of iterations. </p>
 
 <pre><code class="language-python">
 cost_history = np.empty(shape=[1],dtype=float)
@@ -202,5 +202,5 @@ with tf.Session() as session:
 </code></pre>
 
 
-<p>This blog post discussed how to prepare dataset for CNN and train a model with one convolution layer. I would encourage you to train deep models with several convolution, pooling and two or more fully connected layer on complete dataset. If you have any question or feedback, please comment below.</p>
+<p>This blog post discussed how to prepare a dataset for CNN and train a model with one convolution layer. I would encourage you to train deep models with several convolution, pooling and two or more fully connected layers on complete dataset. If you have any question or feedback, please comment below.</p>
 </div>
