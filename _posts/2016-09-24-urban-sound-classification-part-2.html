@@ -12,7 +12,7 @@ published: false
 
 <div class="text-justify">
 
-<p> In part one, we learnt to extract various features from audio clips. Also, we trained a two layer neural network to classify each sound into a predefined category. Today, we will go one step further and see how we can apply convolution neural network (CNN) to perform the same task of urban sound classification. </p>
+<p> In part one, we learnt to extract various features from audio clips. Also, we trained a two layer neural network to classify each sound into a predefined category. Today, we will go one step further and see how we can apply Convolution Neural Network (CNN) to perform the same task of urban sound classification. </p>
 
 <p><i>The python notebook is available at the following link</i>.</p>
 
@@ -20,8 +20,8 @@ published: false
 </div>
 
 <div class="text-justify">
-<p>The well-known application of CNN is image classification, where a fixed dimension image is fed into a network along with channels (RGB in case of a color image) and after various steps of convolution and pooling network outputs class probabilities.  We want to do the same but here instead of image, we have sound clip. A quick search on Google Scholar can provide a lot of research papers, applying CNN on sound dataset. A paper I found interesting and quite relevant is <a href=" http://ieeexplore.ieee.org/document/7324337/ "<i>Environmental sound classification with convolutional neural networks</i></a> by <i>Karol J. Piczak</i>. I borrowed the idea of dataset (feature extraction) preparation for CNN from this paper. For example: how to get equal size segments from varying length audio clips and which audio feature(s) we can feed as a separate channel (just like RGB of a color image) into the network. Once we have the initial dataset ready for the CNN. We can train as deep network (composed of different blocks) as we want! </p>
-<p>Let's define a function to calculate log scaled mel-spectrograms and their corresponding deltas from a sound clip.  Regarding fixed size input, we will divide each sound clip into segments of 60x41 (60 rows and 41 columns). The mel-spec and their deltas will become two channels, which we will input into CNN. Other features can be calculated in the same way, which can be used as a separate input channel. </p>
+<p>The well-known application of CNN is image classification, where a fixed dimension image is fed into a network along with different channels (RGB in case of a color image) and after various steps of convolution, pooling and fully connected layers, network outputs class probabilities for the image.  We want to do the same but here instead of image, we have sound clips. A quick search on Google Scholar can provide a lot of research papers, applying CNN on sound dataset. A paper I found interesting and quite relevant is <a href=" http://ieeexplore.ieee.org/document/7324337/ "<i>Environmental sound classification with convolutional neural networks</i></a> by <i>Karol J. Piczak</i>. I borrowed the idea of dataset (feature extraction) preparation for CNN from this paper. For example: how to get equal size segments from varying length audio clips and which audio feature(s) we can feed as a separate channel (just like RGB of a color image) into the network. Once we have the initial dataset ready for the CNN. We can train as deep network (composed of different layers) as we want! </p>
+<p>Let's define a function to calculate log scaled mel-spectrograms and their corresponding deltas from a sound clip.  Regarding fixed size input, we will divide each sound clip into segments of 60x41 (60 rows and 41 columns). The mel-spec and their deltas will become two channels, which we will be fed into CNN. Other features can be calculated in the same way, which can be used as a separate input channel. </p>
 
 <pre><code class="language-python">
 import glob
@@ -73,7 +73,7 @@ def one_hot_encode(labels):
     return one_hot_encode
 </code></pre>
 
-<p><code>extract_feature</code> and windows are the two methods we need to prepare the data (both features and labels) for CNN. <code>extract_features</code> iterates over all the files with in sub directories of a particular parent directory, calculate above mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them in corresponding variables. Also, convert labels into one hot vector using <code>one_hot_encode</code> method. Let's also split dataset into training and testing sets, with 70/30 ratio.</p>
+<p><code>extract_feature</code> and <code></code>windows</code> are the two methods we need to prepare the data (both features and labels) for CNN. <code>extract_features</code> iterates over all the files with in sub directories of a particular parent directory, calculate above mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them in corresponding variables. Also, convert labels into one hot vector using <code>one_hot_encode</code> method and split dataset into training and testing sets, with 70/30 ratio.</p>
 
 <pre><code class="language-python">
 
@@ -168,7 +168,7 @@ y_ = tf.nn.softmax(tf.matmul(f, out_weights) + out_biases)
 </code></pre>
 
 
-<p>The cross-entropy cost function will be minimized using Adam optimizer, the code provided below initialize cost function and optimizer. Also, define and initialize variables for accuracy calculation of the prediction by model.</p>
+<p>The cross-entropy cost function will be minimized using Adam optimizer, the code provided below initialize cost function and optimizer. Also, define the code for accuracy calculation of the prediction by model.</p>
 
 <pre><code class="language-python">
 
