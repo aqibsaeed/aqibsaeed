@@ -76,6 +76,8 @@ def one_hot_encode(labels):
     
 </code></pre>
 
+<p style="text-align:center"><img src="../img/urban-sound-cnn.PNG" alt="CNN Model Architecture"/></p> 
+
 <p><code>extract_feature</code> and <code>windows</code> are the two methods we need to prepare the data (both features and labels) for CNN. <code>extract_features</code> iterates over all the files within subdirectories of a particular parent directory, calculate above-mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them in corresponding variables. Also, convert labels into one hot vector using <code>one_hot_encode</code> method and split dataset into training and testing sets, with 70/30 ratio.</p>
 
 <pre><code class="language-python line-numbers">parent_dir = 'Sound-Data'
