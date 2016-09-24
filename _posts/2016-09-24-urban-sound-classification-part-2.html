@@ -3,8 +3,9 @@ layout: post
 title: Urban Sound Classification, Part 2
 subtitle: >-
   Applying Convolutional Neural Network
-published: false
+published: true
 ---
+
 <div>
 <link href="../css/prism.css" rel="stylesheet" />
 <script src="../js/prism.js"></script>
@@ -14,7 +15,7 @@ published: false
 
 <p> In part one, we learnt to extract various features from audio clips. Also, we trained a two layer neural network to classify each sound into a predefined category. Today, we will go one step further and see how we can apply Convolution Neural Network (CNN) to perform the same task of urban sound classification. </p>
 
-<p>The python notebook is available at the following <a href="">link</a>.</p>
+<p>The python notebook is available at the following <a href="https://github.com/aqibsaeed/Urban-Sound-Classification"><b>link</b></a>.</p>
 
 <p>Note: If you want to get in-depth understanding of how CNN works. Kindly consult following resources:<a href=http://cs231n.github.io/convolutional-networks/>[1]</a>, <a href=http://arxiv.org/pdf/1603.07285v1.pdf>[2]</a> and <a href=http://www.deeplearningbook.org/contents/convnets.html>[3]</a>.</p>
 </div>
@@ -30,10 +31,8 @@ import librosa
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import numpy as np
-from scipy.misc import imread, imresize
 %matplotlib inline
 plt.style.use('ggplot')
-
 
 def windows(data, window_size):
     start = 0
@@ -76,23 +75,19 @@ def one_hot_encode(labels):
 <p><code>extract_feature</code> and <code></code>windows</code> are the two methods we need to prepare the data (both features and labels) for CNN. <code>extract_features</code> iterates over all the files within subdirectories of a particular parent directory, calculate above-mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them in corresponding variables. Also, convert labels into one hot vector using <code>one_hot_encode</code> method and split dataset into training and testing sets, with 70/30 ratio.</p>
 
 <pre><code class="language-python">
-
 parent_dir = 'Sound-Data'
 sub_dirs= ['fold1','fold2']
 features,labels = extract_features(parent_dir,sub_dirs)
 labels = one_hot_encode(labels)
-
 </code></pre>
 
 <pre><code class="language-python">
-
 rnd_indices = np.random.rand(len(labels)) < 0.70
 
 train_x = features[rnd_indices]
 train_y = labels[rnd_indices]
 test_x = features[~rnd_indices]
 test_y = labels[~rnd_indices]
-
 </code></pre>
 
 </div>
@@ -101,7 +96,6 @@ test_y = labels[~rnd_indices]
 <p>Now we define some helper functions for the implementation of CNN. The method named <code>weight_variable</code> and <code>bias_variable</code> will return Tensorflow variable of defined shapes, where bias variable is initialized with all ones and weight variable with zero mean and standard deviation of 0.1. The <code>Conv2d</code> method is just a wrapper over Tensorflow conv2d function. It will be called by <code>apply_convolution</code> function, which takes input data, kernel/filer size, a number of channels in the input and output depth or number of channels in the output. It then gets weight and bias variables, applies convolution, adds the bias to the results and finally applies non-linearity (RELU). Max-Pooling can be applied using <code>apply_max_pool</code> function. It takes input data (usually output of convolution layer), kernel and stride size. I used the SAME padding, you can change it to VALID padding if you want.</p>
 
 <pre><code class="language-python">
-
 def weight_variable(shape):
     initial = tf.truncated_normal(shape, stddev = 0.1)
     return tf.Variable(initial)
@@ -121,13 +115,11 @@ def apply_convolution(x,kernel_size,num_channels,depth):
 def apply_max_pool(x,kernel_size,stride_size):
     return tf.nn.max_pool(x, ksize=[1, kernel_size, kernel_size, 1], 
                           strides=[1, stride_size, stride_size, 1], padding='SAME')
-
 </code></pre>
 
 <p>The code provided below defines configuration parameters required by CNN model. Such as kernel size, training epochs, a number of neurons in each hidden layer and learning rate etc.</p>
 
 <pre><code class="language-python">
-
 frames = 41
 bands = 60
 
@@ -142,13 +134,11 @@ num_hidden = 200
 
 learning_rate = 0.01
 training_epochs = 2000
-
 </code></pre>
 
 <p>Tensorflow placeholder for input and output data are defined next. A convolution function is applied with a filter size of 30 and depth of 20 (number of channels, we will get as output from convolution layer). Next, the convolution output is flattened out for the fully connected layer input. There are 200 neurons in the fully connected layer as defined by the above configuration. The Sigmoid function is used as non-linearity in this layer. Lastly, the Softmax layer is defined to output probabilities of the class labels.</p>
 
 <pre><code class="language-python">
-
 X = tf.placeholder(tf.float32, shape=[None,bands,frames,num_channels])
 Y = tf.placeholder(tf.float32, shape=[None,num_labels])
 
@@ -164,19 +154,16 @@ f = tf.nn.sigmoid(tf.add(tf.matmul(cov_flat, f_weights),f_biases))
 out_weights = weight_variable([num_hidden, num_labels])
 out_biases = bias_variable([num_labels])
 y_ = tf.nn.softmax(tf.matmul(f, out_weights) + out_biases)
-
 </code></pre>
 
 
 <p>The cross-entropy cost function will be minimised using Adam optimizer, the code provided below initialize cost function and optimizer. Also, define the code for accuracy calculation of the prediction by model.</p>
 
 <pre><code class="language-python">
-
 cross_entropy = -tf.reduce_sum(Y * tf.log(y_))
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cross_entropy)
 correct_prediction = tf.equal(tf.argmax(y_,1), tf.argmax(Y,1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-
 </code></pre>
 
 <p>Now the following code will train the CNN model using a batch size of 50 for 2000 training epochs. After the training, it classifies testing set and prints out the achieved accuracy of the model along with plotting cost as a function of a number of iterations. </p>
@@ -200,7 +187,6 @@ with tf.Session() as session:
     plt.axis([0,training_epochs,0,np.max(cost_history)])
     plt.show()
 </code></pre>
-
 
 <p>This blog post discussed how to prepare a dataset for CNN and train a model with one convolution layer. I would encourage you to train deep models with several convolution, pooling and two or more fully connected layers on complete dataset. If you have any question or feedback, please comment below.</p>
 </div>
