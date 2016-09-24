@@ -7,12 +7,14 @@ published: true
 
 <div>
 <link href="../css/prism.css" rel="stylesheet" />
+<link href="../css/prism-linenumbers.css" rel="stylesheet" />
 <script src="../js/prism.js"></script>
+<script src="../js/prism-linenumbers.js"></script>
 </div>
 
 <div class="text-justify">
   
-<p> In part one, we learnt to extract various features from audio clips. Also, we trained a two layer neural network to classify each sound into a predefined category. Today, we will go one step further and see how we can apply Convolution Neural Network (CNN) to perform the same task of urban sound classification. </p>
+ <p> In <a href="http://aqibsaeed.github.io/2016-09-03-urban-sound-classification-part-1/">part one</a>, we learnt to extract various features from audio clips. We, also, trained a two layer neural network to classify each sound into a predefined category. Today, we will go one step further and see how we can apply Convolution Neural Network (CNN) to perform the same task of urban sound classification. </p>
 
 <p>
 <i>Note: If you want to get in-depth understanding of how CNN works. Kindly consult following resources:</i>
@@ -23,7 +25,7 @@ published: true
 </div>
 
 <div class="text-justify">
-<p>The well-known application of CNN is image classification, where a fixed dimension image is fed into a network along with different channels (RGB in the case of a color image) and after various steps of convolution, pooling and fully connected layers, network outputs class probabilities for the image.  We want to do the same but here instead of an image, we have sound clips. A quick search on Google Scholar can provide a lot of research papers, applying CNN on a sound dataset. A paper I found interesting and quite relevant is <i>Environmental sound classification with convolutional neural networks</i> by <i>Karol J. Piczak</i>. I borrowed the idea of dataset (feature extraction) preparation for CNN from this paper. For example: how to get equal size segments from varying length audio clips and which audio feature(s) we can feed as a separate channel (just like RGB of a color image) into the network. Once we have the initial dataset ready for the CNN. We can train as deep network (composed of different layers) as we want! </p>
+<p>The well-known application of CNN is image classification, where a fixed dimension image is fed into a network along with different channels (RGB in the case of a color image) and after various steps of convolution, pooling and fully connected layers, network outputs class probabilities for the image.  We want to do the same, but here instead of an image, we have sound clips. A quick search on Google Scholar provide a lot of research papers, which discuss the implementation of CNN on a sound dataset. A paper I found particularly interesting and quite relevant is <i>Environmental sound classification with convolutional neural networks</i> by <i>Karol J. Piczak</i>. I borrowed the idea of dataset (feature extraction) preparation for CNN from this paper. For example: how to get equal size segments from varying length audio clips and which audio feature(s) we can feed as a separate channel (just like RGB of a color image) into the network. Once we have the initial dataset ready for the CNN. We can train as deep network (composed of different layers) as we want! </p>
 <p>Let's define a function to calculate log scaled mel-spectrograms and their corresponding deltas from a sound clip.  Regarding fixed size input, we will divide each sound clip into segments of 60x41 (60 rows and 41 columns). The mel-spec and their deltas will become two channels, which we will be fed into CNN. Other features can be calculated in the same way, which can be used as a separate input channel. </p>
 
 <pre><code class="language-python">
