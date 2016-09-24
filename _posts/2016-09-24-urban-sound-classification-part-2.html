@@ -1,8 +1,7 @@
 ---
 layout: post
-title: Urban Sound Classification, Part 2
-subtitle: >-
-  Applying Convolutional Neural Network
+title: 'Urban Sound Classification, Part 2'
+subtitle: Applying Convolutional Neural Network
 published: true
 ---
 
@@ -12,13 +11,17 @@ published: true
 </div>
 
 <div class="text-justify">
-
+  
 <p> In part one, we learnt to extract various features from audio clips. Also, we trained a two layer neural network to classify each sound into a predefined category. Today, we will go one step further and see how we can apply Convolution Neural Network (CNN) to perform the same task of urban sound classification. </p>
 
-<p>The python notebook is available at the following <a href="https://github.com/aqibsaeed/Urban-Sound-Classification"><b>link</b></a>.</p>
+<p>Note: If you want to get in-depth understanding of how CNN works. Kindly consult following resources: <a href=http://cs231n.github.io/convolutional-networks/>[1]</a>, 
+<a href=http://arxiv.org/pdf/1603.07285v1.pdf>[2]</a> and 
+<a href=http://www.deeplearningbook.org/contents/convnets.html>[3]</a>.
+</p>
 
-<p><i>Note: If you want to get in-depth understanding of how CNN works. Kindly consult following resources:<a href=http://cs231n.github.io/convolutional-networks/>[1]</a>, <a href=http://arxiv.org/pdf/1603.07285v1.pdf>[2]</a> and <a href=http://www.deeplearningbook.org/contents/convnets.html>[3]</a>.</i></p>
 </div>
+
+<p>The python notebook is available at the following <a href="https://github.com/aqibsaeed/Urban-Sound-Classification"><b>link</b></a>.</p>
 
 <div class="text-justify">
 <p>The well-known application of CNN is image classification, where a fixed dimension image is fed into a network along with different channels (RGB in the case of a color image) and after various steps of convolution, pooling and fully connected layers, network outputs class probabilities for the image.  We want to do the same but here instead of an image, we have sound clips. A quick search on Google Scholar can provide a lot of research papers, applying CNN on a sound dataset. A paper I found interesting and quite relevant is <i>Environmental sound classification with convolutional neural networks</i> by <i>Karol J. Piczak</i>. I borrowed the idea of dataset (feature extraction) preparation for CNN from this paper. For example: how to get equal size segments from varying length audio clips and which audio feature(s) we can feed as a separate channel (just like RGB of a color image) into the network. Once we have the initial dataset ready for the CNN. We can train as deep network (composed of different layers) as we want! </p>
@@ -189,4 +192,5 @@ with tf.Session() as session:
 </code></pre>
 
 <p>This blog post discussed how to prepare a dataset for CNN and train a model with one convolution layer. I would encourage you to train deep models with several convolution, pooling and two or more fully connected layers on complete dataset. If you have any question or feedback, please comment below.</p>
+
 </div>
