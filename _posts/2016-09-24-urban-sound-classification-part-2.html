@@ -5,3 +5,202 @@ subtitle: >-
   Applying Convolutional Neural Network
 published: false
 ---
+<div>
+<link href="../css/prism.css" rel="stylesheet" />
+<script src="../js/prism.js"></script>
+</div>
+
+<div class="text-justify">
+
+<p> In part one, we learnt to extract various features from audio clips. Also, we trained a two layer neural network to classify each sound into a predefined category. Today, we will go one step further and see how we can apply convolution neural network (CNN) to perform the same task of urban sound classification. </p>
+
+<p><i>The python notebook is available at the following link</i>.</p>
+
+<p>Note: If you want to get in depth understanding of how CNN works. Kindly consult following resources:<a href=http://cs231n.github.io/convolutional-networks/>[1]</a>, <a href=http://arxiv.org/pdf/1603.07285v1.pdf>[2]</a> and <a href=http://www.deeplearningbook.org/contents/convnets.html>[3]</a>.</p>
+</div>
+
+<div class="text-justify">
+<p>The well-known application of CNN is image classification, where a fixed dimension image is fed into a network along with channels (RGB in case of a color image) and after various steps of convolution and pooling network outputs class probabilities.  We want to do the same but here instead of image, we have sound clip. A quick search on Google Scholar can provide a lot of research papers, applying CNN on sound dataset. A paper I found interesting and quite relevant is <a href=" http://ieeexplore.ieee.org/document/7324337/ "<i>Environmental sound classification with convolutional neural networks</i></a> by <i>Karol J. Piczak</i>. I borrowed the idea of dataset (feature extraction) preparation for CNN from this paper. For example: how to get equal size segments from varying length audio clips and which audio feature(s) we can feed as a separate channel (just like RGB of a color image) into the network. Once we have the initial dataset ready for the CNN. We can train as deep network (composed of different blocks) as we want! </p>
+<p>Let's define a function to calculate log scaled mel-spectrograms and their corresponding deltas from a sound clip.  Regarding fixed size input, we will divide each sound clip into segments of 60x41 (60 rows and 41 columns). The mel-spec and their deltas will become two channels, which we will input into CNN. Other features can be calculated in the same way, which can be used as a separate input channel. </p>
+
+<pre><code class="language-python">
+import glob
+import os
+import librosa
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import numpy as np
+from scipy.misc import imread, imresize
+%matplotlib inline
+plt.style.use('ggplot')
+
+
+def windows(data, window_size):
+    start = 0
+    while start < len(data):
+        yield start, start + window_size
+        start += (window_size / 2)
+
+def extract_features(parent_dir,sub_dirs,file_ext="*.wav",bands = 60, frames = 41):
+    window_size = 512 * (frames - 1)
+    log_specgrams = []
+    labels = []
+    for l, sub_dir in enumerate(sub_dirs):
+        for fn in glob.glob(os.path.join(parent_dir, sub_dir, file_ext)):
+            sound_clip,s = librosa.load(fn)
+            label = fn.split('/')[2].split('-')[1]
+            for (start,end) in windows(sound_clip,window_size):
+                if(len(sound_clip[start:end]) == window_size):
+                    signal = sound_clip[start:end]
+                    melspec = librosa.feature.melspectrogram(signal, n_mels = bands)
+                    logspec = librosa.logamplitude(melspec)
+                    logspec = logspec.T.flatten()[:, np.newaxis].T
+                    log_specgrams.append(logspec)
+                    labels.append(label)
+            
+    log_specgrams = np.asarray(log_specgrams).reshape(len(log_specgrams),bands,frames,1)
+    features = np.concatenate((log_specgrams, np.zeros(np.shape(log_specgrams))), axis = 3)
+    for i in range(len(features)):
+        features[i, :, :, 1] = librosa.feature.delta(features[i, :, :, 0])
+    
+    return np.array(features), np.array(labels,dtype = np.int)
+
+def one_hot_encode(labels):
+    n_labels = len(labels)
+    n_unique_labels = len(np.unique(labels))
+    one_hot_encode = np.zeros((n_labels,n_unique_labels))
+    one_hot_encode[np.arange(n_labels), labels] = 1
+    return one_hot_encode
+</code></pre>
+
+<p><code>extract_feature</code> and windows are the two methods we need to prepare the data (both features and labels) for CNN. <code>extract_features</code> iterates over all the files with in sub directories of a particular parent directory, calculate above mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them in corresponding variables. Also, convert labels into one hot vector using <code>one_hot_encode</code> method. Let's also split dataset into training and testing sets, with 70/30 ratio.</p>
+
+<pre><code class="language-python">
+
+parent_dir = 'Sound-Data'
+sub_dirs= ['fold1','fold2']
+features,labels = extract_features(parent_dir,sub_dirs)
+labels = one_hot_encode(labels)
+
+</code></pre>
+
+<pre><code class="language-python">
+
+rnd_indices = np.random.rand(len(labels)) < 0.70
+
+train_x = features[rnd_indices]
+train_y = labels[rnd_indices]
+test_x = features[~rnd_indices]
+test_y = labels[~rnd_indices]
+
+</code></pre>
+
+</div>
+
+<div class="text-justify">
+<p>Now we define some helper functions for the implementation of CNN. The method named <code>weight_variable</code> and <code>bias_variable</code> will return Tensorflow variable of defined shapes, where bias variable is initialized with all ones and weight variable with zero mean and standard deviation of 0.1. Conv2d method is just a wrapper over Tensorflow conv2d function. It will be called by <code>apply_convolution</code> function, which takes input data, kernel/filer size, number of channels in the input and output depth or number of channels in the output. It then get weight and bias variables, apply convolution, add the bias to the results and finally apply non-linearity (RELU). Max Pooling can be applied using <code>apply_max_pool</code> function. It takes input data (usually output of convolution layer), kernel and stride size. I used the SAME padding, you can change it to VALID padding, if you want.</p>
+
+<pre><code class="language-python">
+
+def weight_variable(shape):
+    initial = tf.truncated_normal(shape, stddev = 0.1)
+    return tf.Variable(initial)
+
+def bias_variable(shape):
+    initial = tf.constant(1.0, shape = shape)
+    return tf.Variable(initial)
+
+def conv2d(x, W):
+    return tf.nn.conv2d(x,W,strides=[1,2,2,1], padding='SAME')
+
+def apply_convolution(x,kernel_size,num_channels,depth):
+    weights = weight_variable([kernel_size, kernel_size, num_channels, depth])
+    biases = bias_variable([depth])
+    return tf.nn.relu(tf.add(conv2d(x, weights),biases))
+
+def apply_max_pool(x,kernel_size,stride_size):
+    return tf.nn.max_pool(x, ksize=[1, kernel_size, kernel_size, 1], 
+                          strides=[1, stride_size, stride_size, 1], padding='SAME')
+
+</code></pre>
+
+<p>The code provided below defines configuration parameters required by CNN model. Such as kernel size, training epochs, a number of neurons in each hidden layer and learning rate etc.</p>
+
+<pre><code class="language-python">
+
+frames = 41
+bands = 60
+
+feature_size = 2460 #60x41
+num_labels = 10
+num_channels = 2
+
+batch_size = 50
+kernel_size = 30
+depth = 20
+num_hidden = 200
+
+learning_rate = 0.01
+training_epochs = 2000
+
+</code></pre>
+
+<p>Tensorflow placeholder for input and output data are defined next. A convolution function is applied with filter size of 30 and depth of 20 (number of channels, we will get as output from convolution layer). Next the convolution output is flattened out for the fully connected layer input. There are 200 neurons in the fully connected layer as defined by the above configuration. Sigmoid function is used as non-linearity in this layer. Lastly, the Softmax layer is defined to output probabilities of the class labels.</p>
+
+<pre><code class="language-python">
+
+X = tf.placeholder(tf.float32, shape=[None,bands,frames,num_channels])
+Y = tf.placeholder(tf.float32, shape=[None,num_labels])
+
+cov = apply_convolution(X,kernel_size,num_channels,depth)
+
+shape = cov.get_shape().as_list()
+cov_flat = tf.reshape(cov, [-1, shape[1] * shape[2] * shape[3]])
+
+f_weights = weight_variable([shape[1] * shape[2] * depth, num_hidden])
+f_biases = bias_variable([num_hidden])
+f = tf.nn.sigmoid(tf.add(tf.matmul(cov_flat, f_weights),f_biases))
+
+out_weights = weight_variable([num_hidden, num_labels])
+out_biases = bias_variable([num_labels])
+y_ = tf.nn.softmax(tf.matmul(f, out_weights) + out_biases)
+
+</code></pre>
+
+
+<p>The cross-entropy cost function will be minimized using Adam optimizer, the code provided below initialize cost function and optimizer. Also, define and initialize variables for accuracy calculation of the prediction by model.</p>
+
+<pre><code class="language-python">
+
+cross_entropy = -tf.reduce_sum(Y * tf.log(y_))
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cross_entropy)
+correct_prediction = tf.equal(tf.argmax(y_,1), tf.argmax(Y,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+</code></pre>
+
+<p>Now the following code will train the CNN model using batch size of 50 for 2000 training epochs. After the training, it classify testing set and print out the achieved accuracy of the model along with plotting cost as a function of number of iterations. </p>
+
+<pre><code class="language-python">
+cost_history = np.empty(shape=[1],dtype=float)
+with tf.Session() as session:
+    tf.initialize_all_variables().run()
+
+    for epoch in range(training_epochs):    
+        offset = (epoch * batch_size) % (train_y.shape[0] - batch_size)
+        batch_x = train_x[offset:(offset + batch_size), :, :, :]
+        batch_y = train_y[offset:(offset + batch_size), :]
+        
+        _, c = session.run([optimizer, cross_entropy],feed_dict={X: batch_x, Y : batch_y})
+        cost_history = np.append(cost_history,c)
+    
+    print('Test accuracy: ',round(session.run(accuracy, feed_dict={X: test_x, Y: test_y}) , 3))
+    fig = plt.figure(figsize=(15,10))
+    plt.plot(cost_history)
+    plt.axis([0,training_epochs,0,np.max(cost_history)])
+    plt.show()
+</code></pre>
+
+
+<p>This blog post discussed how to prepare dataset for CNN and train a model with one convolution layer. I would encourage you to train deep models with several convolution, pooling and two or more fully connected layer on complete dataset. If you have any question or feedback, please comment below.</p>
+</div>
