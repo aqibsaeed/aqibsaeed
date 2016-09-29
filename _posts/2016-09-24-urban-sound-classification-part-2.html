@@ -81,21 +81,17 @@ def one_hot_encode(labels):
 </code></pre>
 
 
-<p><code>extract_feature</code> and <code>windows</code> are the two methods we need to prepare the data (both features and labels) for CNN. <code>extract_features</code> iterates over all the files within subdirectories of a particular parent directory, calculate above-mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them in corresponding variables. Also, convert labels into one hot vector using <code>one_hot_encode</code> method and split dataset into training and testing sets, with 70/30 ratio.</p>
+<p><code>extract_feature</code> and <code>windows</code> are the two methods we need to prepare the data (both features and labels) for CNN. <code>extract_features</code> iterates over all the files within subdirectories of a particular parent directory, calculate above-mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them in corresponding variables. Also, convert labels into one hot vector using <code>one_hot_encode</code> method.</p>
 
 <pre><code class="language-python line-numbers">parent_dir = 'Sound-Data'
-sub_dirs= ['fold1','fold2']
-features,labels = extract_features(parent_dir,sub_dirs)
-labels = one_hot_encode(labels)
-</code></pre>
+tr_sub_dirs= ['fold1','fold2']
+tr_features,tr_labels = extract_features(parent_dir,tr_sub_dirs)
+tr_labels = one_hot_encode(tr_labels)
 
-<pre><code class="language-python line-numbers">rnd_indices = np.random.rand(len(labels)) < 0.70
-train_x = features[rnd_indices]
-train_y = labels[rnd_indices]
-test_x = features[~rnd_indices]
-test_y = labels[~rnd_indices]
+ts_sub_dirs= ['fold3']
+ts_features,ts_labels = extract_features(parent_dir,ts_sub_dirs)
+ts_labels = one_hot_encode(ts_labels)
 </code></pre>
-
 </div>
 
 <div class="text-justify">
@@ -175,14 +171,14 @@ with tf.Session() as session:
     tf.initialize_all_variables().run()
 
     for epoch in range(training_epochs):    
-        offset = (epoch * batch_size) % (train_y.shape[0] - batch_size)
-        batch_x = train_x[offset:(offset + batch_size), :, :, :]
-        batch_y = train_y[offset:(offset + batch_size), :]
+        offset = (epoch * batch_size) % (tr_labels.shape[0] - batch_size)
+        batch_x = tr_features[offset:(offset + batch_size), :, :, :]
+        batch_y = tr_labels[offset:(offset + batch_size), :]
         
         _, c = session.run([optimizer, cross_entropy],feed_dict={X: batch_x, Y : batch_y})
         cost_history = np.append(cost_history,c)
     
-    print('Test accuracy: ',round(session.run(accuracy, feed_dict={X: test_x, Y: test_y}) , 3))
+    print('Test accuracy: ',round(session.run(accuracy, feed_dict={X: ts_features, Y: ts_labels}) , 3))
     fig = plt.figure(figsize=(15,10))
     plt.plot(cost_history)
     plt.axis([0,training_epochs,0,np.max(cost_history)])
