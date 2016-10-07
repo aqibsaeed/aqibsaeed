@@ -158,8 +158,8 @@ y_ = tf.nn.softmax(tf.matmul(f, out_weights) + out_biases)
 
 <p>The cross-entropy cost function will be minimised using Adam optimizer, the code provided below initialize cost function and optimizer. Also, define the code for accuracy calculation of the prediction by model.</p>
 
-<pre><code class="language-python line-numbers">cross_entropy = -tf.reduce_sum(Y * tf.log(y_))
-optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cross_entropy)
+<pre><code class="language-python line-numbers">loss = -tf.reduce_sum(Y * tf.log(y_))
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
 correct_prediction = tf.equal(tf.argmax(y_,1), tf.argmax(Y,1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 </code></pre>
@@ -175,7 +175,7 @@ with tf.Session() as session:
         batch_x = tr_features[offset:(offset + batch_size), :, :, :]
         batch_y = tr_labels[offset:(offset + batch_size), :]
         
-        _, c = session.run([optimizer, cross_entropy],feed_dict={X: batch_x, Y : batch_y})
+        _, c = session.run([optimizer, loss],feed_dict={X: batch_x, Y : batch_y})
         cost_history = np.append(cost_history,c)
     
     print('Test accuracy: ',round(session.run(accuracy, feed_dict={X: ts_features, Y: ts_labels}) , 3))
