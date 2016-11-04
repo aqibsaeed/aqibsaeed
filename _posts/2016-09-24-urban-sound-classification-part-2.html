@@ -118,7 +118,7 @@ def apply_max_pool(x,kernel_size,stride_size):
                           strides=[1, stride_size, stride_size, 1], padding='SAME')
 </code></pre>
 
-<p>The code provided below defines configuration parameters required by CNN model. Such as kernel size, training epochs, a number of neurons in each hidden layer and learning rate etc.</p>
+<p>The code provided below defines configuration parameters required by CNN model. Such as kernel size, total iterations, a number of neurons in each hidden layer and learning rate etc.</p>
 
 <pre><code class="language-python line-numbers">frames = 41
 bands = 60
@@ -133,7 +133,7 @@ depth = 20
 num_hidden = 200
 
 learning_rate = 0.01
-training_epochs = 2000
+total_iterations = 2000
 </code></pre>
 
 <p>Tensorflow placeholder for input and output data are defined next. A convolution function is applied with a filter size of 30 and depth of 20 (number of channels, we will get as output from convolution layer). Next, the convolution output is flattened out for the fully connected layer input. There are 200 neurons in the fully connected layer as defined by the above configuration. The Sigmoid function is used as non-linearity in this layer. Lastly, the Softmax layer is defined to output probabilities of the class labels.</p>
@@ -170,8 +170,8 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 with tf.Session() as session:
     tf.initialize_all_variables().run()
 
-    for epoch in range(training_epochs):    
-        offset = (epoch * batch_size) % (tr_labels.shape[0] - batch_size)
+    for itr in range(total_iterations):    
+        offset = (itr * batch_size) % (tr_labels.shape[0] - batch_size)
         batch_x = tr_features[offset:(offset + batch_size), :, :, :]
         batch_y = tr_labels[offset:(offset + batch_size), :]
         
@@ -181,7 +181,7 @@ with tf.Session() as session:
     print('Test accuracy: ',round(session.run(accuracy, feed_dict={X: ts_features, Y: ts_labels}) , 3))
     fig = plt.figure(figsize=(15,10))
     plt.plot(cost_history)
-    plt.axis([0,training_epochs,0,np.max(cost_history)])
+    plt.axis([0,total_iterations,0,np.max(cost_history)])
     plt.show()
 </code></pre>
 
