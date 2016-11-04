@@ -156,7 +156,7 @@ y_ = tf.nn.softmax(tf.matmul(f, out_weights) + out_biases)
 </code></pre>
 
 
-<p>The cross-entropy cost function will be minimised using Adam optimizer, the code provided below initialize cost function and optimizer. Also, define the code for accuracy calculation of the prediction by model.</p>
+<p>The negative log-likelihood cost function will be minimised using Adam optimizer, the code provided below initialize cost function and optimizer. Also, define the code for accuracy calculation of the prediction by model.</p>
 
 <pre><code class="language-python line-numbers">loss = -tf.reduce_sum(Y * tf.log(y_))
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
