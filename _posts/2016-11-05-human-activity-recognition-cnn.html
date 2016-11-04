@@ -25,7 +25,6 @@ published: false
 <pre><code class="language-python line-numbers">import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import specgram
 from scipy import stats
 import tensorflow as tf
 
@@ -74,11 +73,33 @@ dataset['z-axis'] = feature_normalize(dataset['z-axis'])</code></pre>
 <p style="text-align:center"><img src="../img/har-activity-set-two.PNG" alt="Activity set two"/></p> 
 <p style="text-align:center"><img src="../img/har-activity-set-three.PNG" alt="Activity set three"/></p> 
 
-<p>Now we have to prepare the dataset in a format required by the CNN model. For doing this we define some helper functions to create fixed sized segments from the raw signal. The <code>windows</code> function will generate indexes as specified by the size parameter by moving over the signal by fixed step size. The window size used is 90, which equals to 4.5 seconds of data and as we are moving each time by 20 points the step size is equal to 1 second. The label (activity) for each segment will be selected by the most frequent class label presented in that window. The <code>segment_signal</code> will perform generate fixed size segments and append each signal component along the third dimension, so that the input dimension will be (total segments, input width and input channel). We will reshape the generated segments to have height of 1 as we are going to perform one dimensional convolution (depth wise) over the signal. Moreover, labels will be one hot encoded using <code>get_dummies</code> function available in Pandas package.</p>
+<p>Now we have to prepare the dataset in a format required by the CNN model. For doing this we define some helper functions to create fixed sized segments from the raw signal. The <code>windows</code> function will generate indexes as specified by the size parameter by moving over the signal by fixed step size. The window size used is 90, which equals to 4.5 seconds of data and as we are moving each time by 45 points the step size is equal to 2.25 seconds. The label (activity) for each segment will be selected by the most frequent class label presented in that window. The <code>segment_signal</code> will generate fixed size segments and append each signal component along the third dimension, so that the input dimension will be (total segments, input width and input channel). We will reshape the generated segments to have height of 1 as we are going to perform one dimensional convolution (depth wise) over the signal. Moreover, labels will be one hot encoded using <code>get_dummies</code> function available in Pandas package.</p>
+
+<pre><code class="language-python line-numbers">def windows(data, size):
+    start = 0
+    while start < data.count():
+        yield start, start + size
+        start += (size / 2)
+        
+def segment_signal(data,window_size = 90):
+    segments = np.empty((0,window_size,3))
+    labels = np.empty((0))
+    for (start, end) in windows(data['timestamp'], window_size):
+        x = data["x-axis"][start:end]
+        y = data["y-axis"][start:end]
+        z = data["z-axis"][start:end]
+        if(len(dataset['timestamp'][start:end]) == window_size):
+            segments = np.vstack([segments,np.dstack([x,y,z])])
+            labels = np.append(labels,stats.mode(data["activity"][start:end])[0][0])
+    return segments, labels</code></pre>
+
+
 <pre><code class="language-python line-numbers">segments, labels = segment_signal(dataset)
 labels = np.asarray(pd.get_dummies(labels), dtype = np.int8)
 reshaped_segments = segments.reshape(len(segments), 1,90, 3)</code></pre>
+
 <p>Now we have our data set in the desired format, let’s divide it into training and testing set (70/30) randomly.</p>
+
 <pre><code class="language-python line-numbers">segments, labels = segment_signal(dataset)
 labels = np.asarray(pd.get_dummies(labels), dtype = np.int8)
 reshaped_segments = segments.reshape(len(segments), 1,90, 3)</code></pre>
