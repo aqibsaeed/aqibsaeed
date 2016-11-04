@@ -123,7 +123,7 @@ depth = 60
 num_hidden = 1000
 
 learning_rate = 0.0001
-training_epochs = 8
+training_epochs = 5
 
 total_batchs = reshaped_segments.shape[0] // batch_size
 
@@ -176,7 +176,7 @@ optimizer = tf.train.GradientDescentOptimizer(learning_rate = learning_rate).min
 correct_prediction = tf.equal(tf.argmax(y_,1), tf.argmax(Y,1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</code></pre>
 
-<p>We have all the required pieces for CNN. Next, let’s write code for training the model. The code provided below, will train the CNN model using a batch size of 10 for 8 training epochs. At each epoch, we will print out the model’s loss and accuracy on the training set. At the end of training, the model will classify the testing set instances and will print out achieved accuracy.</p>
+<p>We have all the required pieces for CNN. Next, let’s write code for training the model. The code provided below, will train the CNN model using a batch size of 10 for 5 training epochs. At each epoch, we will print out the model’s loss and accuracy on the training set. At the end of training, the model will classify the testing set instances and will print out achieved accuracy.</p>
 
 <pre><code class="language-python line-numbers">cost_history = np.empty(shape=[1],dtype=float)
 
