@@ -83,11 +83,11 @@ dataset['z-axis'] = feature_normalize(dataset['z-axis'])</code></pre>
 def segment_signal(data,window_size = 90):
     segments = np.empty((0,window_size,3))
     labels = np.empty((0))
-    for (start, end) in windows(data['timestamp'], window_size):
+    for (start, end) in windows(data["timestamp"], window_size):
         x = data["x-axis"][start:end]
         y = data["y-axis"][start:end]
         z = data["z-axis"][start:end]
-        if(len(dataset['timestamp'][start:end]) == window_size):
+        if(len(dataset["timestamp"][start:end]) == window_size):
             segments = np.vstack([segments,np.dstack([x,y,z])])
             labels = np.append(labels,stats.mode(data["activity"][start:end])[0][0])
     return segments, labels</code></pre>
