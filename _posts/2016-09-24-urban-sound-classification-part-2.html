@@ -164,7 +164,7 @@ correct_prediction = tf.equal(tf.argmax(y_,1), tf.argmax(Y,1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 </code></pre>
 
-<p>Now the following code will train the CNN model using a batch size of 50 for 2000 training epochs. After the training, it classifies testing set and prints out the achieved accuracy of the model along with plotting cost as a function of a number of iterations. </p>
+<p>Now the following code will train the CNN model using a batch size of 50 for 2000 iterations. After the training, it classifies testing set and prints out the achieved accuracy of the model along with plotting cost as a function of a number of iterations. </p>
 
 <pre><code class="language-python line-numbers">cost_history = np.empty(shape=[1],dtype=float)
 with tf.Session() as session:
