@@ -189,7 +189,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</code></pre>
             batch_y = train_y[offset:(offset + batch_size), :]
             _, c = session.run([optimizer, loss],feed_dict={X: batch_x, Y : batch_y})
             cost_history = np.append(cost_history,c)
-        print "Epoch: ",epoch," Training Loss: ",c," Training Accuracy: ",
+        print "Epoch: ",epoch," Training Loss: ",np.mean(cost_history)," Training Accuracy: ",
               session.run(accuracy, feed_dict={X: train_x, Y: train_y})
     
     print "Testing Accuracy:", session.run(accuracy, feed_dict={X: test_x, Y: test_y})</code></pre>
