@@ -18,11 +18,11 @@ published: true
 
 <p>In short, we want to learn a function of the form:</p>
   
-<p style="text-align:center"><img src="../img/lg-tf-sigmoid.PNG" alt="Sigmoid Equation"/><b> ----(i)</b><p>  
+<p style="text-align:center"><img src="../img/lg-tf-sigmoid.PNG" alt="Sigmoid Equation" width="300" height="50" /> ----(i)<p>  
   
 <p>To determine, how well we are learning to classify the training examples with binary labels we have to use cost function which can be minimise using some optimisation algorithm like gradient descent. Equation 2 shows the cost function that we will be minimising to learn the optimal weight vector.</p>
 
-  <p style="text-align:center"><img src="../img/lg-tf-cost-function.PNG" alt="Cost Function"/><b> ----(ii)</b></p>
+  <p style="text-align:center"><img src="../img/lg-tf-cost-function.PNG" alt="Cost Function"/> ----(ii)</p>
  
 <p>To get deeper an intuition for the selection of this cost function please consult following <a href="http://cs229.stanford.edu/notes/cs229-notes1.pdf ">resource</a>.</p>
 
@@ -36,26 +36,110 @@ published: true
 <p>Let’s get started with implementing logistic regression to predict anomalies. </p>
  
 <p>Load the required libraries and define some helper functions.</p>
-<script src="https://gist.github.com/aqibsaeed/f2c24516be800850a442c6d54ed1260f.js"></script>
+  
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+from numpy import genfromtxt
+from imblearn.over_sampling import SMOTE
+import tensorflow as tf
+%matplotlib inline
+
+def read_dataset(filePath,delimiter=','):
+    data = genfromtxt(filePath, delimiter=delimiter)
+    features, labels = np.array(data[:,0:-1], dtype=float), np.array(data[:,-1],dtype=int)
+    return features,labels
+
+def feature_normalize(features):
+    mu = np.mean(features,axis=0)
+    sigma = np.std(features,axis=0)
+    return (features - mu)/sigma
+
+def append_bias_reshape(features):
+    n_training_samples, n_dim  = features.shape[0], features.shape[1]
+    features = np.reshape(np.c_[np.ones(n_training_samples),features],[n_training_samples,n_dim + 1])
+    return features
+
+def one_hot_encode(labels):
+    n_labels = len(labels)
+    n_unique_labels = len(np.unique(labels))
+    one_hot_encode = np.zeros((n_labels,n_unique_labels))
+    one_hot_encode[np.arange(n_labels), labels] = 1
+    return one_hot_encode
+
+def plot_points(features,labels):
+    normal = np.where(labels == 0)
+    outliers = np.where(labels == 1)
+    fig = plt.figure(figsize=(10,8))
+    plt.plot(features[normal ,0],features[normal ,1],'bx')
+    plt.plot(features[outliers,0],features[outliers ,1],'ro')
+    plt.xlabel('Latency (ms)')
+    plt.ylabel('Throughput (mb/s)')
+    plt.show()</code></pre> 
+  
 
 <p>Load and visualize the original dataset.</p>
-<script src="https://gist.github.com/aqibsaeed/7dbf8edf229a92486b39b36bc782b16b.js"></script>
+  
+<pre><code>features,labels = read_dataset('data.csv')
+normalized_features = feature_normalize(features)
+plot_points(features,labels)</code></pre>
   
 <p style="text-align:center"><img src="../img/lg-tf-original-data.png" alt="Original data"/></p>
 
 <p>Apply SMOTE algorithm to generate 10% additional data for minority class and visualize it.</p>
-<script src="https://gist.github.com/aqibsaeed/a8a349176fa911008348666b2f023877.js"></script>
+  
+<pre><code>sm = SMOTE(ratio=0.1,k=5,kind='regular',random_state=10)
+features_res, labels_res = sm.fit_sample(normalized_features, labels)
+plot_points(features_res,labels_res)</code></pre>
   
 <p style="text-align:center"><img src="../img/lg-tf-smotted-data.png" alt="Smotted data"/></p>
 
 <p>Initalize required variables and split the data set into train and test set.</p>
-<script src="https://gist.github.com/aqibsaeed/609fb6456da5948ad7bdabb9377a5dd5.js"></script>
+  
+<pre><code>features = append_bias_reshape(features_res)
+one_hot_labels = one_hot_encode(labels_res)
 
-<p>Define sigmoid and cost function to optimize.</p>
-<script src="https://gist.github.com/aqibsaeed/6a4c6fc3aeb5f29e83d183f072e9843d.js"></script>
+n_dim = features.shape[1]
+rnd_indices = np.random.rand(len(features)) < 0.70
+
+train_x = features[rnd_indices]
+train_y = one_hot_labels[rnd_indices]
+test_x = features[~rnd_indices]
+test_y = one_hot_labels[~rnd_indices]
+
+learning_rate = 0.1
+training_epochs = 10
+
+X = tf.placeholder(tf.float32,[None,n_dim])
+Y = tf.placeholder(tf.float32,[None,2])
+W = tf.Variable(tf.ones([n_dim,2]))
+
+init = tf.initialize_all_variables()</code></pre>
+
+<p>Define sigmoid activation and cost function to optimize.</p>
+<pre><code>y_ = tf.nn.sigmoid(tf.matmul(X,W))
+cost_function = tf.reduce_mean(tf.reduce_sum((-Y * tf.log(y_)) - ((1 - Y) * tf.log(1 - y_)), 
+reduction_indices=[1]))
+optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost_function)</code></pre>
 
 <p>Training the classifier and visualize the cost.</p>
-<script src="https://gist.github.com/aqibsaeed/836cc5d071bf748730d9d1ca14b6d6d7.js"></script>
+<pre><code>cost_history = np.empty(shape=[1],dtype=float)
+with tf.Session() as sess:
+    sess.run(init)
+    for epoch in range(training_epochs):
+        sess.run(optimizer,feed_dict={X:train_x,Y:train_y})
+        cost_history = np.append(cost_history,sess.run(cost_function,feed_dict={X: train_x,Y: train_y}))
+    
+    y_pred = sess.run(y_ , feed_dict={X: test_x})
+    correct_prediction = tf.equal(tf.argmax(y_,1), tf.argmax(Y,1))
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+    print "Accuracy: ",(sess.run(accuracy, feed_dict={X: test_x, Y: test_y}))
+    
+    fig = plt.figure(figsize=(10,8))
+    plt.plot(cost_history)
+    plt.axis([0,training_epochs,0,np.max(cost_history)])
+    plt.xlabel('# Iterations')
+    plt.ylabel('Cost')
+    plt.show()</code></pre>
 
 <p>The resulting accruacy of the classifier is around 93%.</p>
 <p style="text-align:center"><img src="../img/lg-tf-cost.png" alt="Cost"/></p>
