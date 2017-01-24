@@ -9,6 +9,7 @@ published: true
 <script src="../js/prism.js"></script>
 <script src="../js/prism-linenumbers.js"></script>
 </div>
+
 <div  class="text-justify">
 <p>This blog discusses the implementation of Logistic Regression in TensorFlow to detect anomalies. Also, we will see how SMOTE (Synthetic Minority Over-sampling Technique) can be applied to generate additional data points for minority class.</p> 
 <h3>Logistic Regression</h3>
@@ -40,7 +41,7 @@ published: true
  
 <p>Load the required libraries and define some helper functions.</p>
   
-<pre><code>import matplotlib.pyplot as plt
+<pre><code class="language-python line-numbers">import matplotlib.pyplot as plt
 import numpy as np
 from numpy import genfromtxt
 from imblearn.over_sampling import SMOTE
@@ -82,7 +83,7 @@ def plot_points(features,labels):
 
 <p>Load and visualize the original dataset.</p>
   
-<pre><code>features,labels = read_dataset('data.csv')
+<pre><code class="language-python line-numbers">features,labels = read_dataset('data.csv')
 normalized_features = feature_normalize(features)
 plot_points(features,labels)</code></pre>
   
@@ -98,7 +99,7 @@ plot_points(features_res,labels_res)</code></pre>
 
 <p>Initalize required variables and split the data set into train and test set.</p>
   
-<pre><code>features = append_bias_reshape(features_res)
+<pre><code class="language-python line-numbers">features = append_bias_reshape(features_res)
 one_hot_labels = one_hot_encode(labels_res)
 
 n_dim = features.shape[1]
@@ -119,13 +120,13 @@ W = tf.Variable(tf.ones([n_dim,2]))
 init = tf.initialize_all_variables()</code></pre>
 
 <p>Define sigmoid activation and cost function to optimize.</p>
-<pre><code>y_ = tf.nn.sigmoid(tf.matmul(X,W))
+<pre><code class="language-python line-numbers">y_ = tf.nn.sigmoid(tf.matmul(X,W))
 cost_function = tf.reduce_mean(tf.reduce_sum((-Y * tf.log(y_)) - ((1 - Y) * tf.log(1 - y_)), 
 reduction_indices=[1]))
 optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost_function)</code></pre>
 
 <p>Training the classifier and visualize the cost.</p>
-<pre><code>cost_history = np.empty(shape=[1],dtype=float)
+<pre><code class="language-python line-numbers">cost_history = np.empty(shape=[1],dtype=float)
 with tf.Session() as sess:
     sess.run(init)
     for epoch in range(training_epochs):
