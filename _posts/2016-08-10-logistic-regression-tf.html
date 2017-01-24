@@ -60,7 +60,8 @@ def feature_normalize(features):
 
 def append_bias_reshape(features):
     n_training_samples, n_dim  = features.shape[0], features.shape[1]
-    features = np.reshape(np.c_[np.ones(n_training_samples),features],[n_training_samples,n_dim + 1])
+    features = np.reshape(np.c_[np.ones(n_training_samples),features],
+    [n_training_samples,n_dim + 1])
     return features
 
 def one_hot_encode(labels):
@@ -131,7 +132,8 @@ with tf.Session() as sess:
     sess.run(init)
     for epoch in range(training_epochs):
         sess.run(optimizer,feed_dict={X:train_x,Y:train_y})
-        cost_history = np.append(cost_history,sess.run(cost_function,feed_dict={X: train_x,Y: train_y}))
+        cost_history = np.append(cost_history,sess.run(cost_function,
+        feed_dict={X: train_x,Y: train_y}))
     
     y_pred = sess.run(y_ , feed_dict={X: test_x})
     correct_prediction = tf.equal(tf.argmax(y_,1), tf.argmax(Y,1))
