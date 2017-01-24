@@ -207,7 +207,7 @@ with tf.Session() as sess:
     
     y_pred = sess.run(tf.argmax(y_,1),feed_dict={X: ts_features})
     y_true = sess.run(tf.argmax(ts_labels,1))
-    print("Test accuracy: ",round(session.run(accuracy, feed_dict={X: ts_features,          		Y: ts_labels}),3))
+    print("Test accuracy: ",round(session.run(accuracy, feed_dict={X: ts_features,         Y: ts_labels}),3))
 
 fig = plt.figure(figsize=(10,8))
 plt.plot(cost_history)
