@@ -17,7 +17,7 @@ In this tutorial, we will implement anomaly detection algorithm (in Python) to d
 For training set, we will first learn the gaussian distribution of each feature for which mean and variance of features are required. Numpy, provides the method to calculate both mean and variance (covariance matrix) efficiently. Similarly, Scipy library provide method to estimate gaussian distribution, which is given by:
 </p>
   
-<p style="text-align:center"><img src="../img/g-eq.png" alt="Gaussian distribution equation" width="300" height="80"/></p>
+<p style="text-align:center"><img src="../img/g-eq.png" alt="Gaussian distribution equation" width="250" height="60"/></p>
 
 <p>The complete code (Python notebook) and dataset is available at the following link: <b><a href="https://github.com/aqibsaeed/Anomaly-Detection">Code and Dataset</a></b>. Five different methods are defined to perform functions defined above i.e. from reading dataset to calculating the mean and estimating gaussian etc. One method that needs explanation is <code>selectThresholdByCV</code>, it is used to find the optimal value for threshold (epsilon) that can be used to differentiate between normal and anomalous data points. For learning the optimal value of epsilon we will try different values in a range of learned probabilities on a cross validation set. F-score will be calculated by for predicted anomalies based on the ground truth data available. The epsilon value with highest f-score will be selected as threshold i.e. the probabilities that lie below this threshold will be considered anomalous.</p>  
   
