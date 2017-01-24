@@ -3,12 +3,10 @@ layout: post
 title: Logistic Regression in Tensorflow with SMOTE
 published: true
 ---
+<div><link href="../css/prism.css" rel="stylesheet" /> <link href="../css/prism-linenumbers.css" rel="stylesheet" /> <script src="../js/prism.js"></script> <script src="../js/prism-linenumbers.js"></script></div>
 <div  class="text-justify">
-  
 <p>This blog discusses the implementation of Logistic Regression in TensorFlow to detect anomalies. Also, we will see how SMOTE (Synthetic Minority Over-sampling Technique) can be applied to generate additional data points for minority class.</p> 
-  
 <h3>Logistic Regression</h3>
-  
 <p>In Linear Regression <a href="https://aqibsaeed.github.io/2016-07-07-TensorflowLR/">tutorial</a>, we predicted house prices i.e. continuous values. To achieve this, we multiplied the weight vector (W) with feature vector (X) to get the prediction (Y). In the classification problem, we want to predict discrete output (Y) or for probabilistic interpretation we want output value to be between 0 and 1. Logistic regression is a well know classification algorithm with a nice probabilistic interpretation that can be used to predict discrete values.</p>
 
 <p>We have seen in linear regression W<sup>T</sup>X results in real value output but to get the discrete output, we need to use some function which can squash the range of W<sup>T</sup>X between 0 and 1. One such squashing function is a sigmoid or logistic function, a graph of which is shown in Figure 1. It looks like a smooth S which increases slowly as it moves towards the origin, crosses the origin at 0.5 and then flattens out. 
