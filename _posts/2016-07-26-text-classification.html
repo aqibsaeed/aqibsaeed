@@ -3,6 +3,12 @@ layout: post
 title: Research paper categorization using machine learning and NLP
 published: true
 ---
+<div>
+<link href="../css/prism.css" rel="stylesheet" />
+<link href="../css/prism-linenumbers.css" rel="stylesheet" />
+<script src="../js/prism.js"></script>
+<script src="../js/prism-linenumbers.js"></script>
+</div>
 <div class="text-justify">
 <p>Text classification (a.k.a. text categorization) is one of the most prominent application of Machine Learning. It is used to automatically assign predefined categories (labels) to free-text documents. The purpose of text classification is to give conceptual organization to a large collection of documents. It has become more relevant with exponential growth of the data, with wide applicability in real world applications e.g. categorization of news stories by topics, products classification into multilevel categories, organization of emails into various groups (such as social, primary and promotions), indexing of patients data in healthcare sector from multiple aspects e.g. disease type, surgical procedure and medication given etc.</p>
   
@@ -13,6 +19,33 @@ published: true
 <p>Let’s import the required libraries, which we will use to process the text, performing feature selection, model training and evaluation. </p>
   
 <script src="https://gist.github.com/aqibsaeed/cf6be92cd7a68e39fa9b32f295b5e411.js"></script>
+  
+<pre><code class="language-python line-numbers">import pandas as pd 
+import sklearn
+import numpy as np
+import nltk
+import re
+
+from nltk.corpus import stopwords
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import LinearSVC
+
+from sklearn import tree
+from sklearn.decomposition import TruncatedSVD
+from sklearn.feature_selection import chi2
+
+from sklearn.preprocessing import Normalizer
+from sklearn.pipeline import make_pipeline
+
+from sklearn.feature_selection import SelectFromModel
+from sklearn.feature_selection import SelectKBest
+
+from sklearn.cross_validation import StratifiedKFold
+from sklearn.metrics import precision_recall_fscore_support</code></pre>  
+ 
 </div>
 
 <div class="text-justify">
@@ -21,15 +54,33 @@ published: true
 <p style="text-align:center"><img src="../img/tc-dataset-distribution.png" alt="Dataset distribution"/></p>
   
 <p>The <code>loadData</code> method will be used to read the dataset from a text file and return titles and conference names. Similarly, <code> preProcessing</code> method will take titles as a parameter and will perform text pre-processing steps. By iterating over titles it will convert the text into lowercase and remove the stop words (that are provided in the corpus of NLTK library). You can uncomment one line of code in this method if you wish to remove punctuation and numbers from the titles. Few research paper titles and corresponding conferences are shown in Figure 2.</p>
-<script src="https://gist.github.com/aqibsaeed/1b2747fdd2162b80bd734f28186a8bf0.js" ></script>
   
+<pre><code class="language-python line-numbers">def loadData(filePath="data.txt"):
+    data = pd.read_csv(filePath, header=0, delimiter="\t")
+    return data["Title"],data["Conference"]
+    
+    
+def preProcessing(titles):
+    num_titles = titles.size
+    clean_titles = []
+    stops = set(stopwords.words("english"))
+    for i in xrange( 0, num_titles):
+        #letters_only = re.sub("[^a-zA-Z]", " ", titles[i]) 
+        words = titles[i].lower().split()
+        words = [w.lower() for w in words if not w in stops]  
+        clean_titles.append(" ".join(words))
+    return clean_titles</code></pre>  
+
 <p style="text-align:center"><img src="../img/tc-dataset-sample.png" alt="Paper titles and conferences"/></p>
   
 <p>Machine learning algorithms require numeric feature vectors to learn the underlying representation of the dataset. For this purpose, we need to convert our text into some numeric form. There are a couple of different ways to do this. We will use Term frequency-inverse document frequency or TF-IDF. It is the measure of how important the term is, for a particular document in a corpus. If the term is frequent in the document and appears less frequently in the corpus, then the term is of high importance for the document. It is computed by the product of two terms as follows: the first computes the term frequency (tf), aka. A number of times a word appears in a document, divided by the total number of words in that document; the second term is the inverse document frequency (idf), computed as the logarithm of the number of the documents in the corpus divided by the number of documents where the specific term appears. Hence, terms in the document with a high tf-idf score occur frequently in the document and provide the most information about that specific document.</p>
   
 <p>The <code>getDTMByTFIDF</code> method takes two parameters pre-processed title and number of (top) maximum feature that we want to get from the corpus. If <code>None</code> is passed as <code>nfeatures</code>, the method will return all the terms. <code>TfidfVectorizer</code> takes several other parameters to learn more about this consult the <a href="http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html">documentation</a>. This method also returns the <code> tfIdf_vectorizer</code> object in addition to document term matrix. The vectorizer object can later be used to transform test set (unseen/new) titles during prediction. </p>
   
-<script src="https://gist.github.com/aqibsaeed/b0c958212a9848456c07d7b295984a8d.js"></script>
+<pre><code class="language-python line-numbers">def getDTMByTFIDF(titles,nfeatures):
+    tfIdf_vectorizer = TfidfVectorizer(max_features=nfeatures)
+    dtm = tfIdf_vectorizer.fit_transform(titles).toarray()
+    return dtm, tfIdf_vectorizer</code></pre>
   
 <p>The document term matrix (from Tf-Idf) is usually very high dimensional and sparse. It can create issues for machine learning algorithms during the learning phase. Therefore, it is recommended to reduce the dimensionality of the dataset by either feature selection or dimensionality reduction methods. The former selects important features from the original feature set whereas, later learns new features from the original set in some other dimension. We will apply Chi Square and Information Gain as feature selection methods and Latent Semantic Analysis as dimensionality reduction technique.</p>
   
@@ -39,11 +90,53 @@ published: true
   
 <p>LSA is an unsupervised statistical technique used for extracting and inferring relations of expected contextual usage of words in documents. It utilizes singular value decomposition (SVD) to reduce the high dimensionality of text data. It does so by keeping the first k largest singular values and omitting the rest. <code>featuresByLSA</code> method takes titles and number of components (features) that we want LSA to learn from original features. </p>
   
-<script src="https://gist.github.com/aqibsaeed/5f83ff0d74cf9ec48c63c680cf5d03e2.js"></script>
+<pre><code class="language-python line-numbers">def featuresByChiSq(features,labels,nFeature=5000):
+    chi2_model = SelectKBest(chi2,k=nFeature)
+    dtm = chi2_model.fit_transform(features,labels)
+    return dtm,chi2_model
+
+def featuresByInformationGain(features,labels):
+    treeCL = tree.DecisionTreeClassifier(criterion="entropy")
+    treeCL = treeCL.fit(features,labels)
+    transformed_features = SelectFromModel(treeCL,prefit=True).transform(features)
+    return transformed_features
+    
+def featuresByLSA(features,ncomponents=100):
+    svd = TruncatedSVD(n_components=ncomponents)
+    normalizer =  Normalizer(copy=False)
+    lsa = make_pipeline(svd, normalizer)
+    dtm_lsa = lsa.fit_transform(features)
+    return dtm_lsa</code></pre>
   
 <p>We will use three classification algorithms to categorize research papers. 1) Support vector machine with linear kernel 2) Random forest and 3) Multinomial Naïve Bayes. For evaluating/comparing how well the models are performing stratified k-fold cross validation will be used. It seeks to ensure that each fold is a good representative of a whole. Generally, this is used to evaluate the performance of supervised learning algorithms and aims to ensure, each class has (approximately) equal representation across each fold. Weighted average precision, recall and f-score will be calculated that can be used for final model selection. The <code>crossValidate</code> method will perform above-discussed steps of model training and evaluation. It takes document term matrix, class labels, classifier name and number of folds for cross validation and returns averaged precision, recall and f-score.</p>
   
-<script src="https://gist.github.com/aqibsaeed/35c7ccb39874c5f04a4afab567af8588.js"></script>
+<pre><code class="language-python line-numbers">def crossValidate(document_term_matrix,labels,classifier="SVM",nfold=10):
+    clf = None
+    precision = []
+    recall = []
+    fscore = []
+    
+    if classifier == "RF":
+        clf = RandomForestClassifier()
+    elif classifier == "NB":
+        clf = MultinomialNB()
+    elif classifier == "SVM":
+        clf = LinearSVC()
+    
+    skf = StratifiedKFold(labels, n_folds=nfold)
+
+    for train_index, test_index in skf:
+        X_train, X_test = document_term_matrix[train_index], document_term_matrix[test_index]
+        y_train, y_test = labels[train_index], labels[test_index]
+        model = clf.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+        p,r,f,s = precision_recall_fscore_support(y_test, y_pred, average='weighted')
+        precision.append(p)
+        recall.append(r)
+        fscore.append(f)
+        
+    return round(np.mean(precision),3),round(np.mean(recall),3),round(np.mean(fscore),3)</code></pre>
+
 </div>
 
 <div class="text-justify">
@@ -51,7 +144,16 @@ published: true
   
 <p style="text-align:center"><img src="../img/tc-ml-pipiline.png" alt="Machine learning pipeline"/></p>  
   
-<script src="https://gist.github.com/aqibsaeed/42507c5195c461c38993c2b196aa02cd.js"></script>
+<pre><code class="language-python line-numbers">titles, labels = loadData()
+processed_titles = preProcessing(titles)
+dtm,vect = getDTMByTFIDF(processed_titles,None)
+
+chisqDtm = featuresByChiSq(dtm,labels,2000)
+igDtm = featuresByInformationGain(dtm,labels)
+lsaDtm = featuresByLSA(dtm,100)
+
+precision, recall, fscore = crossValidate(chisqDtm,labels,"SVM",10)
+print precision, recall, f-score</code></pre>
   
 <p>Results achieved by executing above code are shown below in Table 1. Default hyper- parameters values are used for all the classifiers. I would recommend trying different text processing techniques, a number of features, optimize hyper parameter values and even use some different classification algorithm. </p>
   
