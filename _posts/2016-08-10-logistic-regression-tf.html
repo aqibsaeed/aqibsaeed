@@ -92,7 +92,7 @@ plot_points(features,labels)</code></pre>
 
 <p>Apply SMOTE algorithm to generate 10% additional data for minority class and visualize it.</p>
   
-<pre><code>sm = SMOTE(ratio=0.1,k=5,kind='regular',random_state=10)
+<pre><code class="language-python line-numbers">sm = SMOTE(ratio=0.1,k=5,kind='regular',random_state=10)
 features_res, labels_res = sm.fit_sample(normalized_features, labels)
 plot_points(features_res,labels_res)</code></pre>
   
