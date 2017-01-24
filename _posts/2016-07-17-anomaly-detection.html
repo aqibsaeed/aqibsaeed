@@ -5,24 +5,95 @@ published: true
 ---
 <div class="text-justify">
 <p>
-Anomaly detection is the problem of identifying data points that don't conform to expected (normal) behaviour. Unexpected data points are also known as outliers and exceptions etc. Anomaly detection has crucial significance in the wide variety of domains as it provides critical and actionable information. For example, an anomaly in MRI image scan could be an indication of the malignant tumor or anomalous reading from production plant sensor may indicate faulty component.</p>
+Anomaly detection is the problem of identifying data points that don't conform to expected (normal) behaviour. Unexpected data points are also known as outliers and exceptions etc. Anomaly detection has crucial significance in the wide variety of domains as it provides critical and actionable information. For example, an anomaly in MRI image scan could be an indication of the malignant tumour or anomalous reading from production plant sensor may indicate faulty component.</p>
   
 <p>
-Simply, anomaly detection is the task of defining a boundary around normal data points so that they can be distinguishable from outliers. But several different factors make this notion of defining normality very challenging. E.g. normal behaviour usually evolve in certain domains and the notion that is considered normal in the present could be changed in future. Moreover, defining the normal region which separates outliers from normal data points is not straightforward in itself.</p>
+Simply, anomaly detection is the task of defining a boundary around normal data points so that they can be distinguishable from outliers. But several different factors make this notion of defining normality very challenging. E.g. normal behaviour usually evolve in certain domains and the notion that is considered normal in the present could change in future. Moreover, defining the normal region which separates outliers from normal data points is not straightforward in itself.</p>
   
 <p>
-In this tutorial, we will implement anomaly detection algorithm (in Python) to detect outliers in computer servers. To keep things simple we will use two features 1) throughput in mb/s and 2) latency in ms of response for each server. Gaussian model will be used to learn an underlying pattern of the dataset with the hope that our features follow the gaussian distribution. After that, we will find data points with very low probabilities and hence can be considered outliers.</p>
-  
-<p>
-For training set, we will first learn the gaussian distribution of each feature for which mean and variance of features are required. Numpy, provides the method to calculate both mean and variance (covariance matrix) efficiently. Similarly, Scipy library provide method to estimate gaussian distribution, which is given by:
-</p>
-  
-<p style="text-align:center"><img src="../img/g-eq.png" alt="Gaussian distribution equation" width="250" height="60"/></p>
+In this tutorial, we will implement anomaly detection algorithm (in Python) to detect outliers in computer servers. To keep things simple we will use two features 1) throughput in mb/s and 2) latency in ms of response for each server. The Gaussian model will be used to learn an underlying pattern of the dataset with the hope that our features follow the gaussian distribution. After that, we will find data points with very low probabilities of being normal and hence can be considered outliers. For training set, we will first learn the gaussian distribution of each feature for which mean and variance of features are required. Numpy provides the method to calculate both mean and variance (covariance matrix) efficiently. Similarly, Scipy library provide method to estimate gaussian distribution.</p>
 
-<p>The complete code (Python notebook) and dataset is available at the following link: <b><a href="https://github.com/aqibsaeed/Anomaly-Detection">Code and Dataset</a></b>. Five different methods are defined to perform functions defined above i.e. from reading dataset to calculating the mean and estimating gaussian etc. One method that needs explanation is <code>selectThresholdByCV</code>, it is used to find the optimal value for threshold (epsilon) that can be used to differentiate between normal and anomalous data points. For learning the optimal value of epsilon we will try different values in a range of learned probabilities on a cross validation set. F-score will be calculated by for predicted anomalies based on the ground truth data available. The epsilon value with highest f-score will be selected as threshold i.e. the probabilities that lie below this threshold will be considered anomalous.</p>  
+<p>Let's get started! By first importing requried libraries and defining functions for reading data, mean normalizing features and estimating gaussian distribution.</p>
   
+<pre><code class="language-python line-numbers">import matplotlib.pyplot as plt
+import numpy as np
+%matplotlib inline
+
+from numpy import genfromtxt
+from scipy.stats import multivariate_normal
+from sklearn.metrics import f1_score</code></pre>
+  
+<pre><code>def read_dataset(filePath,delimiter=','):
+    return genfromtxt(filePath, delimiter=delimiter)
+
+def feature_normalize(dataset):
+    mu = np.mean(dataset,axis=0)
+    sigma = np.std(dataset,axis=0)
+    return (dataset - mu)/sigma
+
+def estimateGaussian(dataset):
+    mu = np.mean(dataset, axis=0)
+    sigma = np.cov(dataset.T)
+    return mu, sigma
+    
+def multivariateGaussian(dataset,mu,sigma):
+    p = multivariate_normal(mean=mu, cov=sigma)
+    return p.pdf(dataset)</code></pre>
+
+<p>Next, define a function to find the optimal value for threshold (epsilon) that can be used to differentiate between normal and anomalous data points. For learning the optimal value of epsilon we will try different values in a range of learned probabilities on a cross-validation set. The f-score will be calculated for predicted anomalies based on the ground truth data available. The epsilon value with highest f-score will be selected as threshold i.e. the probabilities that lie below the selected threshold will be considered anomalous.</p> 
+
+<pre><code class="language-python line-numbers">def selectThresholdByCV(probs,gt):
+    best_epsilon = 0
+    best_f1 = 0
+    f = 0
+    stepsize = (max(probs) - min(probs)) / 1000;
+    epsilons = np.arange(min(probs),max(probs),stepsize)
+    for epsilon in np.nditer(epsilons):
+        predictions = (probs < epsilon)
+        f = f1_score(gt, predictions, average = "binary")
+        if f > best_f1:
+            best_f1 = f
+            best_epsilon = epsilon
+    return best_f1, best_epsilon</code></pre>
 </div>
+  
 <div class="text-justify">
-We implemented a very simple anomaly detection algorithm. To gain more in-depth knowledge, please consult following resource: </p>
-<p><i>Chandola, Varun, Arindam Banerjee, and Vipin Kumar. "Anomaly detection: A survey." ACM computing surveys (CSUR) 41.3 (2009): 15.</i></p>
+<p>We have all the required pieces, next let's call above defined functions to find anomalies in the dataset. Also, as we are dealing with only two features here, plotting helps us visualize the anomalous data points.</p>
+
+<pre><code class="language-python line-numbers">tr_data = read_dataset('tr_server_data.csv') 
+cv_data = read_dataset('cv_server_data.csv') 
+gt_data = read_dataset('gt_server_data.csv')
+
+n_training_samples = tr_data.shape[0]
+n_dim = tr_data.shape[1]
+
+plt.figure()
+plt.xlabel("Latency (ms)")
+plt.ylabel("Throughput (mb/s)")
+plt.plot(tr_data[:,0],tr_data[:,1],"bx")
+plt.show()</code></pre>
+  
+<p style="text-align:center"><img src="../img/anomaly_detection_one.png" alt="Original Data"/></p>   
+  
+<pre><code class="language-python line-numbers">mu, sigma = estimateGaussian(tr_data)
+p = multivariateGaussian(tr_data,mu,sigma)
+
+p_cv = multivariateGaussian(cv_data,mu,sigma)
+fscore, ep = selectThresholdByCV(p_cv,gt_data)
+outliers = np.asarray(np.where(p < ep))
+
+plt.figure() 
+plt.xlabel("Latency (ms)") 
+plt.ylabel("Throughput (mb/s)") 
+plt.plot(tr_data[:,0],tr_data[:,1],"bx") plt.plot(tr_data[outliers,0],tr_data[outliers,1],"ro") 
+plt.show()</code></pre>
+
+<p style="text-align:center"><img src="../img/anomaly_detection_two.png" alt="Found Anomalies"/></p> 
+</div>
+
+<div class="text-justify"><p>We implemented a very simple anomaly detection algorithm. To gain more in-depth knowledge, please consult following resource:<i>Chandola, Varun, Arindam Banerjee, and Vipin Kumar. "Anomaly detection: A survey." ACM computing surveys (CSUR) 41.3 (2009): 15.</i></p>
+
+<p><i>The complete code (Python notebook) and the dataset is available at the following<b><a href="https://github.com/aqibsaeed/Anomaly-Detection">link</a></b>.</i></p>
+  
+<p><small>Last Updated: 24/1/2017</small></p>
 <div>
