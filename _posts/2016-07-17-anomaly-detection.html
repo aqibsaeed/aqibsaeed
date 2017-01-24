@@ -29,7 +29,7 @@ from numpy import genfromtxt
 from scipy.stats import multivariate_normal
 from sklearn.metrics import f1_score</code></pre>
   
-<pre><code>def read_dataset(filePath,delimiter=','):
+<pre><code class="language-python line-numbers">def read_dataset(filePath,delimiter=','):
     return genfromtxt(filePath, delimiter=delimiter)
 
 def feature_normalize(dataset):
