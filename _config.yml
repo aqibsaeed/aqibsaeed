@@ -38,17 +38,17 @@ navbar-links:
 author:
   name: Aaqib Saeed
   github: aqibsaeed    
-  twitter: aqibsaeedahmed   
-  linkedin: in/aqibsaeed 
+  twitter:  
+  linkedin: 
  
 # Select which links to show in the footer
 footer-links-active:
   rss: false
   facebook: false
   email: false
-  twitter: true
+  twitter: false
   github: true
-  linkedin: true
+  linkedin: false
   stackoverflow: false
 
 # How to display the link to the website in the footer
