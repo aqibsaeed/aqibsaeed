@@ -40,12 +40,13 @@ author:
   github: aqibsaeed    
   twitter:  
   linkedin: 
+  email: aqibsaeed@protonmail.com
  
 # Select which links to show in the footer
 footer-links-active:
   rss: false
   facebook: false
-  email: false
+  email: true
   twitter: false
   github: true
   linkedin: false
