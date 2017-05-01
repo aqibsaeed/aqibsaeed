@@ -57,7 +57,7 @@ f = tf.gfile.FastGFile("optimized_frozen_har.pb", "w")
 f.write(output_graph_def.SerializeToString())
 </code></pre>
 
-<p>Let's make a simple Android app to get accelerometer data and make predictions about user activities with the learned model. Before doing so, get Tensorflow libraries for Android from the following <a href="https://ci.tensorflow.org/view/Nightly/job/nightly-android/">link</a>. For the purpose of this tutorial, I used the libraries with artifact number 117. Now, create an empty app and copy libandroid_tensorflow_inference_java.jar, arm64-v8a, armeabi-v7a, x86, x86_64 files/folders in libs directory of the project. Also, copy the frozen optimized model into an asset directory of the project. The figure shows directory structure after copying all the required files.</p>
+<p>Let's make a simple Android app to get accelerometer data and make predictions about user activities with the learned model. Before doing so, get Tensorflow libraries for Android from the following <a href="https://ci.tensorflow.org/view/Nightly/job/nightly-android/">link</a>. For the purpose of this tutorial, I used the libraries with artifact number 117. Now, create an empty app and copy <i>libandroid_tensorflow_inference_java.jar</i>,<i>arm64-v8a</i>,<i>armeabi-v7a</i>,<i>x86</i>,<i>x86_64</i> files/folders in libs directory of the project. Also, copy the frozen optimized model into an asset directory of the project. The figure shows directory structure after copying all the required files.</p>
 <p style="text-align:center"><img src="../img/directory_structure.PNG" alt="Directory Structure"/></p> 
 
 <p>Afterwards, add following entry in build.gradle file to let build system know where files are located.</p>
