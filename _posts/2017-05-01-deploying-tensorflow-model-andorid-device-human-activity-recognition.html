@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(this, mAccelerometer , 
-		SensorManager.SENSOR_DELAY_FASTEST);
+			SensorManager.SENSOR_DELAY_FASTEST);
         activityInference = new ActivityInference(getApplicationContext());
     }
 
@@ -177,7 +177,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     protected void onResume() {
         super.onResume();
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+        mSensorManager.registerListener(this, mAccelerometer, 
+		SensorManager.SENSOR_DELAY_FASTEST);
     }
 
     @Override
