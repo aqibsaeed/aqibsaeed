@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Deploying Tensorflow model on Andorid device for Human Activity Recognition 
+title: Deploying Tensorflow model on Andorid device for Human Activity Recognition
 published: true
 ---
 <div>
@@ -10,13 +10,10 @@ published: true
 <script src="../js/prism-linenumbers.js"></script>
 </div>
 <div class="text-justify">
-<p>
-In this tutorial, we will learn how to deploy human activity recognition (HAR) model on Android device for real-time prediction. The majority of the code in this post is largely taken from <a href="https://omid.al/posts/2017-02-20-Tutorial-Build-Your-First-Tensorflow-Android-App.html">Omid Alemi's simply elegant tutorial named "Build Your First Tensorflow Android App"</a>. This post could not have been possible without that, so here I am building upon Omid's work and we should thank him for his contribution. If you have not seen the post on how to build a deep convolutional neural network for HAR, please follow this <a href="http://aqibsaeed.github.io/2016-11-04-human-activity-recognition-cnn/">link</a>. Here, details on how to freeze and export the model for use in Android app are discussed.
-</p>
+  
+<p>In this tutorial, we will learn how to deploy human activity recognition (HAR) model on Android device for real-time prediction. The majority of the code in this post is largely taken from <a href="https://omid.al/posts/2017-02-20-Tutorial-Build-Your-First-Tensorflow-Android-App.html">Omid Alemi's simply elegant tutorial named "Build Your First Tensorflow Android App"</a>. This post could not have been possible without that, so here I am building upon Omid's work and we should thank him for his contribution. If you have not seen the post on how to build a deep convolutional neural network for HAR, please follow this <a href="http://aqibsaeed.github.io/2016-11-04-human-activity-recognition-cnn/">link</a>. Here, details on how to freeze and export the model for use in Android app are discussed.</p>
 
-<p>
-We need to have frozen Tensorflow graph with learned weights that will be imported into an Android app for making predictions using accelerometer data. Before proceeding further make sure, the model input and output nodes have given valid names. Another thing to notice is that the input shape of CNN model is 1 x 90 x 3 (i.e. height, width and channels). However, from Android, we will feed vector of size 270 (i.e. 90 x 3) that we can reshape in Tensorflow model. For doing this, the input node of shape (None, 270) will be added on top of earlier input node as follows: 
-</p>
+<pWe need to have frozen Tensorflow graph with learned weights that will be imported into an Android app for making predictions using accelerometer data. Before proceeding further make sure, the model input and output nodes have given valid names. Another thing to notice is that the input shape of CNN model is 1 x 90 x 3 (i.e. height, width and channels). However, from Android, we will feed vector of size 270 (i.e. 90 x 3) that we can reshape in Tensorflow model. For doing this, the input node of shape (None, 270) will be added on top of earlier input node as follows:</p>
 
 <pre><code class="language-python line-numbers">X = tf.placeholder(tf.float32, shape=[None,input_width * num_channels], name="input")
 X_reshaped = tf.reshape(X,[-1,1,90,3]) 
@@ -60,14 +57,14 @@ f.write(output_graph_def.SerializeToString())
 <p>Let's make a simple Android app to get accelerometer data and make predictions about user activities with the learned model. Before doing so, get Tensorflow libraries for Android from the following <a href="https://ci.tensorflow.org/view/Nightly/job/nightly-android/">link</a>. For the purpose of this tutorial, I used the libraries with artifact number 117.</p> <p>We will now create an empty app and copy <i>libandroid_tensorflow_inference_java.jar</i>, <i>arm64-v8a</i>, <i>armeabi-v7a</i>, <i>x86</i> and <i>x86_64</i> files/folders in libs directory of the project. Also, copy the frozen optimized model into an asset directory of the project. The figure shows directory structure after copying all the required files.</p>
 <p style="text-align:center"><img src="../img/directory_structure.PNG" alt="Directory Structure"/></p> 
 
-<p>Afterwards, add following entry in build.gradle file to let build system know where files are located.</p>
+<p>Afterwards, add following entry in <code>build.gradle</code> file to let build system know where files are located.</p>
 <pre><code class="language-python line-numbers">sourceSets{
 	main {
 		jniLibs.srcDirs = ['libs']
 	}
 }</code></pre>
 
-<p>Now we create a class, which will use TensorflowInferenceInterface for feeding data to a model, running inference and getting back results.</p>
+<p>Now we create a class, which will use <code>TensorflowInferenceInterface</code> for feeding data to a model, running inference and getting back results.</p>
 
 <pre><code class="language-java line-numbers">import android.content.Context;
 import android.content.res.AssetManager;
@@ -114,7 +111,7 @@ public class ActivityInference {
 }
 </code></pre>
 
-<p>The rest of the code provided below is from MainActivity class. It is listening to accelerometer sensor and using getActivityProb method of ActivityInference class for getting a probability of each class to update the UI.</p>
+<p>The rest of the code provided below is from <code>MainActivity</code> class. It is listening to accelerometer sensor and using <code>getActivityProb</code> method of <code>ActivityInference</code> class for getting a probability of each class to update the UI.</p>
 
 <pre><code class="language-java line-numbers">import android.content.Context;
 import android.hardware.Sensor;
