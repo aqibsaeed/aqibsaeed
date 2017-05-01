@@ -25,21 +25,22 @@ X_reshaped = tf.reshape(X,[-1,1,90,3])
 <p>Now add following lines of code after model training steps to checkpoint and save the graph definition.</p>
 
 <pre><code class="language-python line-numbers">with tf.Session() as session:
-/** 
-------- Model training code goes here ------
-**/
-tf.train.write_graph(session.graph_def, '.', '../har.pbtxt')  
-saver.save(session,save_path = "../har.ckpt")
+	/** 
+	------- Model training code goes here ------
+	**/
+	tf.train.write_graph(session.graph_def, '.', '../har.pbtxt')  
+	saver.save(session,save_path = "../har.ckpt")
 </code></pre>
 
 <p>Next, the checkpointed model will be frozen and its optimized version can be saved as follows:</p>
 
 <pre><code class="language-python line-numbers">from tensorflow.python.tools import freeze_graph
 from tensorflow.python.tools import optimize_for_inference_lib
+
 freeze_graph.freeze_graph(input_graph = "../har.pbtxt",  input_saver = "",
-                          input_binary = False, input_checkpoint = "../har.ckpt", output_node_names = "y_",
-                          restore_op_name = "save/restore_all", filename_tensor_name = "save/Const:0",
-                          output_graph = "frozen_har.pb", clear_devices = True, initializer_nodes = "")
+             input_binary = False, input_checkpoint = "../har.ckpt", output_node_names = "y_",
+             restore_op_name = "save/restore_all", filename_tensor_name = "save/Const:0",
+             output_graph = "frozen_har.pb", clear_devices = True, initializer_nodes = "")
 
 input_graph_def = tf.GraphDef()
 with tf.gfile.Open(output_frozen_graph_name, "r") as f:
@@ -56,16 +57,7 @@ f = tf.gfile.FastGFile("optimized_frozen_har.pb", "w")
 f.write(output_graph_def.SerializeToString())
 </code></pre>
 
-<p>Let's make a simple Android app to get accelerometer data and make predictions about user activities with the learned model. Before doing so, get Tensorflow libraries for Android from the following <a href="https://ci.tensorflow.org/view/Nightly/job/nightly-android/">link</a>. For the purpose of this tutorial, I used the libraries with artifact number 117. Now, create an empty app and copy below-mentioned files/folders in libs directory of the project. Also, copy the frozen optimized model into an asset directory of the project. The figure shows directory structure after copying all the required files.</p>
-
-<ul>
-<li>libandroid_tensorflow_inference_java.jar</li>
-<li>arm64-v8a</li>
-<li>armeabi-v7a</li>
-<li>x86</li>
-<li>x86_64</li>
-</ul>
-
+<p>Let's make a simple Android app to get accelerometer data and make predictions about user activities with the learned model. Before doing so, get Tensorflow libraries for Android from the following <a href="https://ci.tensorflow.org/view/Nightly/job/nightly-android/">link</a>. For the purpose of this tutorial, I used the libraries with artifact number 117. Now, create an empty app and copy libandroid_tensorflow_inference_java.jar, arm64-v8a, armeabi-v7a, x86, x86_64 files/folders in libs directory of the project. Also, copy the frozen optimized model into an asset directory of the project. The figure shows directory structure after copying all the required files.</p>
 <p style="text-align:center"><img src="../img/directory_structure.PNG" alt="Directory Structure"/></p> 
 
 <p>Afterwards, add following entry in build.gradle file to let build system know where files are located.</p>
@@ -242,6 +234,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 <p>
 This is all that we need to use Tensorflow on Android to make predictions about user activities. A simple app UI will look something as shown in the screenshot below.</p>
 <p style="text-align:center"><img src="../img/har_app_screenshot.png" alt="HAR App Screenshot"/></p> 
-<p>The complete code of app is available at the following <a href="https://github.com/aqibsaeed/Human-Activity-Recognition-using-CNN/tree/master/ActivityRecognition">link</a>. If you have any question or face any issue, please comment below. 
+<p>The complete code of the app is available at the following <a href="https://github.com/aqibsaeed/Human-Activity-Recognition-using-CNN/tree/master/ActivityRecognition">link</a>. If you have any question or face any issue, please comment below. 
 </p>
 </div>
