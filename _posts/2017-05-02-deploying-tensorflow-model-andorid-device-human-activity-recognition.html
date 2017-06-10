@@ -50,7 +50,7 @@ output_graph_def = optimize_for_inference_lib.optimize_for_inference(
         ["y_"],
         tf.float32.as_datatype_enum)
 
-f = tf.gfile.FastGFile("optimized_frozen_har.pb", "w")
+f = tf.gfile.FastGFile("optimized_har.pb", "w")
 f.write(output_graph_def.SerializeToString())
 </code></pre>
 
