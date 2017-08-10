@@ -13,14 +13,14 @@ published: true
   
 <p>Recently, there has been a lot of work on automating machine learning, from a selection of appropriate algorithm to feature selection and hyperparameters tuning. Several tools are available (e.g. <i>AutoML</i> and <i>TPOT</i>), that can aid the user in the process of performing hundreds of experiments efficiently. Likewise, the deep neural network architecture is usually designed by experts; through a trial and error approach. Although, this approach resulted in state-of-the-art models in several domains but is very time-consuming. Lately, due to increase in available computing power, researchers are employing <a href="https://openreview.net/pdf?id=r1Ue8Hcxg">Reinforcement Learning</a> and <a href="http://nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf">Evolutionary Algorithms</a> to automatically search for optimal neural architectures.</p>
 
-<p>In this tutorial, we will see how to apply a Genetic Algorithm (GA) for finding an optimal window size and a number of units in Long Short-Term Memory (LSTM) based Recurrent Neural Network (RNN). For this purpose, we will train and evaluate models for time-series prediction problem using <a href="https://github.com/fchollet/keras">Keras</a>. For GA, a python package called <a href="https://github.com/DEAP/deap">DEAP</a> will be used. The main idea of the tutorial is to familiarize the reader about employing GA to find optimal settings automatically; hence, only two parameters will be explored. Moreover, reader’s knowledge (theoretical and applied) about RNNs is assumed. If you are unfamiliar with them, please consult following resources <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">[1]</a> and <a href="https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html">[2]</a>.</p>
+<p>In this tutorial, we will see how to apply a Genetic Algorithm (GA) for finding an optimal window size and a number of units in Long Short-Term Memory (LSTM) based Recurrent Neural Network (RNN). For this purpose, we will train and evaluate models for time-series prediction problem using <a href="https://github.com/fchollet/keras">Keras</a>. For GA, a python package called <a href="https://github.com/DEAP/deap">DEAP</a> will be used. The main idea of the tutorial is to familiarize the reader about employing GA, to find optimal settings automatically; hence, only two parameters will be explored. Moreover, reader’s knowledge (theoretical and applied) about RNNs is assumed. If you are unfamiliar with them, please consult following resources <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">[1]</a> and <a href="https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html">[2]</a>.</p>
 
 <p>The ipython netbook with the complete code is available at the following <a href="https://github.com/aqibsaeed/Genetic-Algorithm-RNN">link</a>.</p>
 	
 <h3>Genetic Algorithm</h3>
 <p>The genetic algorithm is a heuristic search and an optimization method inspired by the process of natural selection. They are widely used for finding a near optimal solution to optimization problems with large parameter space. The process of evolution of species (solutions in our case) is mimicked, by depending on biologically inspired components e.g. crossover. Furthermore, as it doesn’t take auxiliary information into account, (e.g. derivatives) it can be used for both discrete and continuous optimization. </p>
 
-<p>For using a GA, two preconditions have to be fulfilled, a) a solution representation or defining a chromosome and b) a fitness function to evaluate produced solutions.  In our case, a binary array is a genetic representation of a solution (see Figure 1) and model’s Root-Mean-Square Error (RMSE) on validation set will act a fitness value. Moreover, three basic operations that constitute a GA, are as follows:
+<p>For using a GA, two preconditions have to be fulfilled, a) a solution representation or defining a chromosome and b) a fitness function to evaluate produced solutions.  In our case, a binary array is a genetic representation of a solution (see <b>Figure 1</b>) and model’s Root-Mean-Square Error (RMSE) on validation set will act a fitness value. Moreover, three basic operations that constitute a GA, are as follows:
 <ol>
 <li><b>Selection</b>: It defines which solutions to preserve for further reproduction e.g. roulette wheel selection.</li>
 <li><b>Crossover</b>: It describes how new solutions are created from existing ones e.g. n-point crossover. </li>
@@ -30,14 +30,14 @@ published: true
 
 <p style="text-align:center"><img src="../img/genetic_representation.png" alt="Genetic representation of a solution"></p>
 
-<p>Occasionally, a technique called “Elitism” is also used, which preserve few best solutions from the population, and pass on to next generation. Figure 2 depicts a complete genetic algorithm, where, initial solutions (population) are randomly generated. Next, they are evaluated according to a fitness function and selection, crossover and mutation are performed afterwards. This process is repeated for a defined number of iteration (called generations in GA terminology). At the end, a solution with highest fitness score is selected as the best solution. To learn more, please check following resources <a href="http://www.flll.jku.at/div/teaching/Ga/GA-Notes.pdf">[3]</a> and <a href="http://www.cs.cmu.edu/~tom/mlbook.html">[4]</a>.</p>
+<p>Occasionally, a technique called “Elitism” is also used, which preserve few best solutions from the population, and pass on to next generation. <b>Figure 2</b> depicts a complete genetic algorithm, where, initial solutions (population) are randomly generated. Next, they are evaluated according to a fitness function and selection, crossover and mutation are performed afterwards. This process is repeated for a defined number of iteration (called generations in GA terminology). At the end, a solution with highest fitness score is selected as the best solution. To learn more, please check following resources <a href="http://www.flll.jku.at/div/teaching/Ga/GA-Notes.pdf">[3]</a> and <a href="http://www.cs.cmu.edu/~tom/mlbook.html">[4]</a>.</p>
 
 <p style="text-align:center"><img src="../img/ga.png" alt="Genetic Algorithm"></p>
 
 <h3>Implementation</h3>
 <p>Now, we have a fair understanding of what GA is and how it works. Next, let’s get to coding. </p>
 
-<p>We will use wind power forecast data, which is available at the following <a href="https://www.kaggle.com/c/GEF2012-wind-forecasting/data">link</a>. It consists of normalized (between zero and one) wind power measurements from seven wind farms. To keep things simple, we will use first wind farm data (column named wp1) but I encourage the reader to experiment and extend the code to forecast energy for all seven, wind farms.</p>
+<p>We will use wind power forecast data, which is available at the following <a href="https://www.kaggle.com/c/GEF2012-wind-forecasting/data">link</a>. It consists of normalized (between zero and one) wind power measurements from seven wind farms. To keep things simple, we will use first wind farm data (column named <b>wp1</b>) but I encourage the reader to experiment and extend the code to forecast energy for all seven, wind farms.</p>
 
 <p>Let’s import required packages, load the dataset and define two helper functions. The first method <code>prepare_dataset</code> will segment the data into chunks to create <i>X</i>, <i>Y</i> pair for model training. The <i>X</i> will the wind power values from the past (e.g. <i>1</i> to <i>t-1</i>) and <i>Y</i> will be future value at time <i>t</i>. The second method <code>train_evaluate</code> perform three things, 1) decoding GA solution to get window size and number of units. 2) Prepare the dataset using window size found by GA and divide into train and validation set, and 3) train LSTM model, calculate RMSE on validation set and return it as a fitness score of the current GA solution.</p>
 
@@ -120,7 +120,8 @@ creator.create('Individual', list , fitness = creator.FitnessMax)
 
 toolbox = base.Toolbox()
 toolbox.register('binary', bernoulli.rvs, 0.5)
-toolbox.register('individual', tools.initRepeat, creator.Individual, toolbox.binary, n = gene_length)
+toolbox.register('individual', tools.initRepeat, creator.Individual, toolbox.binary, 
+n = gene_length)
 toolbox.register('population', tools.initRepeat, list , toolbox.individual)
 
 toolbox.register('mate', tools.cxOrdered)
@@ -129,7 +130,8 @@ toolbox.register('select', tools.selRoulette)
 toolbox.register('evaluate', train_evaluate)
 
 population = toolbox.population(n = population_size)
-r = algorithms.eaSimple(population, toolbox, cxpb = 0.4, mutpb = 0.1, ngen = num_generations, verbose = False)
+r = algorithms.eaSimple(population, toolbox, cxpb = 0.4, mutpb = 0.1, 
+ngen = num_generations, verbose = False)
 </code></pre>
 
 <p>The K best-found solution via GA can be seen easily seen using <code>tools.selBest(population,k = 1)</code>. Afterward, the optimal configuration can be used to train on the complete training set and test it on holdout test set.</p>
@@ -147,7 +149,8 @@ for bi in best_individuals:
     print('\nWindow Size: ', best_window_size, ', Num of Units: ', best_num_units)
 </code></pre>
 
-<pre><code class="language-java line-numbers"># Train the model using best configuration on complete training set and make predictions on the test set
+<pre><code class="language-java line-numbers"># Train the model using best configuration on complete training set 
+#and make predictions on the test set
 X_train,y_train = prepare_dataset(train_data,best_window_size)
 X_test, y_test = prepare_dataset(test_data,best_window_size)
 
