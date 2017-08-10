@@ -28,18 +28,18 @@ published: true
 </ol>
 </p>
 
-<p><img src="genetic_representation.png" alt="Genetic representation of a solution"></p>
+<p><img src="../img/genetic_representation.png" alt="Genetic representation of a solution"></p>
 
 <p>Occasionally, a technique called “Elitism” is also used, which preserve few best solutions from the population, and pass on to next generation. Figure 2 depicts a complete genetic algorithm, where, initial solutions (population) are randomly generated. Next, they are evaluated according to a fitness function and selection, crossover and mutation are performed afterwards. This process is repeated for a defined number of iteration (called generations in GA terminology). At the end, a solution with highest fitness score is selected as the best solution. To learn more, please check following resources <a href="http://www.flll.jku.at/div/teaching/Ga/GA-Notes.pdf">[3]</a> and <a href="http://www.cs.cmu.edu/~tom/mlbook.html">[4]</a>.</p>
 
-<p><img src="ga.png" alt="Genetic Algorithm"></p>
+<p><img src="../img/ga.png" alt="Genetic Algorithm"></p>
 
 <h3>Implementation</h3>
 <p>Now, we have a fair understanding of what GA is and how it works. Next, let’s get to coding. </p>
 
 <p>We will use wind power forecast data, which is available at the following <a href="https://www.kaggle.com/c/GEF2012-wind-forecasting/data">link</a>. It consists of normalized (between zero and one) wind power measurements from seven wind farms. To keep things simple, we will use first wind farm data (column named wp1) but I encourage the reader to experiment and extend the code to forecast energy for all seven, wind farms.</p>
 
-<p>Let’s import required packages, load the dataset and define two helper functions. The first method <code>prepare_dataset</code> will segment the data into chunks to create <i>X</i>, <i>Y</i> pair for model training. The <i>X</i> will the wind power values from the past (e.g. <i>1</i> to <i>t-1</i>) and <i>Y</i> will be future value at time <i>t</i>. The second method <code>train_evaluate</code>perform three things, 1) decoding GA solution to get window size and number of units. 2) Prepare the dataset using window size found by GA and divide into train and validation set, and 3) train LSTM model, calculate RMSE on validation set and return it as a fitness score of the current GA solution.</p>
+<p>Let’s import required packages, load the dataset and define two helper functions. The first method <code>prepare_dataset</code> will segment the data into chunks to create <i>X</i>, <i>Y</i> pair for model training. The <i>X</i> will the wind power values from the past (e.g. <i>1</i> to <i>t-1</i>) and <i>Y</i> will be future value at time <i>t</i>. The second method <code>train_evaluate</code> perform three things, 1) decoding GA solution to get window size and number of units. 2) Prepare the dataset using window size found by GA and divide into train and validation set, and 3) train LSTM model, calculate RMSE on validation set and return it as a fitness score of the current GA solution.</p>
 
 <pre><code class="language-python line-numbers">import numpy as np
 import pandas as pd
