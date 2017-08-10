@@ -1,0 +1,176 @@
+---
+layout: post
+title: Optimizing Recurrent Neural Network using Genetic Algorithm
+published: false
+---
+<div>
+<link href="../css/prism.css" rel="stylesheet" />
+<link href="../css/prism-linenumbers.css" rel="stylesheet" />
+<script src="../js/prism.js"></script>
+<script src="../js/prism-linenumbers.js"></script>
+</div>
+<div class="text-justify">
+  
+<p>Recently, there has been a lot of work on automating machine learning, from a selection of appropriate algorithm to feature selection and hyperparameters tuning. Several tools are available (e.g. <i>AutoML</i> and <i>TPOT</i>), that can aid the user in the process of performing hundreds of experiments efficiently. Likewise, the deep neural network architecture is usually designed by experts; through a trial and error approach. Although, this approach resulted in state-of-the-art models in several domains but is very time-consuming. Lately, due to increase in available computing power, researchers are employing <a href="https://openreview.net/pdf?id=r1Ue8Hcxg">Reinforcement Learning</a> and <a href="http://nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf">Evolutionary Algorithms</a> to automatically search for optimal neural architectures.</p>
+
+<p>In this tutorial, we will see how to apply a Genetic Algorithm (GA) for finding an optimal window size and a number of units in Long Short-Term Memory (LSTM) based Recurrent Neural Network (RNN). For this purpose, we will train and evaluate models for time-series prediction problem using <a href="https://github.com/fchollet/keras">Keras</a>. For GA, a python package called <a href="https://github.com/DEAP/deap">DEAP</a> will be used. The main idea of the tutorial is to familiarize the reader about employing GA to find optimal settings automatically; hence, only two parameters will be explored. Moreover, reader’s knowledge (theoretical and applied) about RNNs is assumed. If you are unfamiliar with them, please consult following resources <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">[1]</a> and <a href="https://r2rt.com/recurrent-neural-networks-in-tensorflow-i.html">[2]</a>.</p>
+
+<h3>Genetic Algorithm</h3>
+<p>The genetic algorithm is a heuristic search and an optimization method inspired by the process of natural selection. They are widely used for finding a near optimal solution to optimization problems with large parameter space. The process of evolution of species (solutions in our case) is mimicked, by depending on biologically inspired components e.g. crossover. Furthermore, as it doesn’t take auxiliary information into account, (e.g. derivatives) it can be used for both discrete and continuous optimization. </p>
+
+<p>For using a GA, two preconditions have to be fulfilled, a) a solution representation or defining a chromosome and b) a fitness function to evaluate produced solutions.  In our case, a binary array is a genetic representation of a solution (see Figure 1) and model’s Root-Mean-Square Error (RMSE) on validation set will act a fitness value. Moreover, three basic operations that constitute a GA, are as follows:
+<ol>
+<li><b>Selection</b>: It defines which solutions to preserve for further reproduction e.g. roulette wheel selection.</li>
+<li><b>Crossover</b>: It describes how new solutions are created from existing ones e.g. n-point crossover. </li>
+<li><b>Mutation</b>: Its aim is to introduce diversity and novelty into the solution pool by means of randomly swapping or turning-off solution bits e.g. binary mutation.  </li>
+</ol>
+</p>
+
+<p><img src="genetic_representation.png" alt="Genetic representation of a solution"></p>
+
+<p>Occasionally, a technique called “Elitism” is also used, which preserve few best solutions from the population, and pass on to next generation. Figure 2 depicts a complete genetic algorithm, where, initial solutions (population) are randomly generated. Next, they are evaluated according to a fitness function and selection, crossover and mutation are performed afterwards. This process is repeated for a defined number of iteration (called generations in GA terminology). At the end, a solution with highest fitness score is selected as the best solution. To learn more, please check following resources <a href="http://www.flll.jku.at/div/teaching/Ga/GA-Notes.pdf">[3]</a> and <a href="http://www.cs.cmu.edu/~tom/mlbook.html">[4]</a>.</p>
+
+<p><img src="ga.png" alt="Genetic Algorithm"></p>
+
+<h3>Implementation</h3>
+<p>Now, we have a fair understanding of what GA is and how it works. Next, let’s get to coding. </p>
+
+<p>We will use wind power forecast data, which is available at the following <a href="https://www.kaggle.com/c/GEF2012-wind-forecasting/data">link</a>. It consists of normalized (between zero and one) wind power measurements from seven wind farms. To keep things simple, we will use first wind farm data (column named wp1) but I encourage the reader to experiment and extend the code to forecast energy for all seven, wind farms.</p>
+
+<p>Let’s import required packages, load the dataset and define two helper functions. The first method <code>prepare_dataset</code> will segment the data into chunks to create <i>X</i>, <i>Y</i> pair for model training. The <i>X</i> will the wind power values from the past (e.g. <i>1</i> to <i>t-1</i>) and <i>Y</i> will be future value at time <i>t</i>. The second method <code>train_evaluate</code>perform three things, 1) decoding GA solution to get window size and number of units. 2) Prepare the dataset using window size found by GA and divide into train and validation set, and 3) train LSTM model, calculate RMSE on validation set and return it as a fitness score of the current GA solution.</p>
+
+<pre><code class="language-python line-numbers">import numpy as np
+import pandas as pd
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split as split
+
+from keras.layers import LSTM, Input, Dense
+from keras.models import Model
+
+from deap import base, creator, tools, algorithms
+from scipy.stats import bernoulli
+from bitstring import BitArray
+
+np.random.seed(1120)
+</code></pre>
+
+<pre><code class="language-python line-numbers">data = pd.read_csv('train.csv')
+data = np.reshape(np.array(data['wp1']),(len(data['wp1']),1))
+
+# Use first 17,257 points as training/validation and rest of the 1500 points as test set.
+train_data = data[0:17257]
+test_data = data[17257:]
+</code></pre>
+
+
+<pre><code class="language-python line-numbers">def prepare_dataset(data, window_size):
+    X, Y = np.empty((0,window_size)), np.empty((0))
+    for i in range(len(data)-window_size-1):
+        X = np.vstack([X,data[i:(i + window_size),0]])
+        Y = np.append(Y,data[i + window_size,0])   
+    X = np.reshape(X,(len(X),window_size,1))
+    Y = np.reshape(Y,(len(Y),1))
+    return X, Y
+
+def train_evaluate(ga_individual_solution):   
+    # Decode GA solution to integer for window_size and num_units
+    window_size_bits = BitArray(ga_individual_solution[0:6])
+    num_units_bits = BitArray(ga_individual_solution[6:]) 
+    window_size = window_size_bits.uint
+    num_units = num_units_bits.uint
+    print('\nWindow Size: ', window_size, ', Num of Units: ', num_units)
+    
+    # Return fitness score of 100 if window_size or num_unit is zero
+    if window_size == 0 or num_units == 0:
+        return 100, 
+    
+    # Segment the train_data based on new window_size; split into train and validation (80/20)
+    X,Y = prepare_dataset(train_data,window_size)
+    X_train, X_val, y_train, y_val = split(X, Y, test_size = 0.20, random_state = 1120)
+    
+    # Train LSTM model and predict on validation set
+    inputs = Input(shape=(window_size,1))
+    x = LSTM(num_units, input_shape=(window_size,1))(inputs)
+    predictions = Dense(1, activation='linear')(x)
+    model = Model(inputs=inputs, outputs=predictions)
+    model.compile(optimizer='adam',loss='mean_squared_error')
+    model.fit(X_train, y_train, epochs=5, batch_size=10,shuffle=True)
+    y_pred = model.predict(X_val)
+    
+    # Calculate the RMSE score as fitness score for GA
+    rmse = np.sqrt(mean_squared_error(y_val, y_pred))
+    print('Validation RMSE: ', rmse,'\n')
+    
+    return rmse,
+</code></pre>
+
+<p>Next, use DEAP package to define things to run GA. We will use a binary representation for the solution of length ten. It will be randomly initialized using Bernoulli distribution. Likewise, ordered crossover, shuffle mutation and roulette wheel selection is used. The GA parameter values are initialized arbitrarily; I will suggest you, to play around with different settings.</p> 
+
+
+<pre><code class="language-java line-numbers">population_size = 4
+num_generations = 4
+gene_length = 10
+
+# As we are trying to minimize the RMSE score, that's why using -1.0. 
+# In case, when you want to maximize accuracy for instance, use 1.0
+creator.create('FitnessMax', base.Fitness, weights = (-1.0,))
+creator.create('Individual', list , fitness = creator.FitnessMax)
+
+toolbox = base.Toolbox()
+toolbox.register('binary', bernoulli.rvs, 0.5)
+toolbox.register('individual', tools.initRepeat, creator.Individual, toolbox.binary, n = gene_length)
+toolbox.register('population', tools.initRepeat, list , toolbox.individual)
+
+toolbox.register('mate', tools.cxOrdered)
+toolbox.register('mutate', tools.mutShuffleIndexes, indpb = 0.6)
+toolbox.register('select', tools.selRoulette)
+toolbox.register('evaluate', train_evaluate)
+
+population = toolbox.population(n = population_size)
+r = algorithms.eaSimple(population, toolbox, cxpb = 0.4, mutpb = 0.1, ngen = num_generations, verbose = False)
+</code></pre>
+
+<p>The K best-found solution via GA can be seen easily seen using <code>tools.selBest(population,k = 1)</code>. Afterward, the optimal configuration can be used to train on the complete training set and test it on holdout test set.</p>
+
+<pre><code class="language-java line-numbers"># Print top N solutions - (1st only, for now)
+best_individuals = tools.selBest(population,k = 1)
+best_window_size = None
+best_num_units = None
+
+for bi in best_individuals:
+    window_size_bits = BitArray(bi[0:6])
+    num_units_bits = BitArray(bi[6:]) 
+    best_window_size = window_size_bits.uint
+    best_num_units = num_units_bits.uint
+    print('\nWindow Size: ', best_window_size, ', Num of Units: ', best_num_units)
+</code></pre>
+
+<pre><code class="language-java line-numbers"># Train the model using best configuration on complete training set and make predictions on the test set
+X_train,y_train = prepare_dataset(train_data,best_window_size)
+X_test, y_test = prepare_dataset(test_data,best_window_size)
+
+inputs = Input(shape=(best_window_size,1))
+x = LSTM(best_num_units, input_shape=(best_window_size,1))(inputs)
+predictions = Dense(1, activation='linear')(x)
+model = Model(inputs = inputs, outputs = predictions)
+model.compile(optimizer='adam',loss='mean_squared_error')
+model.fit(X_train, y_train, epochs=5, batch_size=10,shuffle=True)
+y_pred = model.predict(X_test)
+
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+print('Test RMSE: ', rmse)
+</code></pre>
+	
+<p>In this tutorial, we saw how to employ GA to automatically find optimal window size (or lookback) and a number of units to use in RNN. For further learning, I would suggest you, to experiment with different GA parameter configurations, extend genetic representation to include more parameters to explore and share your findings and questions below in the comment section below. </p>
+
+<h3>References:</h3>
+<p>
+<ol>
+<li>Understanding LSTM Networks, by Christopher Olah</li>
+<li>Recurrent Neural Networks in Tensorflow I, by R2RT</li>
+<li>Genetic Algorithms: Theory and Applications, by Ulrich Bodenhofer</li>
+<li>Chapter 9, Genetic Algorithms of Machine Learning book, by Tom M. Mitchell </li>
+</ol>
+</p>
+
+</div>
