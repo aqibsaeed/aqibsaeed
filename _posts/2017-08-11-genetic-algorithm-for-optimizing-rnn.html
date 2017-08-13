@@ -109,7 +109,7 @@ def train_evaluate(ga_individual_solution):
 <p>Next, use DEAP package to define things to run GA. We will use a binary representation for the solution of length ten. It will be randomly initialized using Bernoulli distribution. Likewise, ordered crossover, shuffle mutation and roulette wheel selection is used. The GA parameter values are initialized arbitrarily; I will suggest you, to play around with different settings.</p> 
 
 
-<pre><code class="language-java line-numbers">population_size = 4
+<pre><code class="language-python line-numbers">population_size = 4
 num_generations = 4
 gene_length = 10
 
@@ -136,7 +136,7 @@ ngen = num_generations, verbose = False)
 
 <p>The K best-found solution via GA can be seen easily seen using <code>tools.selBest(population,k = 1)</code>. Afterward, the optimal configuration can be used to train on the complete training set and test it on holdout test set.</p>
 
-<pre><code class="language-java line-numbers"># Print top N solutions - (1st only, for now)
+<pre><code class="language-python line-numbers"># Print top N solutions - (1st only, for now)
 best_individuals = tools.selBest(population,k = 1)
 best_window_size = None
 best_num_units = None
@@ -149,7 +149,7 @@ for bi in best_individuals:
     print('\nWindow Size: ', best_window_size, ', Num of Units: ', best_num_units)
 </code></pre>
 
-<pre><code class="language-java line-numbers"># Train the model using best configuration on complete training set 
+<pre><code class="language-python line-numbers"># Train the model using best configuration on complete training set 
 #and make predictions on the test set
 X_train,y_train = prepare_dataset(train_data,best_window_size)
 X_test, y_test = prepare_dataset(test_data,best_window_size)
