@@ -80,7 +80,7 @@ dataset['z-axis'] = feature_normalize(dataset['z-axis'])</code></pre>
 <pre><code class="language-python line-numbers">def windows(data, size):
     start = 0
     while start < data.count():
-        yield start, start + size
+        yield int(start), int(start + size)
         start += (size / 2)
         
 def segment_signal(data,window_size = 90):
