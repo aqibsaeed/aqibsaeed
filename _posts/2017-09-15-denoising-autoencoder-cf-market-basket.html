@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Collaborative Filtering with Denoising Autoencoder on Market Basket Data
-published: false
+published: true
 ---
 <div>
 <link href="../css/prism.css" rel="stylesheet" />
@@ -68,11 +68,10 @@ validation_x = train_x[~train_validation_split]
 train_x = train_x[train_validation_split]
 </code></pre>
 
-<p style="text-align:center"><img src="../img/mb_raw_data.PNG" alt="Raw data representation"><br/>
-Figure 1: Raw market baset data</p>
+<p style="text-align:center"><img src="../img/mb_raw_data.PNG" alt="Raw data representation"><br/>Figure 1: Raw market baset data</p>
 
-<p style="text-align:center"><img src="../img/mb_top_items_count.png" alt="Most frequent items in dataset"></p>
-
+<p style="text-align:center"><img src="../img/mb_top_items_count.png" alt="Most frequent items in dataset"><br/>Figure 2: Most frequent items in dataset</p>
+  
 <p>The autoencoder model learns to approximately reconstruct its own input. While doing so, it learns a salient representation of the data. Hence, it is also used for dimensionality reduction purposes. The model consists of two components, an encoder, and a decoder. The encoder maps the input R<sup>n</sup> --> R<sup>d</sup> and decoder reproduce the input from the reduced dimensions i.e. mapping R<sup>d</sup> --> R<sup>n</sup>. The noise in the input is usually introduced in the training phase (e.g. by means of <i>Dropout</i>) to avoid learning an identity function; hence get the name of denoising autoencoder. In our case, during model training, a noisy or corrupted basket with some items missing will be used as input. At test time, the one-hot encoded basket items will be feed into the model to get item predictions. Then from the output, we will have to select items with probabilities greater than some threshold value (for now, if <i>p >= 0.1</i> then <i>1</i> else <i>0</i>), to convert back into one-hot encoded vector. Finally, items with one in the binary vector can be recommended to the user.</p>
 	
 <p>Now let us define a <i>four</i> layers denoising autoencoder model (i.e. <i>4</i> layers in encoder and <i>4</i> layers in the decoder). The <i>soft sign</i> activation function will be used in the first <i>three</i> layers of encoder and decoder, while <i>sigmoid</i> is used in the <i>fourth</i>. The binary cross entropy is used as a loss function that will be minimized using a variant of stochastic gradient descent, generally known as <i>Adam</i>. The model architecture is illustrated in <i>Figure 2</i>, it can be seen that the input dimensionality is <i>169</i> (i.e. number of unique items in the dataset). Likewise, the number of neurons in <i>first</i>, <i>second</i>, <i>third</i> and <i>fourth</i> layers are <i>128</i>, <i>64</i>, <i>32</i> and <i>16</i> respectively. The dropout is introduced at the input layer with probability of <i>0.6</i> (i.e. dropping <i>40%</i> of the inputs randomly). Moreover, the weights of the encoder are regularized using l2-regularization with rate of <i>0.00001</i>.</p>
