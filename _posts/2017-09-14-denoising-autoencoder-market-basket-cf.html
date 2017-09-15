@@ -59,6 +59,19 @@ def get_items_from_ohe(ohe,unique_items):
 <pre><code class="language-python line-numbers">unique_items = get_unique_items(data)
 onehot_items = np.array(get_onehot_items(data, unique_items))	
 </code></pre>
+  
+ <pre><code class="language-python line-numbers">n = 10
+item_counts = (onehot_items != 0).sum(0)
+items_max_args = item_counts.argsort()[-n:][::-1]
+ic = pd.DataFrame({"Items":unique_items[items_max_args], "Frequency":item_counts[items_max_args]})
+
+fig = plt.figure(figsize = (16,8))
+sns.barplot(x="Items", y="Frequency", data=ic, palette=sns.color_palette("Set2", 10))
+plt.xlabel("Items")
+plt.ylabel("Frequency")
+plt.title(str(n) + " Most frequent items in the dataset")
+plt.show()
+</code></pre>
 
 <pre><code class="language-python line-numbers">train_test_split = np.random.rand(len(onehot_items)) < 0.80
 train_x = onehot_items[train_test_split]
@@ -159,8 +172,10 @@ encoded = encoder(X_drop)
 decoded = decoder(encoded) 
 
 regularizer = tf.contrib.layers.l2_regularizer(l2_reg_rate)
-reg_loss = regularizer(e_weights_h1) + regularizer(e_weights_h2) + regularizer(e_weights_h3) + regularizer(e_weights_h4) 
-cost_function = -tf.reduce_mean(((X * tf.log(decoded)) + ((1 - X) * tf.log(1 - decoded)))) + reg_loss
+reg_loss = regularizer(e_weights_h1) + regularizer(e_weights_h2) \
++ regularizer(e_weights_h3) + regularizer(e_weights_h4) 
+cost_function = -tf.reduce_mean(((X * tf.log(decoded)) \
++ ((1 - X) * tf.log(1 - decoded)))) + reg_loss
 optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost_function)
 </code></pre>
 
@@ -173,7 +188,8 @@ optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost_function)
         for b in range(total_batches):
             offset = (b * batch_size) % (train_x.shape[0] - batch_size)
             batch_x = train_x[offset:(offset + batch_size), :] 
-            _, c = session.run([optimizer, cost_function],feed_dict={X: batch_x, is_training: True})
+            _, c = session.run([optimizer, cost_function],feed_dict={X: batch_x, \
+            is_training: True})
     
         tr_c = session.run(cost_function,feed_dict={X: train_x, is_training: False})
         val_c = session.run(cost_function,feed_dict={X: validation_x, is_training: False})
@@ -194,6 +210,10 @@ optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost_function)
     item_preds = session.run(decoded,feed_dict={X: test_x.reshape(-1,169), is_training: False})
     item_preds[item_preds >= 0.1] = 1
     item_preds[item_preds < 0.1] = 0
+    
+    i = 60
+    print("Items in basket: ", get_items_from_ohe(test_x[i],unique_items))
+    print("Recommended item(s): ",get_items_from_ohe(item_preds[i],unique_items))
 </code></pre>
 
 <p>Some of the recommendation on test set made by this model are provided below:</p>
@@ -205,15 +225,11 @@ soda, tropical fruit, whole milk, yogurt </p>
 <p><b>Items in basket:</b> napkins, sausage, white wine <br/>
 <b>Recommended items:</b> other vegetables, rolls/buns, soda, whole milk, yogurt</p>
 
-<p><b>Items in basket:</b> abrasive cleaner, candy, chicken, cleaner, root vegetables, sausage, 
-					tropical fruit, whole milk, yogurt <br/>
-<b>Recommended items:</b>  beef, bottled beer, bottled water, brown bread, butter, canned beer,
-citrus fruit, coffee, curd, domestic eggs, frankfurter, 
+<p><b>Items in basket:</b> abrasive cleaner, candy, chicken, cleaner, root vegetables, sausage, tropical fruit, whole milk, yogurt <br/>
+<b>Recommended items:</b>  beef, bottled beer, bottled water, brown bread, butter, canned beer,citrus fruit, coffee, curd, domestic eggs, frankfurter, 
 fruit/vegetable juice, margarine, newspapers, other vegetables, pastry, 
 pip fruit, pork, rolls/buns, root vegetables, sausage, shopping bags, 
 soda, tropical fruit, whipped/sour cream, whole milk, yogurt</p>	
-					
-<p></p>
 
 <p><i>If you have any question or suggestion about this tutorial or proposal for future, blog posts; please comment below. The ipython notebook with complete code and dataset is accessible from the following <a href="https://github.com/aqibsaeed/CF-with-DAE-on-Market-Basket-Data">link</a>.</i></p>
 </div>
