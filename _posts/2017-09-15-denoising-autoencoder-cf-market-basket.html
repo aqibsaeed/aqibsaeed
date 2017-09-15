@@ -68,9 +68,9 @@ validation_x = train_x[~train_validation_split]
 train_x = train_x[train_validation_split]
 </code></pre>
 
-<p style="text-align:center"><img src="../img/mb_raw_data.PNG" alt="Raw data representation"><br/>Figure 1: Raw market baset data</p>
+<p style="text-align:center"><img src="../img/mb_raw_data.PNG" alt="Raw data representation"></p>
 
-<p style="text-align:center"><img src="../img/mb_top_items_count.png" alt="Most frequent items in dataset"><br/>Figure 2: Most frequent items in dataset</p>
+<p style="text-align:center"><img src="../img/mb_top_items_count.png" alt="Most frequent items in dataset"></p>
   
 <p>The autoencoder model learns to approximately reconstruct its own input. While doing so, it learns a salient representation of the data. Hence, it is also used for dimensionality reduction purposes. The model consists of two components, an encoder, and a decoder. The encoder maps the input R<sup>n</sup> --> R<sup>d</sup> and decoder reproduce the input from the reduced dimensions i.e. mapping R<sup>d</sup> --> R<sup>n</sup>. The noise in the input is usually introduced in the training phase (e.g. by means of <i>Dropout</i>) to avoid learning an identity function; hence get the name of denoising autoencoder. In our case, during model training, a noisy or corrupted basket with some items missing will be used as input. At test time, the one-hot encoded basket items will be feed into the model to get item predictions. Then from the output, we will have to select items with probabilities greater than some threshold value (for now, if <i>p >= 0.1</i> then <i>1</i> else <i>0</i>), to convert back into one-hot encoded vector. Finally, items with one in the binary vector can be recommended to the user.</p>
 	
