@@ -183,7 +183,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</code></pre>
 <p>We have all the required pieces for CNN. Next, let’s write code for training the model. The code provided below, will train the CNN model using a batch size of 10 for 5 training epochs. At each epoch, we will print out the model’s loss and accuracy on the training set. At the end of training, the model will classify the testing set instances and will print out achieved accuracy.</p>
 
 <pre><code class="language-python line-numbers">with tf.Session() as session:
-    tf.initialize_all_variables().run()
+    tf.global_variables_initializer().run()
     for epoch in range(training_epochs):
         cost_history = np.empty(shape=[1],dtype=float)
         for b in range(total_batchs):    
