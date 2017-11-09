@@ -14,7 +14,7 @@ published: true
 
 <p><i>The ipython notebook with the complete code and dataset is available at the following <a href="https://github.com/aqibsaeed/CF-with-DAE-on-Market-Basket-Data">link</a>.</i></p>
   
-<p>In this tutorial, we will apply denoising autoencoder on market basket data for collaborative filtering. The learned model then will be able to recommend similar items to users, based on the ones in their baskets. The groceries dataset is used in the tutorial; it consists of <i>9,835</i> transactions (or baskets) of the items purchased together. We will divide the dataset into train, test, and validation. The <i>Figure 1</i> depicts the raw dataset; we need to process it to convert in a format suitable for model input. For doing so, each transaction will be represented as a binary vector, where one indicates the item is in the basket and zero otherwise. Let us first read the dataset and define few helper functions, to find unique items, to convert them into one-hot encoded representation and convert back into items from the binary vector. Moreover, the <i>Figure 2</i>, provides <i>ten</i> most frequent items in the dataset.</p>
+<p>In this tutorial, we will apply denoising autoencoder on market basket data for collaborative filtering. The learned model then will be able to recommend similar items to users, based on the ones in their baskets. The groceries dataset is used in the tutorial; it consists of <i>9,835</i> transactions (or baskets) of the items purchased together. We will divide the dataset into train, test, and validation. We need to process the raw transactions data to convert in a format suitable for model input. For doing so, each transaction will be represented as a binary vector, where one indicates the item is in the basket and zero otherwise. Let us first read the dataset and define few helper functions, to find unique items, to convert them into one-hot encoded representation and convert back into items from the binary vector. Moreover, the <i>Figure 1</i>, provides <i>ten</i> most frequent items in the dataset.</p>
 
 <pre><code class="language-python line-numbers">import numpy as np
 import pandas as pd
@@ -74,9 +74,7 @@ plt.title(str(n) + " Most frequent items in the dataset")
 plt.show()
 </code></pre>
 
-<p style="text-align:center"><img src="../img/mb_raw_data.PNG" alt="Raw data representation"><br/>Figure 1: Raw market baset data</p>
-
-<p style="text-align:center"><img src="../img/mb_top_items_count.png" alt="Most frequent items in dataset"><br/>Figure 2: Most frequent items in dataset</p>
+<p style="text-align:center"><img src="../img/mb_top_items_count.png" alt="Most frequent items in dataset"><br/>Figure 1: Most frequent items in dataset</p>
   
 <pre><code class="language-python line-numbers">train_test_split = np.random.rand(len(onehot_items)) < 0.80
 train_x = onehot_items[train_test_split]
@@ -91,7 +89,7 @@ train_x = train_x[train_validation_split]
 	
 <p>Now let us define a <i>four</i> layers denoising autoencoder model (i.e. <i>4</i> layers in encoder and <i>4</i> layers in the decoder). The <i>soft sign</i> activation function will be used in the first <i>three</i> layers of encoder and decoder, while <i>sigmoid</i> is used in the <i>fourth</i>. The binary cross entropy is used as a loss function that will be minimized using a variant of stochastic gradient descent, generally known as <i>Adam</i>. The model architecture is illustrated in <i>Figure 2</i>, it can be seen that the input dimensionality is <i>169</i> (i.e. number of unique items in the dataset). Likewise, the number of neurons in <i>first</i>, <i>second</i>, <i>third</i> and <i>fourth</i> layers are <i>128</i>, <i>64</i>, <i>32</i> and <i>16</i> respectively. The dropout is introduced at the input layer with probability of <i>0.6</i> (i.e. dropping <i>40%</i> of the inputs randomly). Moreover, the weights of the encoder are regularized using l2-regularization with rate of <i>0.00001</i>.</p>
 
-<p style="text-align:center"><img src="../img/mb_dae.png" alt="Denoising Model Architecture"><br/>Figure 3: Denoising Model Architecture</p>
+<p style="text-align:center"><img src="../img/mb_dae.png" alt="Denoising Model Architecture"><br/>Figure 2: Denoising Model Architecture</p>
 
 <pre><code class="language-python line-numbers">def weight_variable(weight_name, weight_shape):
     return tf.get_variable(name = "weight_" + weight_name,shape = weight_shape, 
