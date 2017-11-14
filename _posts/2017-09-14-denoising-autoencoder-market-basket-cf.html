@@ -14,7 +14,7 @@ published: true
 
 <p><i>The ipython notebook with the complete code and dataset is available at the following <a href="https://github.com/aqibsaeed/CF-with-DAE-on-Market-Basket-Data">link</a>.</i></p>
   
-<p>In this tutorial, we will apply denoising autoencoder on market basket data for collaborative filtering. The learned model then will be able to recommend similar items to users, based on the ones in their baskets. The groceries dataset is used in the tutorial; it consists of <i>9,835</i> transactions (or baskets) of the items purchased together. We will divide the dataset into train, test, and validation. We need to process the raw transactions data to convert in a format suitable for model input. For doing so, each transaction will be represented as a binary vector, where one indicates the item is in the basket and zero otherwise. Let us first read the dataset and define few helper functions, to find unique items, to convert them into one-hot encoded representation and convert back into items from the binary vector. Moreover, the <i>Figure 1</i>, provides <i>ten</i> most frequent items in the dataset.</p>
+<p>In this tutorial, we will apply denoising autoencoder on market basket data for collaborative filtering <a href="https://arxiv.org/abs/1708.04312">[1]</a>. The learned model then will be able to recommend similar items to users, based on the ones in their baskets. The groceries dataset is used in the tutorial; it consists of <i>9,835</i> transactions (or baskets) of the items purchased together. We will divide the dataset into train, test, and validation. We need to process the raw transactions data to convert in a format suitable for model input. For doing so, each transaction will be represented as a binary vector, where one indicates the item is in the basket and zero otherwise. Let us first read the dataset and define few helper functions, to find unique items, to convert them into one-hot encoded representation and convert back into items from the binary vector. Moreover, the <i>Figure 1</i>, provides <i>ten</i> most frequent items in the dataset.</p>
 
 <pre><code class="language-python line-numbers">import numpy as np
 import pandas as pd
@@ -231,4 +231,11 @@ pip fruit, pork, rolls/buns, root vegetables, sausage, shopping bags,
 soda, tropical fruit, whipped/sour cream, whole milk, yogurt</p>	
 
 <p><i>If you have any question or suggestion about this tutorial or proposal for future, blog posts; please comment below. The ipython notebook with complete code and dataset is accessible from the following <a href="https://github.com/aqibsaeed/CF-with-DAE-on-Market-Basket-Data">link</a>.</i></p>
+
+<h3>References:</h3>
+<p>
+<ol>
+<li>Abad, Andres G., and Luis I. Reyes-Castro. "Collaborative Filtering using Denoising Auto-Encoders for Market Basket Data." arXiv preprint arXiv:1708.04312 (2017).</li>
+</ol>
+</p>
 </div>
