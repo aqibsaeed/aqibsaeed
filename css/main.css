@@ -100,6 +100,11 @@ img {
 
 /* --- Navbar --- */
 
+.navbar-default{
+  border: 0px;
+  background-color: white;
+}
+
 .navbar-custom {
   background-color: {{ site.navbar-col }};
   /* border-bottom: 1px solid #EAEAEA; */
