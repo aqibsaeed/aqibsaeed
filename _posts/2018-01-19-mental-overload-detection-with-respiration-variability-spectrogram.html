@@ -104,8 +104,12 @@ for p in range(len(participants)):
     cfm.append(confusion_matrix(np.argmax(val_Y, 1), np.argmax(val_predictions, 1)))
     print(f, " ", p, " ", r)
     
+    
 print("Avg F-Score: ", round(np.mean(fscore), 4), " Avg Precision: ", round(np.mean(precision), 4),
      " Avg Recall: ", round(np.mean(recall), 4))
+     
+     
+     
      
 </code></pre>	
 
