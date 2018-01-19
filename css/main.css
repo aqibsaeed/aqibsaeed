@@ -108,7 +108,7 @@ img {
 .navbar-custom {
   /* background-color: {{ site.navbar-col }}; */
   /* border-bottom: 1px solid #EAEAEA; */
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(0, 0, 0, 0);
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   {% if site.navbar-img %}
   background-image: url({{ site.navbar-img }});
@@ -515,10 +515,10 @@ footer .theme-by {
 }
 @media only screen and (min-width: 768px) {
   .intro-header {
-    margin-top: 130px;
+    margin-top: 0px;
   }
   .intro-header.big-img {
-    margin-top: 91px;  /* Full navbar is small navbar + 20px padding on each side when expanded */
+    margin-top: 0px;  /* Full navbar is small navbar + 20px padding on each side when expanded */
   }
   .intro-header.big-img .page-heading,
   .intro-header.big-img .post-heading  {
