@@ -13,7 +13,7 @@ gh-badge: [star, fork, follow]
 </div>
 <div class="text-justify">
 
-<p>Mental overload or hypertension are part of today’s modern life and it can negatively affect physical as well as mental health <a href="https://www.ncbi.nlm.nih.gov/pubmed/17615391">[1]</a>. Breathing process is controlled by the Autonomic Nervous System and its monitoring can provide insights into person’s physical and mental conditions. In this blog post, we will learn to detect mental overload from breathing patterns (temperature change around nostril) extracted from a recording of a low-cost thermal camera. We will use a publicly available dataset from <a href=" http://youngjuncho.com/datasets/">[2]</a> consisting of spectrograms (see <i>Figure </i>) but we will not go into the details of Region of Interest tracking in raw thermal videos. The dataset is composed of augmented breathing spectrograms of size <i>120x120</i> collected from <i>8</i> users, where each of them performed <i>Stroop Color Word Test</i> and <i>Mathematics Test</i> of varying difficulty to increase their mental load. The ground-truth annotations are created by applying k-means overs the self-reported ratings by users. For more details of experimental setup, please look into the paper <a href="https://arxiv.org/abs/1708.06026">[3]</a>.</p>
+<p>Mental overload or hypertension are part of today’s modern life and it can negatively affect physical as well as mental health <a href="https://www.ncbi.nlm.nih.gov/pubmed/17615391">[1]</a>. Breathing process is controlled by the Autonomic Nervous System and its monitoring can provide insights into person’s physical and mental conditions. In this blog post, we will learn to detect mental overload from breathing patterns (temperature change around nostril) extracted from a recording of a low-cost thermal camera. We will use a publicly available dataset from <a href=" http://youngjuncho.com/datasets/">[2]</a> consisting of spectrograms (see <i>Figure 1</i>) but we will not go into the details of Region of Interest tracking in raw thermal videos. The dataset is composed of augmented breathing spectrograms of size <i>120x120</i> collected from <i>8</i> users, where each of them performed <i>Stroop Color Word Test</i> and <i>Mathematics Test</i> of varying difficulty to increase their mental load. The ground-truth annotations are created by applying k-means overs the self-reported ratings by users. For more details of experimental setup, please look into the paper <a href="https://arxiv.org/abs/1708.06026">[3]</a>.</p>
 
 <p style="text-align:center"><img src="../img/mental_load_rvs.PNG" alt="Most frequent items in dataset"><br/>Figure 1: Respiration Spectrograms</p>
 
@@ -91,11 +91,13 @@ for p in range(len(participants)):
     predictions = Dense(2, activation = "sigmoid")(x)
 
     model = Model(inputs = X, outputs = predictions)
-    model.compile(optimizer = Adam(lr = learning_rate), loss = "binary_crossentropy", metrics = ["accuracy"])
+    model.compile(optimizer = Adam(lr = learning_rate), loss = "binary_crossentropy", 
+    		metrics = ["accuracy"])
     model.fit(tr_X, tr_Y, epochs = epochs, batch_size = batch_size, shuffle = True, verbose = 0)
     
     val_predictions = model.predict(val_X)
-    p, r, f, _ = precision_recall_fscore_support(np.argmax(val_Y, 1), np.argmax(val_predictions, 1), average = "binary")
+    p, r, f, _ = precision_recall_fscore_support(np.argmax(val_Y, 1), np.argmax(val_predictions, 1), 
+    		average = "binary")
     fscore.append(f)
     precision.append(p)
     recall.append(r)
@@ -104,6 +106,7 @@ for p in range(len(participants)):
     
 print("Avg F-Score: ", round(np.mean(fscore), 4), " Avg Precision: ", round(np.mean(precision), 4),
      " Avg Recall: ", round(np.mean(recall), 4))
+     
 </code></pre>	
 
 <p>The above-described model is trained for <i>5</i> epochs and <i>l2 regularization</i> is used on the weights of convolution layers. The summarized results of leave-one-user-out cross-validation are shown below in <i>Table 1</i> and combined confusion matrix is shown in <i>Figure 2</i>. For a binary classification problem, we achieved f-score of <i>0.86</i> with the convolutional neural network.</p>
