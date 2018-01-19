@@ -106,8 +106,9 @@ img {
 }
 
 .navbar-custom {
-  background-color: {{ site.navbar-col }};
+  /* background-color: {{ site.navbar-col }}; */
   /* border-bottom: 1px solid #EAEAEA; */
+  background-color: rgba(255, 255, 255, 0)
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   {% if site.navbar-img %}
   background-image: url({{ site.navbar-img }});
@@ -437,6 +438,7 @@ footer .theme-by {
   position: relative;
 }
 .intro-header.big-img {
+  margin-top: 0;
   background: no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
