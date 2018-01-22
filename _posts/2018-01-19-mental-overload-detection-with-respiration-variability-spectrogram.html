@@ -114,7 +114,7 @@ print("Avg F-Score: ", round(np.mean(fscore), 4), " Avg Precision: ", round(np.m
 
 <p style="text-align:center"><img src="../img/mental_load_cfm.png" alt="Most frequent items in dataset"><br/>Figure 2: Confusion Matrix</p>
 	
-<p>From what I understand this problem is by no means completely solved as the dataset used in the mentioned paper was collected under laboratory based setting. In real-world situation, there can be many constraints and challenges to successfully apply this methods. Likewise, model generalization could be difficult for people having different body temperatures; if training set does not cover them. For future work, there is a possibility to try data augmentation, combining facial features from a different but similar dataset, and developing a complete app that will include region-of-interest detection, extraction of spectrogram representing breathing variability and classifying it using the deep model in an everyday situation.</p>
+<p>From what I understand this problem is by no means completely solved as the dataset used in the mentioned paper was collected under laboratory based setting. In real-world situation, there can be many constraints and challenges to successfully apply this methods. Likewise, model generalization could be difficult for people having different body temperatures; if training set does not cover them. The optimal quantization technique discussed in <a href="https://www.osapublishing.org/boe/abstract.cfm?uri=boe-8-10-4480">[4]</a> could be feasible to address different body temperatures. For future work, there is a possibility to try data augmentation, combining facial features from a different but similar dataset, and developing a complete app that will include region-of-interest detection, extraction of spectrogram representing breathing variability and classifying it using the deep model in an everyday situation.</p>
 
 <p>Here, we learn to detect mental load from breathing pattern dynamics by extracting respiration variability spectrogram from low-cost thermal imaging camera. The ipython notebook with complete code is accessible from the following <a href="https://github.com/aqibsaeed/Mental-Overload-Detection-RVS">link</a>.</p>
 
@@ -124,6 +124,7 @@ print("Avg F-Score: ", round(np.mean(fscore), 4), " Avg Precision: ", round(np.m
 <li>B. S. McEwen, “Physiology and Neurobiology of Stress and Adaptation: Central Role of the Brain”, Physiol. Rev., vol. 87, no. 3, pp. 873–904, Jul. 2007.</li>
 <li>DeepBreath (Collection Period: March 2017 – May 2017), http://youngjuncho.com/datasets/</li>
 <li>Cho, Youngjun, Nadia Bianchi-Berthouze, and Simon J. Julier. "DeepBreath: Deep Learning of Breathing Patterns for Automatic Stress Recognition using Low-Cost Thermal Imaging in Unconstrained Settings." arXiv preprint arXiv:1708.06026 (2017).</li>
+	<li>Cho, Youngjun, et al. "Robust tracking of respiratory rate in high-dynamic range scenes using mobile thermal imaging." Biomedical optics express 8.10 (2017): 4480-4503.</li>
 </ol>
 </p>
 </div>
