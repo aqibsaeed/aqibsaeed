@@ -62,6 +62,7 @@ def plot_activity(activity,data):
 
 <p>First, read the data set using <code>read_data</code> function defined above which will return a Pandas data frame. After that, normalise each of the accelerometer component (i.e. x, y and z) using feature_normalize method. </p>
 <pre><code class="language-python line-numbers">dataset = read_data('actitracker_raw.txt')
+dataset.dropna(axis=0, how='any', inplace= True)
 dataset['x-axis'] = feature_normalize(dataset['x-axis'])
 dataset['y-axis'] = feature_normalize(dataset['y-axis'])
 dataset['z-axis'] = feature_normalize(dataset['z-axis'])</code></pre>
