@@ -26,6 +26,7 @@ navbar-links:
   #Home: ""
   Github: "https://github.com/aqibsaeed"
   Twitter: "https://twitter.com/aaqib_saeed"
+  LinkedIn: "https://www.linkedin.com/in/aqibsaeed/"
   #About Me: "aboutme"
 
 # Image to show in the navigation bar - image must be a square (width = height)
