@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="167.08mm" height="91.474mm" version="1.1" viewBox="0 0 167.08 91.474" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <defs>
+  <marker id="Arrow2Lend-7-0" overflow="visible" orient="auto">
+   <path transform="matrix(-1.1,0,0,-1.1,-1.1,0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#808080" fill-rule="evenodd" stroke="#000" stroke-linejoin="round" stroke-opacity=".63137" stroke-width=".625"/>
+  </marker>
+  <marker id="Arrow2Lend-3-7" overflow="visible" orient="auto">
+   <path transform="matrix(-1.1,0,0,-1.1,-1.1,0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#808080" fill-rule="evenodd" stroke="#000" stroke-linejoin="round" stroke-opacity=".63137" stroke-width=".625"/>
+  </marker>
+  <marker id="Arrow2Lend-1-5" overflow="visible" orient="auto">
+   <path transform="matrix(-1.1,0,0,-1.1,-1.1,0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#808080" fill-rule="evenodd" stroke="#000" stroke-linejoin="round" stroke-opacity=".63137" stroke-width=".625"/>
+  </marker>
+  <marker id="Arrow2Lend-10" overflow="visible" orient="auto">
+   <path transform="matrix(-1.1,0,0,-1.1,-1.1,0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#808080" fill-rule="evenodd" stroke="#000" stroke-linejoin="round" stroke-opacity=".63137" stroke-width=".625"/>
+  </marker>
+ </defs>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="translate(-20.742 -78.15)">
+  <g>
+   <rect x="35.475" y="99.866" width="10.436" height="53.194" ry=".36983" fill="#f2f2f2" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".333"/>
+   <text transform="rotate(-89.094)" x="-132.74951" y="44.221863" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-132.74951" y="44.221863" font-family="'Segoe UI'" font-size="6.35px" font-weight="600" stroke-width=".26458">Input</tspan></text>
+   <rect x="46.022" y="99.863" width="10.436" height="53.194" ry=".36983" fill="#d7e3f4" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".333"/>
+   <text transform="rotate(-89.094)" x="-142.78723" y="55.469292" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-142.78723" y="55.469292" font-family="'Segoe UI'" font-size="6.35px" font-weight="600" stroke-width=".26458">Conv + ReLU</tspan></text>
+   <rect x="56.624" y="99.864" width="10.436" height="53.194" ry=".36983" fill="#f4eed7" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".333"/>
+   <text transform="rotate(-89.094)" x="-143.80647" y="65.833298" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-143.80647" y="65.833298" font-family="'Segoe UI'" font-size="6.35px" font-weight="600" stroke-width=".26458">Avg Pooling</tspan></text>
+   <rect x="66.976" y="99.815" width="10.436" height="53.194" ry=".36983" fill="#d7e3f4" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".333"/>
+   <text transform="rotate(-89.094)" x="-142.40755" y="76.418922" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-142.40755" y="76.418922" font-family="'Segoe UI'" font-size="6.35px" font-weight="600" stroke-width=".26458">Conv + ReLU</tspan></text>
+   <rect x="77.261" y="99.864" width="10.436" height="53.194" ry=".36983" fill="#e3dbe2" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".333"/>
+   <text transform="rotate(-89.094)" x="-138.65826" y="86.293495" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-138.65826" y="86.293495" font-family="'Segoe UI'" font-size="6.35px" font-weight="600" stroke-width=".26458">Dropout</tspan></text>
+   <rect x="104.97" y="90.617" width="54.288" height="76.798" ry=".53394" fill="#f9f9f9"/>
+   <g stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415">
+    <rect x="142.22" y="93.94" width="12.445" height="10.79" ry=".40785" fill="#e3e2db"/>
+    <rect x="142.35" y="111.13" width="12.445" height="10.79" ry=".40785" fill="#b7c4c8"/>
+    <rect x="142.22" y="129.52" width="12.445" height="10.79" ry=".40785" fill="#bec8b7"/>
+    <rect x="142.62" y="152.4" width="12.445" height="10.79" ry=".40785" fill="#f4d7d7"/>
+   </g>
+  </g>
+  <g fill="#808080">
+   <ellipse cx="148.11" cy="143.62" rx=".757" ry=".8215"/>
+   <ellipse cx="148.11" cy="149.6" rx=".757" ry=".8215"/>
+   <ellipse cx="148.11" cy="146.62" rx=".757" ry=".8215"/>
+  </g>
+  <g>
+   <text transform="rotate(.9062)" x="121.46551" y="80.429268" fill="#000000" font-family="'Segoe UI'" font-size="5.6444px" font-weight="600" letter-spacing="0px" stroke-width=".26458" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="122.24272" y="80.429268" text-align="center">Private </tspan><tspan x="121.46551" y="87.484825" text-align="center">layers</tspan></text>
+   <text transform="rotate(.9062)" x="62.972771" y="92.975822" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="62.972771" y="92.975822" font-family="'Segoe UI'" font-size="5.6444px" font-weight="600" stroke-width=".26458" text-align="center" text-anchor="middle">Shared layers</tspan></text>
+   <rect x="108.53" y="93.882" width="12.594" height="10.939" ry=".076055" fill="#d7e3f4" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415"/>
+   <rect x="121.09" y="93.863" width="12.594" height="10.939" ry=".076055" fill="#dbdee3" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415"/>
+   <text x="109.73456" y="100.98084" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="109.73456" y="100.98084" font-size="3.8806px" stroke-width=".26458">Conv</tspan></text>
+   <text x="124.87199" y="101.20588" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="124.87199" y="101.20588" font-size="3.8806px" stroke-width=".26458">FC</tspan></text>
+   <rect x="108.93" y="111.08" width="12.594" height="10.939" ry=".076055" fill="#d7e3f4" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415"/>
+   <rect x="121.49" y="111.06" width="12.594" height="10.939" ry=".076055" fill="#dbdee3" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415"/>
+   <text x="110.13142" y="118.17876" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="110.13142" y="118.17876" font-size="3.8806px" stroke-width=".26458">Conv</tspan></text>
+   <text x="125.26886" y="118.4038" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="125.26886" y="118.4038" font-size="3.8806px" stroke-width=".26458">FC</tspan></text>
+   <rect x="108.67" y="129.34" width="12.594" height="10.939" ry=".076055" fill="#d7e3f4" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415"/>
+   <rect x="121.22" y="129.32" width="12.594" height="10.939" ry=".076055" fill="#dbdee3" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415"/>
+   <text x="109.86684" y="136.435" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="109.86684" y="136.435" font-size="3.8806px" stroke-width=".26458">Conv</tspan></text>
+   <text x="125.00428" y="136.66005" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="125.00428" y="136.66005" font-size="3.8806px" stroke-width=".26458">FC</tspan></text>
+   <rect x="109.33" y="152.36" width="12.594" height="10.939" ry=".076055" fill="#d7e3f4" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415"/>
+   <rect x="121.88" y="152.34" width="12.594" height="10.939" ry=".076055" fill="#dbdee3" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415"/>
+   <text x="110.52831" y="159.45375" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="110.52831" y="159.45375" font-size="3.8806px" stroke-width=".26458">Conv</tspan></text>
+   <text x="125.66574" y="159.67877" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="125.66574" y="159.67877" font-size="3.8806px" stroke-width=".26458">FC</tspan></text>
+  </g>
+  <g fill="#808080">
+   <ellipse cx="121.51" cy="143.18" rx=".757" ry=".8215"/>
+   <ellipse cx="121.51" cy="149.16" rx=".757" ry=".8215"/>
+   <ellipse cx="121.51" cy="146.19" rx=".757" ry=".8215"/>
+  </g>
+  <text transform="rotate(.9062)" x="148.4726" y="80.208443" fill="#000000" font-family="'Segoe UI'" font-size="5.6444px" font-weight="600" letter-spacing="0px" stroke-width=".26458" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="149.2498" y="80.208443" text-align="center">Output </tspan><tspan x="148.4726" y="87.264" text-align="center">layers</tspan></text>
+  <g fill="#808080">
+   <g stroke="#000" stroke-opacity=".63137" stroke-width=".265">
+    <path d="m154.67 99.054h14.288" marker-end="url(#Arrow2Lend-10)"/>
+    <path d="m154.98 116.24h14.288" marker-end="url(#Arrow2Lend-1-5)"/>
+    <path d="m154.77 134.88h14.288" marker-end="url(#Arrow2Lend-3-7)"/>
+    <path d="m155.21 157.87h14.288" marker-end="url(#Arrow2Lend-7-0)"/>
+   </g>
+   <g>
+    <ellipse cx="166.31" cy="142.9" rx=".757" ry=".8215"/>
+    <ellipse cx="166.31" cy="149.93" rx=".757" ry=".8215"/>
+    <ellipse cx="166.31" cy="146.43" rx=".757" ry=".8215"/>
+   </g>
+  </g>
+  <g clip-rule="evenodd" fill-rule="evenodd">
+   <path d="m181.9 98.538c-0.75837-0.32667-1.8572-1.1133-3.4976-1.3733 0.40238-0.42 0.72732-1.0733 1.0678-1.8333 0.17073-0.46 0.13882-0.84 0.13882-1.3733 0-0.40666 0.0935-1.0333-0.0307-1.4-0.35583-1.1933-1.269-1.52-2.3368-1.52-1.0833 0-1.9965 0.32667-2.3524 1.52-0.1088 0.36667-0.032 1.0067-0.032 1.4 0 0.53334-0.03 0.91334 0.17072 1.3733 0.32494 0.76 0.63445 1.4267 1.0524 1.8333-1.6251 0.27333-2.7394 1.06-3.4667 1.3733-1.5476 0.62666-1.5476 1.32-1.5476 1.32v0.26666c0 0.45334 0.57252 0.91333 1.1297 0.91333h10.106c0.71189 0 1.1452-0.49999 1.1452-0.95333v-0.22667s-0.0124-0.69333-1.5476-1.32z" fill="#e3e2db" stroke-width=".71824"/>
+   <path d="m181.86 117.37c-0.75837-0.32667-1.8572-1.1133-3.4976-1.3733 0.40238-0.42 0.72732-1.0733 1.0678-1.8333 0.17073-0.46 0.13882-0.84 0.13882-1.3733 0-0.40667 0.0935-1.0333-0.0307-1.4-0.35583-1.1933-1.269-1.52-2.3368-1.52-1.0833 0-1.9965 0.32667-2.3524 1.52-0.1088 0.36667-0.032 1.0067-0.032 1.4 0 0.53333-0.0301 0.91333 0.17072 1.3733 0.32494 0.76 0.63445 1.4267 1.0524 1.8333-1.6251 0.27333-2.7394 1.06-3.4667 1.3733-1.5476 0.62667-1.5476 1.32-1.5476 1.32v0.26666c0 0.45334 0.57252 0.91334 1.1297 0.91334h10.106c0.71189 0 1.1452-0.5 1.1452-0.95333v-0.22668s-0.0124-0.69333-1.5476-1.32z" fill="#b7c4c8" stroke-width=".71824"/>
+   <path d="m182.12 138.27c-0.75837-0.32667-1.8572-1.1133-3.4976-1.3733 0.40238-0.42 0.72732-1.0733 1.0678-1.8334 0.17073-0.45999 0.13882-0.83999 0.13882-1.3733 0-0.40666 0.0935-1.0333-0.0307-1.4-0.35583-1.1933-1.269-1.52-2.3368-1.52-1.0833 0-1.9965 0.32667-2.3524 1.52-0.1088 0.36667-0.032 1.0067-0.032 1.4 0 0.53334-0.03 0.91334 0.17072 1.3733 0.32494 0.76001 0.63445 1.4267 1.0524 1.8334-1.6251 0.27333-2.7394 1.06-3.4667 1.3733-1.5476 0.62667-1.5476 1.32-1.5476 1.32v0.26666c0 0.45334 0.57252 0.91334 1.1297 0.91334h10.106c0.71189 0 1.1452-0.5 1.1452-0.95334v-0.22667s-0.0124-0.69333-1.5476-1.32z" fill="#bec8b7" stroke-width=".71824"/>
+   <path d="m182.12 161.03c-0.75837-0.32667-1.8572-1.1133-3.4976-1.3733 0.40238-0.42 0.72732-1.0733 1.0678-1.8333 0.17073-0.46 0.13882-0.84 0.13882-1.3733 0-0.40666 0.0935-1.0333-0.0307-1.4-0.35583-1.1933-1.269-1.52-2.3368-1.52-1.0833 0-1.9965 0.32667-2.3524 1.52-0.1088 0.36667-0.032 1.0067-0.032 1.4 0 0.53333-0.03 0.91333 0.17072 1.3733 0.32494 0.76 0.63445 1.4267 1.0524 1.8333-1.6251 0.27333-2.7394 1.06-3.4667 1.3733-1.5476 0.62667-1.5476 1.32-1.5476 1.32v0.26667c0 0.45333 0.57252 0.91333 1.1297 0.91333h10.106c0.71189 0 1.1452-0.5 1.1452-0.95333v-0.22668s-0.0124-0.69332-1.5476-1.32z" fill="#f4d7d7" stroke-width=".71825"/>
+  </g>
+  <g fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px">
+   <text transform="rotate(.9062)" x="178.94109" y="103.11164" style="line-height:1.25" xml:space="preserve"><tspan x="178.94109" y="103.11164" font-family="'Segoe UI'" font-weight="600" stroke-width=".26458" text-align="center" text-anchor="middle"><tspan font-size="4.9389px">Subject</tspan><tspan baseline-shift="sub" font-size="4.1275px">1</tspan></tspan></text>
+   <text transform="rotate(.9062)" x="180.91998" y="165.62479" style="line-height:1.25" xml:space="preserve"><tspan x="180.91998" y="165.62479" font-family="'Segoe UI'" font-size="4.9389px" font-weight="600" stroke-width=".26458" text-align="center" text-anchor="middle">Subject<tspan baseline-shift="sub" font-size="3.8806px" stroke-width=".26458">N</tspan></tspan></text>
+   <text transform="rotate(.9062)" x="179.16295" y="121.46192" style="line-height:1.25" xml:space="preserve"><tspan x="179.16295" y="121.46192" font-family="'Segoe UI'" font-size="4.9389px" font-weight="600" stroke-width=".26458" text-align="center" text-anchor="middle">Subject<tspan baseline-shift="sub" font-size="3.8806px" stroke-width=".26458">2</tspan></tspan></text>
+   <text transform="rotate(.9062)" x="180.98755" y="142.72293" style="line-height:1.25" xml:space="preserve"><tspan x="180.98755" y="142.72293" font-family="'Segoe UI'" font-size="4.9389px" font-weight="600" stroke-width=".26458" text-align="center" text-anchor="middle">Subject<tspan baseline-shift="sub" font-size="3.8806px" stroke-width=".26458">3</tspan></tspan></text>
+  </g>
+  <g fill="none" stroke="#000" stroke-opacity=".63137">
+   <g stroke-linecap="round">
+    <path d="m108.88 116.37-21.128 31.604 20.972-43.444" stroke-width=".34451"/>
+    <path d="m108.84 104.62-21.071-0.56211 20.913 7.2056" stroke-width=".37154"/>
+    <path d="m108.52 98.89-20.824 27.741 20.824-11.68" stroke-width=".38301"/>
+    <path d="m87.739 126.78 21.04 8.2224" stroke-width=".37335"/>
+    <path d="m87.838 127.01 21.324 31.953" stroke-width=".32605"/>
+   </g>
+   <path d="m108.82 133.7-21.175-29.952 21.737 48.501" stroke-width=".3754"/>
+   <g stroke-linecap="round">
+    <path d="m133.8 93.994 8.4501 10.408" stroke-width=".3794"/>
+    <path d="m142.13 94.415-8.3984 10.345" stroke-width=".38462"/>
+    <path d="m134.04 111.15 8.2438 10.435" stroke-width=".37524"/>
+    <path d="m142.35 111.47-8.2142 10.418" stroke-width=".38172"/>
+    <path d="m133.88 129.5 8.3798 10.501" stroke-width=".37951"/>
+    <path d="m142.21 129.98-8.403 10.092" stroke-width=".38"/>
+    <path d="m134.54 152.49 8.2198 10.505" stroke-width=".37594"/>
+    <path d="m142.76 152.62-8.2582 10.508" stroke-width=".38441"/>
+   </g>
+   <path d="m87.639 147.78 21.909 15.419" stroke-width=".343"/>
+   <path d="m87.84 147.72 20.892-7.4632" stroke-width=".343"/>
+  </g>
+  <text transform="rotate(-89.094)" x="-125.13079" y="27.030777" fill="#000000" font-family="'Segoe UI'" font-size="5.6444px" font-weight="600" letter-spacing="0px" stroke-width=".26458" text-align="center" text-anchor="middle" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-124.35358" y="27.030777" text-align="center">Raw Physiological </tspan><tspan x="-125.13079" y="34.086334" text-align="center">Signals</tspan></text>
+ </g>
+</svg>

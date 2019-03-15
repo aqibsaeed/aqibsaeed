@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="132.48mm" height="93.742mm" version="1.1" viewBox="0 0 132.48 93.742" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <defs>
+  <marker id="Arrow2Lend" overflow="visible" orient="auto">
+   <path transform="matrix(-1.1,0,0,-1.1,-1.1,0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#808080" fill-rule="evenodd" stroke="#000" stroke-linejoin="round" stroke-opacity=".63137" stroke-width=".625"/>
+  </marker>
+  <marker id="Arrow2Lend-1" overflow="visible" orient="auto">
+   <path transform="matrix(-1.1,0,0,-1.1,-1.1,0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#808080" fill-rule="evenodd" stroke="#000" stroke-linejoin="round" stroke-opacity=".63137" stroke-width=".625"/>
+  </marker>
+  <marker id="Arrow2Lend-3" overflow="visible" orient="auto">
+   <path transform="matrix(-1.1,0,0,-1.1,-1.1,0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#808080" fill-rule="evenodd" stroke="#000" stroke-linejoin="round" stroke-opacity=".63137" stroke-width=".625"/>
+  </marker>
+  <marker id="Arrow2Lend-7" overflow="visible" orient="auto">
+   <path transform="matrix(-1.1,0,0,-1.1,-1.1,0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#808080" fill-rule="evenodd" stroke="#000" stroke-linejoin="round" stroke-opacity=".63137" stroke-width=".625"/>
+  </marker>
+ </defs>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="translate(-32.445 -42.099)">
+  <g>
+   <rect x="47.606" y="53.907" width="10.358" height="81.729" ry=".56822" fill="#f2f2f2" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".41121"/>
+   <rect x="67.469" y="53.857" width="12.246" height="81.827" ry=".5689" fill="#dbdee3" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".31342"/>
+   <rect x="93.216" y="55.854" width="42.313" height="76.798" ry=".53394" fill="#f9f9f9"/>
+  </g>
+  <g fill="#dbdee3" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415">
+   <rect x="97.396" y="59.177" width="12.445" height="10.79" ry=".40785"/>
+   <rect x="97.627" y="76.366" width="12.445" height="10.79" ry=".40785"/>
+   <rect x="97.494" y="94.755" width="12.445" height="10.79" ry=".40785"/>
+   <rect x="97.891" y="117.64" width="12.445" height="10.79" ry=".40785"/>
+  </g>
+  <g fill="#808080">
+   <ellipse cx="103.81" cy="108.85" rx=".757" ry=".8215"/>
+   <ellipse cx="103.81" cy="114.83" rx=".757" ry=".8215"/>
+   <ellipse cx="103.81" cy="111.86" rx=".757" ry=".8215"/>
+  </g>
+  <g stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".415">
+   <rect x="118.24" y="59.253" width="12.445" height="10.79" ry=".40785" fill="#e3e2db"/>
+   <rect x="118.47" y="76.442" width="12.445" height="10.79" ry=".40785" fill="#b7c4c8"/>
+   <rect x="118.34" y="94.831" width="12.445" height="10.79" ry=".40785" fill="#bec8b7"/>
+   <rect x="118.74" y="117.72" width="12.445" height="10.79" ry=".40785" fill="#f4d7d7"/>
+  </g>
+  <g fill="#808080">
+   <g>
+    <ellipse cx="124.66" cy="108.93" rx=".757" ry=".8215"/>
+    <ellipse cx="124.66" cy="114.91" rx=".757" ry=".8215"/>
+    <ellipse cx="124.66" cy="111.93" rx=".757" ry=".8215"/>
+   </g>
+   <g stroke="#000" stroke-opacity=".63137" stroke-width=".265">
+    <path d="m130.71 64.431h14.288" marker-end="url(#Arrow2Lend)"/>
+    <path d="m131.02 81.615h14.288" marker-end="url(#Arrow2Lend-1)"/>
+    <path d="m130.81 100.26h14.288" marker-end="url(#Arrow2Lend-3)"/>
+    <path d="m131.25 123.25h14.288" marker-end="url(#Arrow2Lend-7)"/>
+   </g>
+   <g>
+    <ellipse cx="143.4" cy="108.27" rx=".757" ry=".8215"/>
+    <ellipse cx="143.4" cy="115.31" rx=".757" ry=".8215"/>
+    <ellipse cx="143.4" cy="111.8" rx=".757" ry=".8215"/>
+   </g>
+  </g>
+  <g fill="none" stroke="#000" stroke-opacity=".63137">
+   <g stroke-linecap="round">
+    <path d="m110.37 117.95 8.4963 10.384" stroke-width=".38"/>
+    <path d="m118.73 118.1-8.403 10.092" stroke-width=".38"/>
+    <path d="m98.17 128.52-18.132 4.3067 17.46-27.276" stroke-width=".3776"/>
+    <path d="m97.599 86.945-17.696 45.882 17.565-63.071" stroke-width=".38"/>
+    <path d="m97.626 59.411-17.53-1.4554 17.398 18.656" stroke-width=".37548"/>
+    <path d="m97.389 64.411-17.59 31.715 17.59-13.354" stroke-width=".37639"/>
+    <path d="m79.986 96.31 17.325 4.3058" stroke-width=".37728"/>
+    <path d="m79.714 96.069 18.001 27.931" stroke-width=".37762"/>
+   </g>
+   <path d="m97.481 94.955-17.633-36.856 18.101 59.681" stroke-width=".38"/>
+  </g>
+  <g fill="#000000" letter-spacing="0px" word-spacing="0px">
+   <flowRoot font-family="'Segoe UI'" font-size="24px" font-weight="600" style="line-height:1.25" xml:space="preserve"><flowRegion font-family="'Segoe UI'" font-size="24px" font-weight="600"><rect x="106.77" y="448.65" width="25.456" height="144.25"/></flowRegion><flowPara/></flowRoot>
+   <g stroke-width=".26458">
+    <text transform="rotate(-89.094)" x="-101.57474" y="55.821999" font-family="sans-serif" font-size="4.9389px" style="line-height:1.25" xml:space="preserve"><tspan x="-101.57474" y="55.821999" font-family="'Segoe UI'" font-size="6.35px" font-weight="600" stroke-width=".26458">Input</tspan></text>
+    <text transform="rotate(-89.094)" x="-115.07171" y="77.064873" font-family="sans-serif" font-size="4.9389px" style="line-height:1.25" xml:space="preserve"><tspan x="-115.07171" y="77.064873" font-family="'Segoe UI'" font-size="6.35px" font-weight="600" stroke-width=".26458">Fully Connected</tspan></text>
+    <text transform="rotate(-89.094)" x="-92.905739" y="38.303165" font-family="'Segoe UI'" font-size="5.6444px" font-weight="600" text-align="center" text-anchor="middle" style="line-height:1.25" xml:space="preserve"><tspan x="-92.128525" y="38.303165" text-align="center">Physiological </tspan><tspan x="-92.905739" y="45.358723" text-align="center">Features</tspan></text>
+   </g>
+  </g>
+  <g clip-rule="evenodd" fill-rule="evenodd">
+   <path d="m159 63.916c-0.75837-0.32667-1.8572-1.1133-3.4976-1.3733 0.40238-0.42 0.72732-1.0733 1.0678-1.8333 0.17073-0.46 0.13882-0.84 0.13882-1.3733 0-0.40666 0.0935-1.0333-0.0307-1.4-0.35583-1.1933-1.269-1.52-2.3368-1.52-1.0833 0-1.9965 0.32667-2.3524 1.52-0.1088 0.36667-0.032 1.0067-0.032 1.4 0 0.53333-0.03 0.91334 0.17072 1.3733 0.32494 0.76 0.63445 1.4267 1.0524 1.8333-1.6251 0.27333-2.7394 1.06-3.4667 1.3733-1.5476 0.62667-1.5476 1.32-1.5476 1.32v0.26667c0 0.45333 0.57252 0.91333 1.1297 0.91333h10.106c0.71189 0 1.1452-0.5 1.1452-0.95333v-0.22667s-0.0124-0.69333-1.5476-1.32z" fill="#e3e2db" stroke-width=".71824"/>
+   <path d="m158.95 82.748c-0.75837-0.32667-1.8572-1.1133-3.4976-1.3733 0.40238-0.42 0.72732-1.0733 1.0678-1.8333 0.17073-0.46 0.13882-0.84 0.13882-1.3733 0-0.40666 0.0935-1.0333-0.0307-1.4-0.35583-1.1933-1.269-1.52-2.3368-1.52-1.0833 0-1.9965 0.32667-2.3524 1.52-0.1088 0.36667-0.032 1.0067-0.032 1.4 0 0.53333-0.0301 0.91334 0.17072 1.3733 0.32494 0.76 0.63445 1.4267 1.0524 1.8333-1.6251 0.27333-2.7394 1.06-3.4667 1.3733-1.5476 0.62667-1.5476 1.32-1.5476 1.32v0.26667c0 0.45333 0.57252 0.91333 1.1297 0.91333h10.106c0.71189 0 1.1452-0.5 1.1452-0.95333v-0.22667s-0.0124-0.69333-1.5476-1.32z" fill="#b7c4c8" stroke-width=".71824"/>
+   <path d="m159.22 103.65c-0.75837-0.32667-1.8572-1.1133-3.4976-1.3733 0.40238-0.42 0.72732-1.0733 1.0678-1.8334 0.17073-0.46 0.13882-0.84 0.13882-1.3733 0-0.40666 0.0935-1.0333-0.0307-1.4-0.35583-1.1933-1.269-1.52-2.3368-1.52-1.0833 0-1.9965 0.32667-2.3524 1.52-0.1088 0.36667-0.032 1.0067-0.032 1.4 0 0.53333-0.03 0.91334 0.17072 1.3733 0.32494 0.76001 0.63445 1.4267 1.0524 1.8334-1.6251 0.27333-2.7394 1.06-3.4667 1.3733-1.5476 0.62667-1.5476 1.32-1.5476 1.32v0.26666c0 0.45334 0.57252 0.91334 1.1297 0.91334h10.106c0.71189 0 1.1452-0.5 1.1452-0.95334v-0.22667s-0.0124-0.69333-1.5476-1.32z" fill="#bec8b7" stroke-width=".71824"/>
+   <path d="m159.22 126.4c-0.75837-0.32667-1.8572-1.1133-3.4976-1.3733 0.40238-0.42 0.72732-1.0733 1.0678-1.8333 0.17073-0.46 0.13882-0.84 0.13882-1.3733 0-0.40666 0.0935-1.0333-0.0307-1.4-0.35583-1.1933-1.269-1.52-2.3368-1.52-1.0833 0-1.9965 0.32667-2.3524 1.52-0.1088 0.36667-0.032 1.0067-0.032 1.4 0 0.53333-0.03 0.91333 0.17072 1.3733 0.32494 0.76 0.63445 1.4267 1.0524 1.8333-1.6251 0.27333-2.7394 1.06-3.4667 1.3733-1.5476 0.62667-1.5476 1.32-1.5476 1.32v0.26667c0 0.45333 0.57252 0.91333 1.1297 0.91333h10.106c0.71189 0 1.1452-0.5 1.1452-0.95333v-0.22668s-0.0124-0.69332-1.5476-1.32z" fill="#f4d7d7" stroke-width=".71824"/>
+  </g>
+  <g fill="#000000" letter-spacing="0px" stroke-width=".26458" word-spacing="0px">
+   <text transform="rotate(.9062)" x="104.05692" y="44.648903" font-family="'Segoe UI'" font-size="5.6444px" font-weight="600" text-anchor="middle" style="line-height:1.25" xml:space="preserve"><tspan x="104.83414" y="44.648903" text-align="center">Private </tspan><tspan x="104.05692" y="51.70446" text-align="center">layers</tspan></text>
+   <text transform="rotate(.9062)" x="125.8569" y="44.467575" font-family="'Segoe UI'" font-size="5.6444px" font-weight="600" text-anchor="middle" style="line-height:1.25" xml:space="preserve"><tspan x="126.63412" y="44.467575" text-align="center">Output </tspan><tspan x="125.8569" y="51.523132" text-align="center">layers</tspan></text>
+   <text transform="rotate(.9062)" x="155.49374" y="68.855362" font-family="sans-serif" font-size="4.9389px" style="line-height:1.25" xml:space="preserve"><tspan x="155.49374" y="68.855362" font-family="'Segoe UI'" font-weight="600" stroke-width=".26458" text-align="center" text-anchor="middle"><tspan font-size="4.9389px">Subject</tspan><tspan baseline-shift="sub" font-size="65%">1</tspan></tspan></text>
+   <text transform="rotate(.9062)" x="157.47266" y="131.36848" font-family="sans-serif" font-size="4.9389px" style="line-height:1.25" xml:space="preserve"><tspan x="157.47266" y="131.36848" font-family="'Segoe UI'" font-size="4.9389px" font-weight="600" stroke-width=".26458" text-align="center" text-anchor="middle">Subject<tspan baseline-shift="sub" font-size="3.8806px">N</tspan></tspan></text>
+   <text transform="rotate(.9062)" x="155.71561" y="87.205643" font-family="sans-serif" font-size="4.9389px" style="line-height:1.25" xml:space="preserve"><tspan x="155.71561" y="87.205643" font-family="'Segoe UI'" font-size="4.9389px" font-weight="600" stroke-width=".26458" text-align="center" text-anchor="middle">Subject<tspan baseline-shift="sub" font-size="3.8806px">2</tspan></tspan></text>
+   <text transform="rotate(.9062)" x="157.54022" y="108.46638" font-family="sans-serif" font-size="4.9389px" style="line-height:1.25" xml:space="preserve"><tspan x="157.54022" y="108.46638" font-family="'Segoe UI'" font-size="4.9389px" font-weight="600" stroke-width=".26458" text-align="center" text-anchor="middle">Subject<tspan baseline-shift="sub" font-size="3.8806px">3</tspan></tspan></text>
+  </g>
+  <rect x="57.624" y="53.907" width="10.358" height="81.729" ry=".56822" fill="#e3dbe2" stroke="#000" stroke-linejoin="round" stroke-opacity=".62946" stroke-width=".41121"/>
+  <text transform="rotate(-89.094)" x="-105.33911" y="66.087944" fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="-105.33911" y="66.087944" font-family="'Segoe UI'" font-size="6.35px" font-weight="600" stroke-width=".26458">Dropout</tspan></text>
+  <g fill="none" stroke="#000" stroke-linecap="round" stroke-opacity=".63137">
+   <path d="m109.88 95.026 8.4963 10.384" stroke-width=".38"/>
+   <path d="m118.35 95.139-8.403 10.092" stroke-width=".38"/>
+   <path d="m110.09 76.64 8.4798 10.4" stroke-width=".37993"/>
+   <path d="m118.45 76.736-8.3129 10.159" stroke-width=".37921"/>
+   <path d="m109.9 59.538 8.4963 10.384" stroke-width=".38"/>
+   <path d="m118.26 59.684-8.403 10.092" stroke-width=".38"/>
+  </g>
+  <g fill="#000000" font-family="sans-serif" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px">
+   <text x="101.73866" y="124.90015" style="line-height:1.25" xml:space="preserve"><tspan x="101.73866" y="124.90015" font-size="3.8806px" stroke-width=".26458">FC</tspan></text>
+   <text x="101.34797" y="102.24026" style="line-height:1.25" xml:space="preserve"><tspan x="101.34797" y="102.24026" font-size="3.8806px" stroke-width=".26458">FC</tspan></text>
+   <text x="101.19299" y="83.574501" style="line-height:1.25" xml:space="preserve"><tspan x="101.19299" y="83.574501" font-size="3.8806px" stroke-width=".26458">FC</tspan></text>
+   <text x="101.00589" y="66.506332" style="line-height:1.25" xml:space="preserve"><tspan x="101.00589" y="66.506332" font-size="3.8806px" stroke-width=".26458">FC</tspan></text>
+   <text transform="rotate(.9062)" x="64.424171" y="46.089306" style="line-height:1.25" xml:space="preserve"><tspan x="64.424171" y="46.089306" font-family="'Segoe UI'" font-size="5.6444px" font-weight="600" stroke-width=".26458" text-align="center" text-anchor="middle">Shared layers</tspan></text>
+  </g>
+ </g>
+</svg>
