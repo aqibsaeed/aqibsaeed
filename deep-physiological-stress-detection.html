@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<!-- Template modified from https://github.com/stanfordmlgroup/stanfordmlgroup.github.io  -->
+<head>
+    <meta charset="utf-8">
+    <title>Model Adaptation and Personalization for Physiological Stress Detection - Aaqib Saeed</title>
+    <meta name="description" content="Model Adaptation and Personalization for Physiological Stress Detection - Aaqib Saeed">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <link href="css/paper_theme.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-transparent" id="mainNav">
+        <div class="container">
+            <div class="navbar-header"><a class="navbar-brand page-scroll" href="/">Aaqib Saeed</a></div>
+        </div>
+    </nav>
+    <section id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h1 id="page-title">Model Adaptation and Personalization for Physiological Stress Detection</h1>
+                    <h3>Aaqib Saeed (<a href="https://www.tue.nl/en/" style="color:white;">TU/e</a>), Tanir Ozcelebi (<a href="https://www.tue.nl/en/" style="color:white;">TU/e</a>), Johan Lukkien (<a href="https://www.tue.nl/en/" style="color:white;">TU/e</a>), <br/> Jan B.F. van Erp (<a href="https://www.utwente.nl/en/" style="color:white;">UTwente</a>), and Stojan Trajanovski (Philips Research)</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class = "abstract_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>Abstract</h2>
+                    <p>Stress and accompanying physiological responses can occur when everyday emotional, mental and physical challenges exceed one’s ability to cope. 
+                        Long-Term exposure to stressful situations can have negative health consequences, such as increased risk of cardiovascular diseases and immune system disorder. 
+                        It is also shown to adversely affect productivity, wellbeing, and self-confidence, which can lead to social and economic inequality. 
+                        Hence, timely stress recognition can contribute to better strategies for its management and prevention in the future. 
+                        Stress can be detected from multimodal physiological signals (e.g., skin conductance and heart rate) using well-trained models. 
+                        However, these models need to be adapted to a new target domain and personalized for each test subject. In this paper, we propose a deep reconstruction classification network and multitask learning (MTL) for domain adaptation and personalization of stress recognition models. 
+                        The domain adaptation is achieved via a hybrid model consisting of temporal convolutional and recurrent layers that perform shared feature extraction through supervised source label predictions and unsupervised target data reconstruction. Furthermore, MTL based neural network approach with hard parameter sharing of mutual representation and task-specific layers is utilized to acquire personalized models. 
+                        The proposed methods are tested on multimodal physiological time-series data collected during driving tasks, in both real-world and driving simulator settings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+        <div class="row">
+                <div class="col-lg-10">
+                    <h2>Model Adaptation</h2>
+                    <p>
+                    <b>Unsupervised Domain Adaptation.</b> We formulate model adaptation as a cross-domain and cross-user transfer learning problem. Here, a model trained on
+                        a dataset collected in a specific setting (simulator) or source domain has to be adapted to perform the same task in a different situation (real-world) or target domain. 
+                        There are several challenges for learning an optimal model in this case, such as unavailability of ground-truth for the target domain, expensive process of acquiring a large number of labels and dynamic shift in data distribution. 
+                        Therefore, target data cannot be directly used for fine-tuning an existing model in a supervised manner. 
+                        In this work, we utilize deep reconstruction and classification network for unsupervised domain adaptation to learn from source and target datasets jointly. 
+                        This learning setting resembles MTL in the sense that learning an auxiliary task can help improve performance for the actual task through a shared representation. 
+                        For more information see section II.B of [1].
+                    </p>
+                    <img src="img/drcn.svg" style="width:45%; transform: rotate(270deg);  margin: -47px 0px -40px 85px;">
+                    <h3>Results</h3>
+                    <img src="img/adaptation_results.png" style="width:75%" class="img-fluid">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>Personalization (Subjects as Tasks)</h2>
+                    <div class="column">
+                        <img src="img/mtl_cnn.svg" style="width:100%">
+                    </div>
+                    <div class="column">
+                        <img src="img/mtl_nn.svg" style="width:80%">
+                    </div>
+                    <p >
+                            <b>Multi-task Learning for Personalization.</b> 
+                            A subject-independent global model for stress detection
+                            may perform poorly due to large interpersonal variations in
+                            physiological responses, e.g. due to age, gender, sleep,
+                            and diet. In order to take these disparities into account, we
+                            personalize a model by applying deep MTL with the subjects-as-tasks approach. 
+                            MTL involves finding a unified model for solving more than one task with a
+                            shared representation. In this work, we develop two model architectures for the MTL setting,
+                            one based on the temporal convolutional neural network for end-to-end
+                            representation learning and second a feed-forward neural network trained 
+                            with manually extracted features from heart rate and skin conductance.
+                    </p>
+                    <h3>Results</h3>
+                    <img src="img/personalization_results.png" style="width:80%" class="img-fluid">
+                </div>
+            </div>
+         </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>Papers</h2>
+                    <a href="https://ieeexplore.ieee.org/abstract/document/8631447"><img src="img/dsaa.jpg" width="800" class="img-fluid"></a> 
+                    <a href="https://arxiv.org/pdf/1711.06116.pdf"><img src="img/mlh.jpg" width="800" class="img-fluid"></a>
+                    <p><a class="btn btn-dark" href="https://ieeexplore.ieee.org/abstract/document/8631447">Paper [1]</a> <a class="btn btn-dark" href="https://arxiv.org/pdf/1711.06116.pdf">Paper [2]</a></p>
+                    <h3>Citation</h3>
+                    <p style="text-align: justify;">[1] Aaqib Saeed, Tanir Ozcelebi, Johan Lukkien, Jan B.F. van Erp, and Stojan Trajanovski, "Model Adaptation and Personalization for Physiological Stress Detection." in IEEE International Conference on Data Science and Advanced Analytics (DSAA), 2018. </p>
+                    <p style="text-align: justify;">[2] Aaqib Saeed and Stojan Trajanovski, "Personalized Driver Stress Detection with Multi-task Neural Networks using Physiological Signals." in Machine Learning for Health Workshop at 31st Conference on Neural Information Processing Systems, 2017.</p>
+                    <h3>BibTeX</h3>
+                    
+<pre>@inproceedings{saeed2018model, 
+    title={Model Adaptation and Personalization for Physiological Stress Detection},
+    author={Saeed, Aaqib and Ozcelebi, Tanir and Lukkien, Johan and van Erp, Jan and Trajanovski, Stojan},
+    booktitle={2018 IEEE 5th International Conference on Data Science and Advanced Analytics (DSAA)},
+    pages={209--216},
+    year={2018},
+    organization={IEEE}
+}</pre>
+<pre>@article{saeed2017personalized,
+    title={Personalized driver stress detection with multi-task neural networks using physiological signals},
+    author={Saeed, Aaqib and Trajanovski, Stojan},
+    journal={arXiv preprint arXiv:1711.06116},
+    year={2017}
+}</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>References</h2>
+                    <ul>
+                        <li>Rich Caruana. "Multitask learning." Learning to learn. Springer US, 1998. 95-133.</li>
+                        <li>A. L. Dougall and A. Baum, “Stress, health, and illness,” Handbook of health psychology, pp. 321–337, 2001.</li>
+                        <li>Muhammad Ghifary, et al. "Deep reconstruction-classification networks for unsupervised domain adaptation." ECCV. Springer, Cham, 2016.</li>
+                        <li>J. Healey and R. W. Picard, "Driver stress data", Retrieved June 26th from MIT Affective Computing Group: http://affect.media.mit.edu, 2002.</li>
+                        <li>Aaqib Saeed, et al. "Deep physiological arousal detection in a driving simulator using wearable sensors." ICDMW. IEEE, 2017.</li>
+                        <li>S. Taamneh, et al. "A multimodal dataset for various forms of distracted driving", Scientific data, vol. 4, p. 170110, 2017.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="container">
+            <div class="text-center">
+                <p>Copyright &#169 Aaqib Saeed 2019</p>
+            </div>
+        </div>
+    </footer>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79826043-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-79826043-1');
+    </script>
+</body>
+</html>
