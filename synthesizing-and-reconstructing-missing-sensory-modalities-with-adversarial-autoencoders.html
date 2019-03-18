@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<!-- Template modified from https://github.com/stanfordmlgroup/stanfordmlgroup.github.io  -->
+<head>
+    <meta charset="utf-8">
+    <title>Synthesizing and Reconstructing Missing Sensory Modalities with Adversarial Autoencoders - Aaqib Saeed</title>
+    <meta name="description" content="Synthesizing and Reconstructing Missing Sensory Modalities with Adversarial Autoencoders - Aaqib Saeed">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <link href="css/sarmaa_theme.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-transparent" id="mainNav">
+        <div class="container">
+            <div class="navbar-header"><a class="navbar-brand page-scroll" href="/">Aaqib Saeed</a></div>
+        </div>
+    </nav>
+    <section id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h1 id="page-title">Synthesizing and Reconstructing Missing Sensory Modalities with Adversarial Autoencoders</h1>
+                    <h3>Aaqib Saeed (<a href="https://www.tue.nl/en/" style="color:white;">TU/e</a>), Tanir Ozcelebi (<a href="https://www.tue.nl/en/" style="color:white;">TU/e</a>), and Johan Lukkien (<a href="https://www.tue.nl/en/" style="color:white;">TU/e</a>)</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class = "abstract_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>Abstract</h2>
+                    <p>Detection of human activities along with the associated context is of crucial importance for
+                    various application areas, including assisted living and well-being. To predict a user's context in
+                    the daily-life situation a system needs to learn from multimodal data that are often imbalanced,
+                    and noisy with missing values. The model is likely to encounter missing sensors in real-life conditions as well 
+                    (such as a user not wearing a smartwatch), and it fails to infer the context if
+                    any of the modalities used for training the model are missing. In this paper, we propose a method based on an
+                    adversarial autoencoder (AAE) for handling missing sensory features and synthesizing realistic samples.
+                    We empirically demonstrate the capability of our method in comparison with classical approaches
+                    for filling in missing values on a large-scale activity recognition dataset collected in-the-wild.
+                    We develop a fully-connected classification network by extending an encoder and systematically
+                    evaluate its multi-label classification performance when several modalities are missing. Furthermore,
+                    we show class-conditional artificial data generation and its visual and quantitative analysis on the context
+                    classification task; representing a strong generative power of AAE.</p>
+                </div>
+            </div>
+            <div class = "row">
+                <div class="col-lg-10 img-style">
+                    <img src="img/overview_aae.svg" style="width:70%"/>
+                    <p class="figure-caption">Overview of the proposed framework for robust context classification with missing sensory modalities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+        <div class="row">
+                <div class="col-lg-10">
+                    <h2>Results</h2>
+                    <p>The multimodal AAE is developed to alleviate two problems in multi-label user context detection: (a) the likely issue of losing features
+                    of the same modalities all at once, and (b) synthesizing novel labeled samples. Our empirical results demonstrate that the AAE network trained with structured noise can provide 
+                    a realistic reconstruction of features from the lost modalities as compared to other methods, such as PCA. Similarly, we show that a AAE model trained with supervision to 
+                    a decoder network produce realistic synthetic data, which further can be used for other applications.</p>
+                </div>
+                <div class="col-lg-10"><h3 class="float-left">Reconstruction</h3></div>
+                <div class="col-lg-10 img-style">
+                    <p class="figure-caption">Root mean squared error (RMSE) for recontructing each modality's features <br/> given others; averaged over (user-split) 5-folds.</p>
+                    <img src="img/recons_table.svg" style="width:55%" class="img-fluid">
+
+                    <hr />
+
+                    <img src="img/r12.svg" style="width:60%" class="img-fluid">
+                    <p class="figure-caption">Restoration of an (phone) accelerometer feature values with the AAE and PCA.
+                        The entire  <br/> modality is dropped and reconstructed using features from the remaining signals.</p>
+
+                    <hr />
+
+                    <img src="img/all_mod.svg" style="width:70%" class="img-fluid">    
+                    <p class="figure-caption">Averaged evaluation metrics for 51 contextual labels with 5-folds cross-validation. All the
+                            features <br/>  from the corresponding modality are dropped and imputed with the considered techniques.</p>
+
+                    <hr />
+
+                    <p class="figure-caption">
+                            Classification results for 5-folds cross-validation with different missing modalities that are
+                            restored with a  <br/> specific method. The reported metrics are averaged over 51 labels and BA stands for
+                            balanced accuracy.</p>      
+                    <img src="img/mm_classification_table.svg" style="width:55%" class="img-fluid"> 
+                    <hr />
+                    
+                    <img src="img/recall.svg" style="width:50%" class="img-fluid">     
+                    <p class="figure-caption">Recall of 51 contextual labels with 5-folds cross-validation. All the features from accelerometer, <br/>
+                        gyroscope and audio modalities are dropped to emulate missing features and imputed with different <br/>
+                            techniques to train a classifier.</p>
+                </div>
+                <div class="col-lg-10"><h3 class="float-left">Synthesizing</h3></div>
+                <div class="col-lg-10 img-style">
+                    <p class="figure-caption">Performance of 1-layer neural network for context recognition when: (a) both the training and
+                            the <br/> test sets are  real (Real, first row); (b) a model trained with synthetic data and the test set is real <br/>
+                            (TSTR, second row);  and (c) the training set is real and the test set is synthetic (TRTS, bottom row).</p>
+                    <img src="img/syn_classification_table.svg" style="width:60%" class="img-fluid">    
+                    <hr />
+                    <img src="img/sba.svg" style="width:60%" class="img-fluid">
+                    <p class="figure-caption">Obtained balanced accuracy of 51 contextual labels for two classifiers trained with real and <br/>
+                            synthetic samples–evaluation is done on real test data with 5-folds cross-validation.</p>
+                    <hr/>
+
+                    <img src="img/example_syn_real.svg" style="width:65%" class="img-fluid">
+                    <p class="figure-caption">Examples of real (blue, top) and generated (red, bottom) samples of a randomly selected feature with AAE.</p>
+                </div>
+            </div>
+         </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>Paper</h2>
+                    <a href="https://www.mdpi.com/1424-8220/18/9/2967"><img src="img/sarbcr.jpg" width="900" class="img-fluid"></a> 
+                    <p> <a class="btn btn-dark" href="https://www.mdpi.com/1424-8220/18/9/2967/htm">Read Our Paper</a></p>
+                    <h3>Citation</h3>
+                    <p style="text-align: justify;">Aaqib Saeed, Tanir Ozcelebi, and Johan Lukkien, "Synthesizing and reconstructing missing sensory modalities in behavioral context recognition." Sensors 18.9 (2018): 2967.</p>
+                    <h3>BibTeX</h3>
+                    
+<pre>@article{saeed2018synthesizing,
+    title={Synthesizing and reconstructing missing sensory modalities in behavioral context recognition},
+    author={Saeed, Aaqib and Ozcelebi, Tanir and Lukkien, Johan},
+    journal={Sensors},
+    volume={18},
+    number={9},
+    pages={2967},
+    year={2018},
+    publisher={Multidisciplinary Digital Publishing Institute}
+}</pre>
+             </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>References</h2>
+                    <ul>
+                        <li>Alireza Makhzani et al., "Adversarial autoencoders." arXiv preprint arXiv:1511.05644 (2015).</li>
+                        <li>Yonatan Vaizman et al., "Recognizing detailed human context in the wild from smartphones and smartwatches." IEEE Pervasive Computing 16.4 (2017): 62-74.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="text-center">
+                <p>Copyright &#169 Aaqib Saeed 2019</p>
+            </div>
+        </div>
+    </footer>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79826043-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-79826043-1');
+    </script>
+</body>
+</html>
