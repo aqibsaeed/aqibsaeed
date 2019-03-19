@@ -219,9 +219,9 @@ section.features .feature-item i {
 }
 
 footer {
-  background-color: #2f363f;
+  background-color: #1a1d23;
   padding: 50px 0;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 footer img {
