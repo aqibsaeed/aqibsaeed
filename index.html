@@ -1,9 +1,194 @@
----
-layout: page
-use-site-title: true
-title: PhD Candidate
-subtitle: Eindhoven University of Technology
-meta-title: "Aaqib Saeed"
-meta-description: "PhD Candidate at Eindhoven University of Technology"
----
+<!doctype html>
+<head>
+  <title>Aaqib Saeed - Homepage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+  <meta name="theme-color" content="#1a4067" />
+  <!-- SEO -->
+  <meta property="og:title" content="Aaqib Saeed - Homepage" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="PhD Candidate at Eindhoven University of Technology" />
+  <meta property="og:image" content="" />
+  <meta property="og:url" content="https://aqibsaeed.github.io/" />
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Aaqib Saeed Homepage" />
+  <meta name="twitter:description" content="" />
+  <meta property="og:site_name" content="" />
+  <meta name="twitter:image" content="" />
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<script src="lib/jquery-1.12.4.min.js"></script>
+<!--<script src="lib/mobile-detect.min.js"></script>-->
+<script src="lib/template.v1.js"></script>
+<script src="lib/scramble.js"></script>
+
+<!-- <div class="cover"> -->
+<!--   <h1 class="unselectable">Learning Latent Plans<br>from Play</h1> -->
+<!--   <video src="assets/mp4/8tasks1920x540.mp4" autoplay loop playsinline muted></video> -->
+<!--   <div class="hint unselectable">scroll down</div> -->
+<!-- </div> -->
+
+<dt-article id="dtbody">
+<dt-byline class="l-page transparent"></dt-byline>
+<h1>Aaqib Saeed</h1>
+<h2>PhD Candidate @ <a class="project-link" href="https://www.tue.nl/en/" target="_blank">Eindhoven University of Technology</a><br>
+  Self-Supervised Learning, Ambient Computing, Pervasive Sensing & On-device AI.
+</h2>
+<dt-byline class="l-page" id="authors_section">
+<div class="byline">
+  <div class="authors">
+    <div class="author">
+        <a class="project-link" href="https://twitter.com/aaqib_saeed" target="_blank">Twitter</a>
+    </div>
+    <div class="author">
+        <a class="project-link" href="https://github.com/aqibsaeed" target="_blank">GitHub</a>
+    </div>
+    <div class="author">
+        <a class="project-link" href="https://www.linkedin.com/in/aqibsaeed/" target="_blank">LinkedIn</a>
+    </div>
+    <div class="author">
+        <!-- <a class="project-link" href="">Email: first dot last at gmail</a> -->
+	<a class="project-link">Email:</a><font id="email" style="display:inline;">qrmenso@tcaiopamlbedia.o <a href="#" onclick="emailScramble.initAnimatedBubbleSort();return false;">unscramble</a></font>
+	<script>
+	    emailScramble = new scrambledString(document.getElementById('email'),
+		'emailScramble', '.cepbnomqaloraadtoe@iism',
+		[20, 21, 6, 10, 3, 15, 12, 16, 1, 0, 19, 14, 11, 5, 17, 8, 13, 22, 7, 9, 18, 2, 4, 23]);
+	    </script>
+    </div>
+  </div>
+</div>
+</dt-byline>
+</dt-byline>
+<table valign="top">
+  <!-- project block -->
+  <tr>
+    <td class="project-fig"><div class="figure">
+      <img class='project-img' src='assets/misc/overview_ssrl.svg' style="width:88%;">
+    </div></td>
+    <td class="project-cell">
+      <div class="project-title">Multi-Task Self-Supervised Learning for Human Activity Detection</div>
+      <dt-byline><div class="byline">
+      <a class="project-link" href="https://arxiv.org/pdf/1907.11879.pdf">PDF</a> 
+      <a class="project-link" href="https://dl.acm.org/citation.cfm?id=3328932">Link (Official)</a> 
+      <a class="project-link" href=https://github.com/aqibsaeed/aqibsaeed.github.io/blob/master/assets/bib/saeed2019multi.bib>BibTex</a>
+      </div></div><br>
+      Aaqib Saeed, Tanir Ozcelebi, Johan Lukkien @ <a class="project-link" href="https://imwut.acm.org/">IMWUT June 2019</a>- <a class="project-link" href="http://ubicomp.org/ubicomp2019">Ubicomp 2019</a> <br><br>
+      <a class="project-link" href="https://drive.google.com/file/d/0B4M2lUVyJzS4WHVLWjdZeGVZLWVDb1puX3N2b19lc0xRQzMw/view">Workshop Paper</a>@&nbsp;<a class="project-link" href="https://sites.google.com/view/self-supervised-icml2019">Self-supervised Learning Workshop ICML 2019</a>
+      <br><br>
+        We've created a Transformation Prediction Network, a self-supervised neural network for representation learning from sensory data that does not require access to any form of semantic labels, e.g. activity classes in human context recognition. We demonstrate that simple auxiliary tasks of recognizing signal transformations result in strong supervision 
+        for extracting useful features that generalize well on the down-stream task; substantially improving performance under semi-supervised and transfer learning settings in low-data regime. 
+    </td>
+  </tr>
+  <!-- project block -->
+  <tr>
+      <td class="project-fig"><div class="figure">
+      <img class='project-img' src='assets/misc/overview_mmcr.svg'>
+    </div></td>
+    <td class="project-cell">
+      <div class="project-title">End-to-End Multi-Modal Behavioral Context Recognition in a Real-Life Setting</div>
+      <dt-byline><div class="byline">
+      <a class="project-link" href="https://arxiv.org/pdf/1808.08766.pdf">Paper</a>
+      </div></div><br>
+      Aaqib Saeed, Stojan Trajanovski, Tanir Ozcelebi, Johan Lukkien @ <a class="project-link" href="https://www.fusion2019.org/">Fusion 2019</a>
+      <br><br>
+      The automatic and unobtrusive sensing of human context can help develop solutions for assisted living, fitness tracking, sleep monitoring, and several other fields. Towards addressing this issue, we develop a multi-modal neural network capable of multi-label behavioral context recognition. Our empirical evaluation suggests that a deep convolutional network trained end-to-end achieves comparable performance to manual feature engineering with minimal effort.
+    </td>
+  </tr>
+  <!-- project block -->
+  <tr>
+      <td class="project-fig"><div class="figure">
+      <img class='project-img' src='assets/misc/overview_aae.svg'>
+    </div></td>
+    <td class="project-cell">
+      <div class="project-title">Synthesizing and Reconstructing Missing Sensory Modalities in Behavioral Context Recognition</div>
+      <dt-byline><div class="byline">
+      <a class="project-link" href="https://aqibsaeed.github.io/synthesizing-and-reconstructing-missing-sensory-modalities-with-adversarial-autoencoders">Project Page</a>
+      <a class="project-link" href="https://res.mdpi.com/sensors/sensors-18-02967/article_deploy/sensors-18-02967.pdf">Paper</a>
+      <a class="project-link" href=https://github.com/aqibsaeed/aqibsaeed.github.io/blob/master/assets/bib/saeed2018synthesizing.bib>BibTex</a>
+      </div></div><br>
+      Aaqib Saeed, Tanir Ozcelebi, Johan Lukkien @ <a class="project-link" href="https://www.mdpi.com/journal/sensors">MDPI Sensors 2018</a>
+      <br><br>
+      We propose a method based on an adversarial autoencoder for handling missing sensory features and synthesizing realistic samples. We empirically demonstrate the capability of our approach in comparison with classical techniques for filling-in missing values on a large-scale activity recognition dataset collected in-the-wild. 
+    </td>
+  </tr>
+  <tr>
+      <td class="project-fig"><div class="figure">
+      <img class='project-img' src='assets/misc/overview_drcn.svg' style="width:70%; transform: rotate(270deg);">
+    </div></td>
+    <td class="project-cell">
+      <div class="project-title">Model Adaptation and Personalization for Physiological Stress Detection</div>
+      <dt-byline><div class="byline">
+      <a class="project-link" href="https://aqibsaeed.github.io/deep-physiological-stress-detection">Project Page</a>
+      <a class="project-link" href="https://ieeexplore.ieee.org/abstract/document/8631447">Paper</a>
+      <a class="project-link" href=https://github.com/aqibsaeed/aqibsaeed.github.io/blob/master/assets/bib/saeed2018model.bib>BibTex</a>
+      </div></div><br>
+      Aaqib Saeed, Tanir Ozcelebi, Johan Lukkien, Jan van Erp and Stojan Trajanovski @ <a class="project-link" href="https://dsaa2018.isi.it/home">IEEE DSAA 2018</a>
+      <br><br>
+      A long-term exposure to stressful situations can have negative health consequences, such as increased risk of cardiovascular diseases and immune system disorder. We utilize deep reconstruction classification network and multitask learning for domain adaption and personalization of stress recognition models. The proposed methods performed significantly better than baselines on multimodal physiological (time-series) data collected during driving tasks, in both real-world and driving simulator.
+    </td>
+  </tr>
+  <!-- project block -->
+  <tr>
+      <td class="project-fig"><div class="figure">
+      <img class='project-img' src='assets/misc/overview_pmtl.svg' style="width:70%;">
+    </div></td>
+    <td class="project-cell">
+      <div class="project-title">Personalized Driver Stress Detection with Multi-Task Neural Networks using Physiological Signals</div>
+      <dt-byline><div class="byline">
+      <a class="project-link" href="https://arxiv.org/pdf/1711.06116.pdf">Paper</a>
+      <a class="project-link" href=https://github.com/aqibsaeed/aqibsaeed.github.io/blob/master/assets/bib/saeed2017personalized.bib>BibTex</a>
+      </div></div><br>
+      Aaqib Saeed and Stojan Trajanovski @ <a class="project-link" href="https://ml4health.github.io/2017/index.html">ML4H Workshop NeurIPS 2017</a>
+      <br><br>
+      Stress can be seen as a physiological response to everyday emotional, mental and physical challenges. We suggest a subjects-as-tasks approach for multi-task learning based neural network (with hard parameter sharing of mutual representation and task-specific layers) for personalized stress detection using skin conductance and heart rate from wearable devices.
+    </td>
+  </tr>
+  <!-- project block -->
+  <tr>
+      <td class="project-fig"><div class="figure">
+      <img class='project-img' src='assets/misc/overview_dpa.svg' style="width:80%;">
+    </div></td>
+    <td class="project-cell">
+      <div class="project-title">Deep Physiological Arousal Detection in a Driving Simulator using Wearable Sensors</div>
+      <dt-byline><div class="byline">
+      <a class="project-link" href="https://ieeexplore.ieee.org/abstract/document/8215701">Paper</a>
+      <a class="project-link" href=https://github.com/aqibsaeed/aqibsaeed.github.io/blob/master/assets/bib/saeed2017deep.bib>BibTex</a>
+      </div></div><br>
+      Aaqib Saeed, Stojan Trajanovski, Maurice van Keulen and Jan van Erp @ <a class="project-link" href="https://oakland.edu/secs/dmbih-workshop-2017">DMBIH Workshop IEEE ICDM 2017</a>
+      <br><br>
+      Driving is an activity that requires considerable alertness. Insufficient attention, imperfect perception, inadequate information processing, and sub-optimal arousal are possible causes of poor human performance. Understanding of these causes and the implementation of effective remedies is of key importance to increase traffic safety and improve driver's well-being. For this purpose, we develop an arousal detection algorithm using temporal convolutional neural network that is trained on raw physiological signals i.e., heart rate, skin conductance and skin temperature. 
+    </td>
+  </tr>
+  <!-- project block -->
+  <tr>
+      <td class="project-fig"><div class="figure">
+      <img class='project-img' src='assets/misc/overview_wmi.svg'>
+    </div></td>
+    <td class="project-cell">
+      <div class="project-title">#WhoAmI in 160 Characters? Classifying Social Identities Based on Twitter</div>
+      <dt-byline><div class="byline">
+      <a class="project-link" href="https://aclweb.org/anthology/papers/W/W16/W16-5608/">Paper</a>
+      <a class="project-link" href="https://github.com/annapriante/identityclassifier">Code</a>
+      <a class="project-link" href=https://github.com/aqibsaeed/aqibsaeed.github.io/blob/master/assets/bib/priante2016whoami.bib>BibTex</a>
+      </div></div><br>
+      Anna Priante, Djoerd Hiemstra, Tijs van den Broek, Aaqib Saeed, Michel Ehrenhard and Ariana Need @ <a class="project-link" href="https://sites.google.com/site/nlpandcss/previous-editions/nlpcss-at-emnlp-2016">NLP and CSS Workshop EMNLP 2016</a>
+      <br><br>
+      We combine social theory and NLP methods to classify English-speaking Twitter users' online social identity in profile descriptions. Our study shows how social theory can be used to guide NLP methods, and how such methods provide input to revisit traditional social theory that is strongly consolidated in offline settings.
+    </td>
+  </tr>
+  <!-- project block -->
+</table>
+</dt-article>
+<dt-appendix>
+<h2>Acknowledgments</h2>
+<p>This article was prepared using the <a href="https://distill.pub">Distill</a> <a href="https://github.com/distillpub/template">template</a> which is adapted and kindly open-sourced by <a href="https://sermanet.github.io/">Pierre Sermanet</a>.</p>
+</dt-appendix>
+</dt-appendix>
+</body>
