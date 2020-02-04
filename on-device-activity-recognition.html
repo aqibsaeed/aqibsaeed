@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="description" content="On-Device Activity Recognition - Personalized machine learning on the smartphone">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>On-Device Activity Recognition - Aaqib Saeed</title>
+	<link href="https://fonts.googleapis.com/css?family=Heebo:400,400i,500,700|Titillium+Web:600" rel="stylesheet"/>
+	<link rel="stylesheet" href="css/par_style.css"/>
+	<link rel="stylesheet" href="css/prism.css"/>
+	<script src="js/prism.js"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-79826043-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-79826043-1');
+	</script>
+</head>
+<body class="is-boxed">
+    <div class="body-wrap boxed-container">
+        <header class="site-header">
+            <div class="container">
+                <div class="site-header-inner">
+                    <div class="brand header-brand">
+                        <h4 class="m-0">
+                            <a href="http://aqibsaeed.github.io/">Aaqib Saeed</a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-inner">
+						<div class="hero-copy">
+	                        <h1 class="hero-title mt-0 is-revealing">On-Device Activity Recognition</h1>
+	                        <p class="hero-paragraph is-revealing">Personalized machine learning on the smartphone</p>
+							<div class="hero-form field field-grouped is-revealing">
+	                            <div class="control">
+	                                <a class="button button-block" href="https://github.com/aqibsaeed/on-device-activity-recognition">Check on Github</a> 
+								</div>
+								<div class="control">
+	                                <a class="button button-block button-gray" href="#blogpost">Blog post</a> 
+	                            </div>
+	                        </div>
+						</div>
+						<div class="hero-illustration">
+							<div class="hero-bg">
+								<svg width="720" height="635" xmlns="http://www.w3.org/2000/svg">
+								    <defs>
+								        <linearGradient x1="50%" y1="0%" x2="50%" y2="97.738%" id="a">
+								            <stop stop-color="rgba(63, 61, 86, 0.2)" offset="0%"/>
+								            <stop stop-color="rgba(63, 61, 86, 0.1)" offset="100%"/>
+								        </linearGradient>
+								    </defs>
+								    <path d="M0 0h720v504.382L279.437 630.304c-53.102 15.177-108.454-15.567-123.631-68.669-.072-.25-.142-.5-.211-.75L0 0z" fill="url(#a)" fill-rule="evenodd"/>
+								</svg>
+							</div>
+							<img class="device-mockup" src="img/par_banner.svg" alt="Phone Illustration">
+						</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features section">
+                <div class="container">
+                    <div class="features-inner section-inner">
+						<div class="features-wrap">
+	                        <div class="feature">
+	                            <div class="feature-inner">
+									<div class="feature-header mb-16">
+										<div class="feature-icon mr-16">
+										<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+											<g fill-rule="nonzero" fill="none">
+												<path d="M7 8H1a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1zM19 8h-6a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1z" fill="#3f3d56ff"/>
+												<path d="M19 20h-6a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1z" fill="#3f3d56ff"/>
+												<path d="M31 8h-6a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1z" fill="#3f3d56ff"/>
+												<path d="M7 20H1a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1z" fill="#3f3d56ff"/>
+												<path d="M7 32H1a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1z" fill="#3f3d56ff"/>
+												<path d="M29.5 18h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5z" fill="#3f3d56ff"/>
+												<path d="M17.5 30h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5zM29.5 30h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5z" fill="#3f3d56ff"/>
+											</g>
+										</svg>
+		                                </div>
+		                                <h4 class="feature-title m-0">Privacy Preserving</h4>
+									</div>
+	                                <p class="text-sm mb-0">Leverage the power of on-device machine learning for training personalized models without the need of sharing your data.</p>
+	                            </div>
+	                        </div>
+							<div class="feature">
+	                            <div class="feature-inner">
+									<div class="feature-header mb-16">
+										<div class="feature-icon mr-16">
+											<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+											    <g fill="none" fill-rule="nonzero">
+											        <path d="M16 9c2.206 0 4-1.794 4-4s-1.794-4-4-4-4 1.794-4 4 1.794 4 4 4z" fill="#3f3d56ff"/>
+											        <path d="M27 9c2.206 0 4-1.794 4-4s-1.794-4-4-4-4 1.794-4 4 1.794 4 4 4z" fill="#3f3d56ff"/>
+											        <path d="M27 12c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4-1.794-4-4-4z" fill="#3f3d56ff"/>
+											        <path d="M5 23c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4-1.794-4-4-4z" fill="#3f3d56ff"/>
+											        <path d="M27 23c-1.859 0-3.41 1.28-3.858 3h-3.284A3.994 3.994 0 0 0 17 23.142v-3.284c1.72-.447 3-2 3-3.858 0-2.206-1.794-4-4-4-1.859 0-3.41 1.28-3.858 3H8.858A3.994 3.994 0 0 0 6 12.142V8.858c1.72-.447 3-2 3-3.858 0-2.206-1.794-4-4-4S1 2.794 1 5c0 1.858 1.28 3.41 3 3.858v3.284c-1.72.447-3 2-3 3.858 0 2.206 1.794 4 4 4 1.859 0 3.41-1.28 3.858-3h3.284A3.994 3.994 0 0 0 15 19.858v3.284c-1.72.447-3 2-3 3.858 0 2.206 1.794 4 4 4 1.859 0 3.41-1.28 3.858-3h3.284c.447 1.72 2 3 3.858 3 2.206 0 4-1.794 4-4s-1.794-4-4-4z" fill="#3f3d56ff"/>
+											    </g>
+											</svg>
+		                                </div>
+		                                <h4 class="feature-title m-0">Transfer Learning</h4>
+									</div>
+	                                <p class="text-sm mb-0">Harness a pretrained network learnt using a large-scale dataset for efficient fine-tuning on a specific target task of interest with few-labeled data.</p>
+	                            </div>
+	                        </div>
+							<div class="feature">
+	                            <div class="feature-inner">
+									<div class="feature-header mb-16">
+										<div class="feature-icon mr-16">
+											<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+											    <g fill-rule="nonzero" fill="none">
+											        <path d="M4 12H0V5a5.006 5.006 0 0 1 5-5h7v4H5a1 1 0 0 0-1 1v7z" fill="#3f3d56ff"/>
+											        <path d="M32 12h-4V5a1 1 0 0 0-1-1h-7V0h7a5.006 5.006 0 0 1 5 5v7zM12 32H5a5.006 5.006 0 0 1-5-5v-7h4v7a1 1 0 0 0 1 1h7v4z" fill="#3f3d56ff"/>
+											        <path d="M27 32h-7v-4h7a1 1 0 0 0 1-1v-7h4v7a5.006 5.006 0 0 1-5 5z" fill="#3f3d56ff"/>
+											    </g>
+											</svg>
+		                                </div>
+		                                <h4 class="feature-title m-0">Context Detection</h4>
+									</div>
+	                                <p class="text-sm mb-0">Develop robust activity sensing models for a wide-variety of personal informatics applications running directly on your smartdevice.</p>
+	                            </div>
+	                        </div>
+						</div>
+					</div>
+					<div id="blogpost">
+						<h3 class="feature-title">Learning on-device activity recognizer</h3>
+						<p class="text-sm">In this article, I explain how to utilize transfer learning for efficiently training a personalized activity recognition model on the Android device. The post assumes familiarity with pre-processing sensory data, 
+							convolutional neural network, and a basic understanding of Android programming. To understand how the former can be done, please consult <a href="https://aqibsaeed.github.io/2016-11-04-human-activity-recognition-cnn/"><u>this post</u></a>.</p>
+						<h4 class="feature-title m-0">Overview</h4>
+						<p class="text-sm">Deep learning has become a state-of-the-art method in several areas to match human-level performance, mainly in object detection, language modeling, mastering complex strategy games, 
+							generation of synthetic imagery, and developing sensing systems. However, deep neural networks with a high capacity require a massive amount of well-curated data for achieving generalization and 
+							mitigating the problem of overfitting. This issue escalates even further when we try to adapt or personalize a model to fit the user's needs. It could be because that adaptation currently requires 
+							data to be accumulated in a centralized repository, which then leads to privacy concerns and has substantial annotation cost. A potential solution for tackling this issue is transfer learning. In this case, 
+							we learn a model on a large dataset in a central context (or say datacenter) then use it as a fixed feature extractor for fine-tuning a small network on top of it, and this is achieved directly on the device without ever sending the data to the server. 
+							In this project, I will show how to develop a model leveraging transfer learning and an Android app to recognize daily activities from sensory data of a smartphone. For this purpose, we will use recent release of
+						    <a href="https://github.com/tensorflow/examples/tree/master/lite/examples/model_personalization"><u>Tensorflow Lite Transfer Learning Pipeline</u></a>. So let’s get started! </p>
+							<p class="text-sm">We will build this project in three phases, a) training a temporal convolutional network on a large activity recognition dataset, b) converting the model with TFLite API in a format suitable and defining 
+							a network that can be used on device and finally, c) developing an Android app to put everything together. The entire codebase can be accessed <a href="https://github.com/aqibsaeed/on-device-activity-recognition"><u><b>here</b></u></a> for research purpose only.</p> 
+						<h4 class="feature-title m-0">Dataset and Network Architecture</h4>
+						<p class="text-sm">
+							To achieve our objective of activity recognition, we need to train the network on a large labeled dataset of IMUs values that has corresponding activity annotations. In our case, we will use accelerometer and gyroscope
+							sensor data from <a href="https://archive.ics.uci.edu/ml/datasets/Heterogeneity+Activity+Recognition"><u>this</u></a> <a href="https://dl.acm.org/doi/10.1145/2809695.2809718"><u>paper</u></a>, which is collected from a diverse set of devices and has labels for six activities of daily routine. The sample pre-processed instances are illustrated in the figure below. 
+							If you use this dataset in your research cite the corresponding paper and do check the license.					
+						</p>
+						<p class="figure">
+							<img  src="img/accel_sample.svg" alt="Acceleromer Sample">
+							<i>Accelerometer</i>
+
+							<img  src="img/gyro_sample.svg" alt="Gyroscope Sample">
+							<i>Gyroscope</i>
+						</p>
+						<p class="text-sm">
+							Let's define a convolutional neural network architecture that processes IMU (i.e, triaxial accelerometer and gyroscope) streams and output probabilities over six activities.	
+						</p>
+
+<pre><code class="language-python line-numbers">from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras.layers import Input, Conv2D, Flatten, Dense, MaxPool2D, Reshape
+
+def get_model(input_shape = (2400,), num_classes = 6, learning_rate = 1e-4, l2_rate = 1e-4):
+	input = Input(shape=input_shape)
+	reshape_input = Reshape((1, 400, 6))(input)
+
+	x = Conv2D(32, kernel_size = (1, 24), 
+			strides = (1, 1),  
+			activation = "relu", 
+			padding = "valid", 
+			kernel_regularizer = l2(l2_rate))(reshape_input)
+	x = MaxPool2D((1, 4), (1, 2))(x)
+
+	x = Conv2D(64, kernel_size = (1, 16), 
+			strides = (1, 1), 
+			activation = "relu", 
+			padding = "valid", 
+			kernel_regularizer = l2(l2_rate))(x)
+	x = MaxPool2D((1, 4), (1, 2))(x)
+
+	x = Conv2D(96, kernel_size = (1, 8), 
+			strides = (1, 1), 
+			activation = "relu", 
+			padding = "valid", 
+			kernel_regularizer = l2(l2_rate))(x)
+	x = MaxPool2D((1, 4), (1, 2))(x)
+
+	x = Conv2D(128, kernel_size = (1, 4), 
+			strides = (1, 1), 
+			activation = "relu", 
+			padding = "valid", 
+			kernel_regularizer = l2(l2_rate),
+			name="encoder")(x)        
+	x = Flatten()(x)
+	output = Dense(num_classes, activation = "softmax")(x)
+
+	model = Model(input, output)
+	model.compile(optimizer = Adam(learning_rate), 
+				loss = "categorical_crossentropy",
+				metrics = ["categorical_accuracy"])
+	return model</code></pre>
+						<p class="text-sm">
+							After training the network for a fixed number of epochs in a standard way, we will save the encoder part of the network named <code>base</code> (i.e., without  the last layer) in a <code>Tensorflow SavedModel</code> format. 
+							The next step is to define a fine-tuning network named <code>head</code> with additional layers that will be trained on a device while keeping the base model fixed. 
+							To keep things simple, we add a fully connected layer with 128 units and an output layer with 2 units (for differentiating between two activities). 
+							Here, you can also choose between following optimizers Adam or SGD with <code>optimizers.SGD</code> and <code>optimizers.Adam</code>, respectively. 
+							Afterward, we will convert and save this network using the TFLite Transfer Converter that will generate the following five files: <code>bottleneck.tflite</code>, 
+							<code>inference.tflite</code>, <code>initialize.tflite</code>, <code>optimizer.tflite</code>, and <code>train_head.tflite</code> in a specified directory.
+						</p>
+						<pre><code class="language-python line-numbers">import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Model, Sequential, load_model, save_model
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras.layers import Flatten, Dense
+
+from model import get_model
+
+from tfltransfer import bases
+from tfltransfer import heads
+from tfltransfer import optimizers
+from tfltransfer.tflite_transfer_converter import TFLiteTransferConverter
+
+if __name__ == "__main__":
+	x = np.load("x.npy")
+	y = np.load("y.npy")
+
+	epochs = 10
+	batch_size = 32
+	tflite_model = "par_model"
+	tflite_ondevice_model = "par_ondevice"
+	encoder_layer = "encoder"
+
+	window_size = x.shape[1]
+	num_channels = x.shape[2]
+	x_reshaped = x.reshape(-1, window_size * num_channels) 
+
+	model = get_model()
+	model.fit(x_reshaped, y, epochs = epochs, 
+			batch_size = batch_size, verbose = 2)
+
+	model = Model(model.input, model.get_layer(encoder_layer).output)
+	save_model(model, tflite_model, 
+				include_optimizer = False, 
+				save_format="tf")
+	
+
+	# --------------- on-device model conversion ---------------- #
+
+	# Model configuration.
+	num_classes = 2
+	learning_rate = 0.001
+	batch_size = 5
+	l2_rate = 0.0001
+	hidden_units = 128
+	input_shape = model.get_layer(encoder_layer).output.shape
+
+	base = bases.SavedModelBase(tflite_model)
+
+	head = Sequential([
+		Flatten(input_shape=input_shape),
+		Dense(units=hidden_units,
+			activation="relu",
+			kernel_regularizer=l2(l2_rate)),
+		Dense(units=num_classes, 
+			activation="softmax",
+			kernel_regularizer=l2(l2_rate)),
+	])
+
+	# Optimizer is ignored by the converter.</a>
+	head.compile(loss="categorical_crossentropy", optimizer="adam")
+
+	converter = TFLiteTransferConverter(num_classes, 
+				base,
+				heads.KerasModelHead(head),
+				optimizers.SGD(learning_rate),
+				train_batch_size=batch_size) 
+	
+	converter.convert_and_save(tflite_ondevice_model)</code></pre>
+						<h4 class="feature-title m-0">Application</h4>
+						<p class="text-sm">
+							In this phase, we will focus on developing an Android app that can use the generated model in earlier steps for fine-tuning, inference, and data collection. The app does not require access to the internet and works completely offline, resulting in improved user privacy. 
+							Let's create a new Android project or start from the one provided <a href="https://github.com/aqibsaeed/on-device-activity-recognition/tree/master/android"><u>here</u></a>. To start, copy the five model files under a folder named <code>model</code> within the <code>assets</code> directory of the project.  
+							In <code>AndroidManifest.xml</code> file copy the below lines, this will give our app access to the accelerometer/gyroscope, vibration, and reading/writing model files. Likewise, the included <code>transfer_api</code> library has all the required functionality for performing on-device machine learning. 
+						</p>
+<pre><code class="language-xml line-numbers">< uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+< uses-feature android:name="android.hardware.sensor.gyroscope" android:required="true" />
+< uses-permission android:name="android.permission.VIBRATE" />
+< uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /></code></pre>
+						<p class="text-sm">
+							Importantly, in <code>build.gradle</code> file we need to add the following dependency to use 
+							custom Keras model <code>implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:0.0.0-nightly'</code>. See the complete build file <a href="https://github.com/aqibsaeed/on-device-activity-recognition/blob/master/android/app/build.gradle"><u>here</u></a>. 
+						</p>
+						<p class="text-sm">
+							Now we are in right place to build the UI (or an Android activity). Please feel free to design it as you like. 
+							Here, I have designed it to showcase three aspects a) data collection, b) training and c) inference. 
+							Each block in the interface consists of details relevant to the mentioned features which can be controlled with appropriate item selection from the topmost spinner and start/stop buttons at the bottom. 
+						</p>
+						<p class="app-screenshot">
+							<img src="dist/images/par_app_scrn.png" alt="App Preview">
+							<i>App User Interface</i>
+						</p>
+						<p class="text-sm">
+							In the <code>TansferLearningModelWrapper.java</code> file, we will make changes to specify our model directory name within assets folder and the name of classes on <code>line 50-51</code> as:
+						</p>
+<pre><code class="language-java line-numbers">model = new TransferLearningModel(new AssetModelLoader(context, "model"), Arrays.asList("Class A", "Class B"));</code></pre>
+						<p class="text-sm">
+							Moreover, on top of the functionality provided by the <a href="https://github.com/tensorflow/examples/tree/master/lite/examples/model_personalization"><u>TFLite team</u></a> in <code>TansferLearningModelWrapper</code>, I have also added two additional methods in this class to save and reload the model.
+						</p>
+<pre><code class="language-java line-numbers">public void saveModel(File file){
+	try {
+		FileOutputStream out = new FileOutputStream(file);
+		GatheringByteChannel gather = out.getChannel();
+		model.saveParameters(gather);
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}
+
+public void loadModel(File file){
+	try {
+		FileInputStream inp = new FileInputStream(file);
+		ScatteringByteChannel scatter = inp.getChannel();
+		model.loadParameters(scatter);
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}</code></pre>
+						<p class="text-sm">
+							In the <code>MainActivity.java</code> file, we will add functionality to glue everything together from, data collection to training and inference directly on the smartphone. 
+							The code below is mostly self-explanatory if you have a basic understanding of Android programming. 
+							The crucial bits are collecting accelerometer/gyroscope data at the highest sampling rate possible and feed into our model when there are 400 values in the buffer. 
+							If the data collection mode is selected, we will keep adding instances with their corresponding class ids to the model cache. 
+							When we have the required number of instances per class available (which are 5 per category in our case), the training can be initiated. The loss values can be observed fluctuating in the panel as the network is trained. 
+							The model can also be saved and reload by uncommenting the <code>lines 190-195</code>  and <code>168-176</code>, respectively. During inference, we can observe the output probability of each class in the lower panel. 
+							Likewise, the phone will vibrate if the <code>Class B's</code> probability is above a predefined threshold to make classification process more apparent. Now, compile and run the app on an Android device to see the finished product. I have tested the app on devices running Android version 9.
+						</p>
+<pre><code class="language-java line-numbers">package org.tensorflow.lite.examples.transfer;
+	
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import org.tensorflow.lite.examples.transfer.api.TransferLearningModel.Prediction;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import android.os.Vibrator;
+import android.widget.Toast;
+
+enum Mode {
+	Data_Collection,
+	Inference,
+	Training
+}
+
+public class MainActivity extends AppCompatActivity implements SensorEventListener  {
+	final int NUM_SAMPLES = 400;
+	String MODEL_NAME = "ar_model";
+	double VB_THRESHOLD = 0.75;
+
+	int classAInstanceCount = 0;
+	int classBInstanceCount = 0;
+	boolean isRunning = false;
+
+	SensorManager mSensorManager;
+	Sensor mAccelerometer;
+	Sensor mGyroscope;
+	TransferLearningModelWrapper tlModel;
+	String classId;
+	static List<Float> x_accel;
+	static List<Float> y_accel;
+	static List<Float> z_accel;
+	static List<Float> x_gyro;
+	static List<Float> y_gyro;
+	static List<Float> z_gyro;
+
+	static List<Float> input_signal;
+
+	Mode mode;
+
+	Button startButton;
+	Button stopButton;
+	TextView classATextView;
+	TextView classBTextView;
+	TextView classAInstanceCountTextView;
+	TextView classBInstanceCountTextView;
+	TextView lossValueTextView;
+	Spinner optionSpinner;
+	Spinner classSpinner;
+	Vibrator vibrator;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+		startButton = (Button) findViewById(R.id.buttonStart);
+		stopButton = (Button) findViewById(R.id.buttonStop);
+		stopButton.setEnabled(false);
+
+		classATextView = (TextView)findViewById(R.id.classAOutputValueTextView);
+		classBTextView = (TextView)findViewById(R.id.classBOutputValueTextView);
+		classAInstanceCountTextView = (TextView)findViewById(R.id.classACountValueTextView);
+		classBInstanceCountTextView = (TextView)findViewById(R.id.classBCountValueTextView);
+		lossValueTextView = (TextView)findViewById(R.id.lossValueTextView);
+
+		optionSpinner = (Spinner) findViewById(R.id.optionSpinner);
+		classSpinner = (Spinner) findViewById(R.id.classSpinner);
+
+		ArrayAdapter<CharSequence> optionAdapter = ArrayAdapter
+				.createFromResource(this, R.array.options_array,
+						R.layout.spinner_item);
+		optionAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		optionSpinner.setAdapter(optionAdapter);
+
+		ArrayAdapter<CharSequence> classAdapter = ArrayAdapter
+				.createFromResource(this, R.array.class_array,
+						R.layout.spinner_item);
+		classAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		classSpinner.setAdapter(classAdapter);
+
+		x_accel = new ArrayList<Float>();
+		y_accel = new ArrayList<Float>();
+		z_accel = new ArrayList<Float>();
+		x_gyro= new ArrayList<Float>();
+		y_gyro = new ArrayList<Float>();
+		z_gyro = new ArrayList<Float>();
+		input_signal = new ArrayList<Float>();
+
+		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+		mSensorManager.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_FASTEST);
+		tlModel = new TransferLearningModelWrapper(getApplicationContext());
+
+		optionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+										int position, long id) {
+				String option = (String) parent.getItemAtPosition(position);
+				switch (option){
+					case "Data Collection":
+						mode = Mode.Data_Collection;
+						break;
+					case "Training":
+						mode = Mode.Training;
+						break;
+					case "Inference":
+						mode = Mode.Inference;
+						break;
+					default:
+						throw new IllegalArgumentException("Invalid app mode.");
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+		classSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+										int position, long id) {
+				classId = (String) parent.getItemAtPosition(position);
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+		startButton.setOnClickListener( new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startButton.setEnabled(false);
+				stopButton.setEnabled(true);
+				optionSpinner.setEnabled(false);
+				isRunning = true;
+				// Uncomment following lines to load an existing model.
+				/*     if(mode == Mode.Inference){
+						File modelPath = getApplicationContext().getFilesDir();
+						File modelFile = new File(modelPath, MODEL_NAME);
+						if(modelFile.exists()){
+						tlModel.loadModel(modelFile);
+						Toast.makeText(getApplicationContext(), "Model loaded.", Toast.LENGTH_SHORT).show();
+						}
+					}
+				*/
+			}
+		});
+
+		stopButton.setOnClickListener( new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startButton.setEnabled(true);
+				stopButton.setEnabled(false);
+				optionSpinner.setEnabled(true);
+				isRunning = false;
+				if(mode == Mode.Training){
+					tlModel.disableTraining();
+					// Uncomment following lines to save the model.
+					/*
+					File modelPath = getApplicationContext().getFilesDir();
+					File modelFile = new File(modelPath, MODEL_NAME);
+					tlModel.saveModel(modelFile);
+					Toast.makeText(getApplicationContext(), "Model saved.", Toast.LENGTH_SHORT).show();
+					*/
+				}
+			}
+		});
+	}
+
+	protected void onPause() {
+		super.onPause();
+		mSensorManager.unregisterListener(this);
+	}
+
+	protected void onResume() {
+		super.onResume();
+		mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+		mSensorManager.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_FASTEST);
+	}
+
+	protected void onDestroy() {
+		super.onDestroy();
+		tlModel.close();
+		tlModel = null;
+		mSensorManager = null;
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		switch (event.sensor.getType()) {
+			case Sensor.TYPE_ACCELEROMETER:
+				x_accel.add(event.values[0]); y_accel.add(event.values[1]); z_accel.add(event.values[2]);
+				break;
+			case Sensor.TYPE_GYROSCOPE:
+				x_gyro.add(event.values[0]); y_gyro.add(event.values[1]); z_gyro.add(event.values[2]);
+				break;
+		}
+
+		//Check if we have desired number of samples for sensors, if yes, the process input.
+		if(x_accel.size() == NUM_SAMPLES && y_accel.size() == NUM_SAMPLES &&
+				z_accel.size() == NUM_SAMPLES && x_gyro.size() == NUM_SAMPLES &&
+				y_gyro.size() == NUM_SAMPLES && z_gyro.size() == NUM_SAMPLES)
+			processInput();
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int i) {
+
+	}
+
+	private void processInput()
+	{
+		int i = 0;
+		while (i < NUM_SAMPLES) {
+			input_signal.add(x_accel.get(i));
+			input_signal.add(y_accel.get(i));
+			input_signal.add(z_accel.get(i));
+			input_signal.add(x_gyro.get(i));
+			input_signal.add(y_gyro.get(i));
+			input_signal.add(z_gyro.get(i));
+			i++;
+		}
+
+		float[] input = toFloatArray(input_signal);
+
+		if (isRunning){
+		if(mode == Mode.Training){
+			int batchSize = tlModel.getTrainBatchSize();
+			if(classAInstanceCount >= batchSize && classBInstanceCount >= batchSize){
+				tlModel.enableTraining((epoch, loss) -> runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							lossValueTextView.setText(Float.toString(loss));
+						}
+				}));
+			}
+			else{
+				String message = batchSize + " instances per class are required for training.";
+				Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+				stopButton.callOnClick();
+			}
+
+		}
+		else if (mode == Mode.Data_Collection){
+			tlModel.addSample(input, classId);
+
+			if (classId.equals("Class A")) classAInstanceCount += 1;
+			else if(classId.equals("Class B")) classBInstanceCount += 1;
+
+			classAInstanceCountTextView.setText(Integer.toString(classAInstanceCount));
+			classBInstanceCountTextView.setText(Integer.toString(classBInstanceCount));
+		}
+		else if (mode == Mode.Inference) {
+			Prediction[] predictions = tlModel.predict(input);
+			// Vibrate the phone if Class B is detected.
+			if(predictions[1].getConfidence() > VB_THRESHOLD)
+				vibrator.vibrate(VibrationEffect.createOneShot(200,
+					VibrationEffect.DEFAULT_AMPLITUDE));
+
+			String classAOutput = Float.toString(round(predictions[0].getConfidence(), 4));
+			String classBOutput = Float.toString(round(predictions[1].getConfidence(), 4));
+
+			classATextView.setText(classAOutput);
+			classBTextView.setText(classBOutput);
+		}
+		}
+
+		// Clear all the values
+		x_accel.clear(); y_accel.clear(); z_accel.clear();
+		x_gyro.clear(); y_gyro.clear(); z_gyro.clear();
+		input_signal.clear();
+	}
+
+	private float[] toFloatArray(List<Float> list)
+	{
+		int i = 0;
+		float[] array = new float[list.size()];
+
+		for (Float f : list) {
+			array[i++] = (f != null ? f : Float.NaN);
+		}
+		return array;
+	}
+
+	private static float round(float d, int decimalPlace) {
+		BigDecimal bd = new BigDecimal(Float.toString(d));
+		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+		return bd.floatValue();
+	}
+}
+</code></pre>
+
+						<h4 class="feature-title m-0">Future Work</h4>
+						<p class="text-sm">
+							The opportunities for on-device learning are endless, in my opinion. To explore further, I would encourage you to incorporate more activities, pair the smartphone with a wearable and fine-tune the model with smartwatch data. 
+							Similarly, several useful applications could be build  using the presented framework to do exciting things based on detected user activities. Finally, I am also quite interested in audio recognition models running locally on-device. I am working 
+							on getting <a href="http://soundnet.csail.mit.edu/"><u>SoundNet model</u></a> to work on the phone so it can be used as a fixed feature extractor for an end-task network. The SoundNet can directly consume raw (mono) audio, so no sophisticated pre-processing is required; 
+							however, the missing piece of the puzzle is to add the functionality of audio recording  in the app and dealing with dynamic input size in tflite.  If you want to take up this challenge, please get in touch at: <u>aqibsaeed@protonmail.com</u>.  
+						</p>
+						<h4 class="feature-title m-0">References</h4>
+						<ul class="text-sm">
+							<li><a href="https://aqibsaeed.github.io/2016-11-04-human-activity-recognition-cnn/">Implementing a CNN for Human Activity Recognition in Tensorflow</a></li>
+							<li><a href="https://blog.tensorflow.org/2019/12/example-on-device-model-personalization.html">Example on-device model personalization with TensorFlow Lite</a></li>
+							<li><a href="https://dl.acm.org/doi/10.1145/2809695.2809718">Smart Devices are Different: Assessing and Mitigating Mobile Sensing Heterogeneities for Activity Recognition</a></li>
+							<li><a href="http://soundnet.csail.mit.edu/">SoundNet: Learning Sound Representations from Unlabeled Video</a></li>
+						</ul>
+						<h4 class="feature-title m-0">Citation</h4>
+						<p class="text-xs">
+							If you find this work useful, please cite it as:
+							<pre class="pre-cite">@misc{saeed2020recognition, 
+  author = {Saeed, Aaqib},
+  title = {On-device Activity Recognition},
+  year = {2020},
+  journal = {aqibsaeed.github.io},
+  url = {\url{https://gitHub.com/aqibsaeed/on-device-activity-recognition}}
+}</pre>
+						</p>
+						<p class="text-xs">Last updated: 02/04/2020.</p>
+						</div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+			<div class="footer-bg">
+				<svg width="385" height="305" xmlns="http://www.w3.org/2000/svg">
+				    <defs>
+				        <linearGradient x1="50%" y1="34.994%" x2="50%" y2="97.738%" id="footer-bg">
+				            <stop stop-color="rgba(63, 61, 86, 0.2)" offset="0%"/>
+				            <stop stop-color="rgba(63, 61, 86, 0.1)" offset="100%"/>
+				        </linearGradient>
+				    </defs>
+				    <path d="M384.557 116.012V305H0L210.643 0l173.914 116.012z" fill="url(#footer-bg)" fill-rule="evenodd"/>
+				</svg>
+			</div>
+            <div class="container">
+                <div class="site-footer-inner has-top-divider">
+                    <div class="footer-copyright">&copy; 2020 Aaqib Saeed, all rights reserved. Illustration from undraw.co and app icon from thenounproject.
+					</div>
+					<ul class="footer-social-links list-reset">
+						<li>
+							<a href="https://twitter.com/aaqib_saeed">
+								<span class="screen-reader-text">Twitter</span>
+								<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+									<path d="M16 3c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4C.7 7.7 1.8 9 3.3 9.3c-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H0c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4C15 4.3 15.6 3.7 16 3z" fill="#3f3d56ff"/>
+								</svg>
+							</a>
+						</li>
+						<li>
+							<a href="https://www.linkedin.com/in/aqibsaeed/">
+								<span class="screen-reader-text">LinkedIn</span>
+								<svg viewBox="0 50 512 512" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+									<path fill="#3f3d56ff" d="M150.65,100.682c0,27.992-22.508,50.683-50.273,50.683c-27.765,0-50.273-22.691-50.273-50.683
+									C50.104,72.691,72.612,50,100.377,50C128.143,50,150.65,72.691,150.65,100.682z M143.294,187.333H58.277V462h85.017V187.333z
+									M279.195,187.333h-81.541V462h81.541c0,0,0-101.877,0-144.181c0-38.624,17.779-61.615,51.807-61.615
+									c31.268,0,46.289,22.071,46.289,61.615c0,39.545,0,144.181,0,144.181h84.605c0,0,0-100.344,0-173.915
+									s-41.689-109.131-99.934-109.131s-82.768,45.369-82.768,45.369V187.333z"/>
+								</svg>
+							</a>
+						</li>
+					</ul>
+                </div>
+            </div>
+        </footer>
+	</div>
+</body>
+</html>
