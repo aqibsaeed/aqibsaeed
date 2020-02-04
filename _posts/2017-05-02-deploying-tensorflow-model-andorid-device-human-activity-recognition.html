@@ -197,9 +197,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private void activityPrediction()
     {
         if(x.size() == N_SAMPLES && y.size() == N_SAMPLES && z.size() == N_SAMPLES) {
-	    // Mean normalize the signal
-            normalize();
-
             // Copy all x, y and z values to input_signal
             int i = 0;
             while (i < NUM_SAMPLES) {
