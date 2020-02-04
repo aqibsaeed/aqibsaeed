@@ -297,6 +297,25 @@ img {
 	vertical-align: middle
 }
 
+.app-screenshot {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+  font-size:12px;
+  text-align:center;
+}
+
+.figure {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  font-size:12px;
+  text-align:center;
+}
+
+
 figure {
 	margin: 24px 0
 }
@@ -424,7 +443,7 @@ h3,
 .h3,
 blockquote {
 	font-size: 24px;
-	line-height: 34px;
+	line-height: 60px;
 	letter-spacing: -0.1px
 }
 
@@ -445,7 +464,7 @@ h6,
 .h5,
 .h6 {
 	font-size: 20px;
-	line-height: 32px;
+	line-height: 50px;
 	letter-spacing: -0.1px
 }
 
@@ -566,7 +585,6 @@ address {
 	margin: 0 0 24px
 }
 
-pre,
 pre h1,
 pre h2,
 pre h3,
@@ -587,26 +605,32 @@ code,
 kbd,
 tt,
 var {
-	background: #000000;
+	background: #ececec;
 }
 
 pre {
-	font-size: 16px;
+	font-size: 13px;
 	line-height: 30px;
 	margin-bottom: 1.6em;
 	max-width: 100%;
 	overflow: auto;
 	padding: 24px;
 	margin-top: 24px;
-	margin-bottom: 24px
+	margin-bottom: 24px;
+	border-radius:4px;
 }
+
+.pre-cite{
+	max-width:700px;
+}
+
 
 code,
 kbd,
 tt,
 var {
 	font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
-	font-size: 16px;
+	font-size: 13px;
 	padding: 2px 4px
 }
 
@@ -1300,23 +1324,16 @@ label {
 	box-shadow: 0 4px 32px rgba(67, 83, 255, 0.6)
 }
 
-.button-primary {
-	color: #000000 !important;
-	transition: background .15s ease
-}
-
-.button-primary {
-	background: #505fff;
-	background: linear-gradient(65deg, #4353FF 0, #5D6AFF 100%)
-}
-
-.button-primary:hover {
-	background: #5564ff;
-	background: linear-gradient(65deg, #4858ff 0, #626fff 100%)
-}
-
 .button-block {
 	display: flex
+}
+
+.button-gray{
+	background-color:#333333;
+}
+
+.button-gray:hover{
+	background-color:#333333e6;
 }
 
 .site-header {
@@ -1379,7 +1396,7 @@ label {
 }
 
 .hero-bg {
-	top: -160px;
+	top: -180px;
 	left: 28px;
 }
 
@@ -1576,7 +1593,8 @@ main {
 	flex: none;
 	width: 100%;
 	display: inline-flex;
-	justify-content: center
+	justify-content: center;
+	font-size:11px;
 }
 
 .footer-copyright {
