@@ -4,7 +4,8 @@ title: 'Urban Sound Classification, Part 2'
 subtitle: Applying Convolutional Neural Network
 published: true
 gh-repo: aqibsaeed/Urban-Sound-Classification
-gh-badge: [fork]
+gh-badge:
+  - fork
 ---
 
 <div>
@@ -16,7 +17,7 @@ gh-badge: [fork]
 
 <div class="text-justify">
   
- <p> In <a href="http://aqibsaeed.github.io/2016-09-03-urban-sound-classification-part-1/">part one</a>, we learnt to extract various features from audio clips. We, also, trained a two layer neural network to classify each sound into a predefined category. Today, we will go one step further and see how we can apply Convolution Neural Network (CNN) to perform the same task of urban sound classification. </p>
+ <p> In <a href="http://aqibsaeed.github.io/2016-09-03-urban-sound-classification-part-1/">part one</a>, we learnt to extract various hand-crafted features from audio clips. We, also, trained a simple feedforward neural network to classify each sound into a predefined category. Today, we will go one step further and see how we can apply Convolution Neural Network (CNN) to perform the same task of urban sound classification.</p>
 
 <p>
 <i>Note: If you want to get in-depth understanding of how CNN works. Kindly consult following resources:</i>
@@ -27,167 +28,170 @@ gh-badge: [fork]
 </div>
 
 <div class="text-justify">
-<p>The well-known application of CNN is image classification, where a fixed dimension image is fed into a network along with different channels (RGB in the case of a color image) and after various steps of convolution, pooling and fully connected layers, network outputs class probabilities for the image.  We want to do the same, but here instead of an image, we have sound clips. A quick search on Google Scholar provide a lot of research papers, which discuss the implementation of CNN on a sound dataset. A paper I found particularly interesting and quite relevant is <i>Environmental sound classification with convolutional neural networks</i> by <i>Karol J. Piczak</i>. I borrowed the idea of dataset (feature extraction) preparation for CNN from this paper. For example: how to get equal size segments from varying length audio clips and which audio feature(s) we can feed as a separate channel (just like RGB of a color image) into the network. Once we have the initial dataset ready for the CNN. We can train as deep network (composed of different layers) as we want! </p>
+<p>The well-known application of CNN is image classification, where a fixed dimension image is fed into a network along with different channels (RGB in the case of a color image) and after various transformation steps via application of convolution, pooling and fully connected layers, the network outputs class probabilities for the image.  We want to do the same, but here instead of an image, we have sound clips. A quick search on Google Scholar provide a lot of research papers, which discuss the implementation of CNN for sound recognition. A paper I found particularly interesting and quite relevant is <i>Environmental sound classification with convolutional neural networks</i> by <i>Karol J. Piczak</i>. I borrowed the idea of dataset preparation (i.e. feature extraction) for CNN from this paper. For example: how to get equal size segments from varying length audio clips and which audio feature(s) we can feed as a separate channel (just like RGB of a color image) into the network. Once we have the initial pre-processed dataset ready, we can train a deep convolutional network (composed of different layers) as we want!</p>
   
-  
-<p>Let's define a function to calculate log scaled mel-spectrograms and their corresponding deltas from a sound clip.  Regarding fixed size input, we will divide each sound clip into segments of 60x41 (60 rows and 41 columns). The mel-spec and their deltas will become two channels, which we will be fed into CNN. Other features can be calculated in the same way, which can be used as a separate input channel. </p>
+<p>Let's define a function to calculate log scaled mel-spectrograms and their corresponding deltas from a sound clip.  Regarding fixed size input, we will divide each sound clip into segments of 60x41 (60 rows and 41 columns). The mel-spec and their deltas will become two channels, which we will fed into the CNN. Other features can be calculated in the same way, which can be used as an additional (separate) input channel. </p>
   
 <p style="text-align:center"><img src="../img/urban-sound-cnn.PNG" alt="CNN Model Architecture"/></p> 
 
-<pre><code class="language-python line-numbers">import glob
+<pre><code class="language-python line-numbers">### Load necessary libraries ###
+import glob
 import os
 import librosa
-import matplotlib.pyplot as plt
-import tensorflow as tf
 import numpy as np
-%matplotlib inline
-plt.style.use('ggplot')
+from sklearn.model_selection import KFold
+from sklearn.metrics import accuracy_score
 
-def windows(data, window_size):
-    start = 0
-    while start < len(data):
-        yield start, start + window_size
-        start += (window_size / 2)
+import tensorflow as tf
+from tensorflow import keras
 
-def extract_features(parent_dir,sub_dirs,file_ext="*.wav",bands = 60, frames = 41):
-    window_size = 512 * (frames - 1)
-    log_specgrams = []
-    labels = []
-    for l, sub_dir in enumerate(sub_dirs):
-        for fn in glob.glob(os.path.join(parent_dir, sub_dir, file_ext)):
-            sound_clip,s = librosa.load(fn)
-            label = fn.split('/')[2].split('-')[1]
-            for (start,end) in windows(sound_clip,window_size):
-                if(len(sound_clip[start:end]) == window_size):
-                    signal = sound_clip[start:end]
-                    melspec = librosa.feature.melspectrogram(signal, n_mels = bands)
-                    logspec = librosa.logamplitude(melspec)
-                    logspec = logspec.T.flatten()[:, np.newaxis].T
-                    log_specgrams.append(logspec)
-                    labels.append(label)
+### Define helper functions ###
+def extract_features(parent_dir,sub_dirs,file_ext="*.wav",
+                     bands=60,frames=41):
+    def _windows(data, window_size):
+        start = 0
+        while start < len(data):
+            yield int(start), int(start + window_size)
+            start += (window_size // 2)
             
-    log_specgrams = np.asarray(log_specgrams).reshape(len(log_specgrams),bands,frames,1)
-    features = np.concatenate((log_specgrams, np.zeros(np.shape(log_specgrams))), axis = 3)
-    for i in range(len(features)):
-        features[i, :, :, 1] = librosa.feature.delta(features[i, :, :, 0])
-    
-    return np.array(features), np.array(labels,dtype = np.int)
-
-def one_hot_encode(labels):
-    n_labels = len(labels)
-    n_unique_labels = len(np.unique(labels))
-    one_hot_encode = np.zeros((n_labels,n_unique_labels))
-    one_hot_encode[np.arange(n_labels), labels] = 1
-    return one_hot_encode
-    
+    window_size = 512 * (frames - 1)
+    features, labels = [], []
+    for fn in glob.glob(os.path.join(parent_dir, sub_dir, file_ext)):
+        segment_log_specgrams, segment_labels = [], []
+        sound_clip,sr = librosa.load(fn)
+        label = int(fn.split('/')[2].split('-')[1])
+        for (start,end) in _windows(sound_clip,window_size):
+            if(len(sound_clip[start:end]) == window_size):
+                signal = sound_clip[start:end]
+                melspec = librosa.feature.melspectrogram(signal,n_mels=bands)
+                logspec = librosa.amplitude_to_db(melspec)
+                logspec = logspec.T.flatten()[:, np.newaxis].T
+                segment_log_specgrams.append(logspec)
+                segment_labels.append(label)
+            
+        segment_log_specgrams = np.asarray(segment_log_specgrams).reshape(
+            len(segment_log_specgrams),bands,frames,1)
+        segment_features = np.concatenate((segment_log_specgrams, np.zeros(
+            np.shape(segment_log_specgrams))), axis=3)
+        for i in range(len(segment_features)): 
+            segment_features[i, :, :, 1] = librosa.feature.delta(
+                segment_features[i, :, :, 0])
+        
+        if len(segment_features) > 0: # check for empty segments 
+            features.append(segment_features)
+            labels.append(segment_labels)
+    return features, labels
 </code></pre>
 
+<p><code>extract_feature</code> and <code>windows</code> are the two functions we need to prepare the data (both features and labels) for training CNN. <code>extract_features</code> iterates over all the files within subdirectories (folds), calculate above-mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them as numpy array using numpy.savez.</p>
 
-<p><code>extract_feature</code> and <code>windows</code> are the two methods we need to prepare the data (both features and labels) for CNN. <code>extract_features</code> iterates over all the files within subdirectories of a particular parent directory, calculate above-mentioned features along with class labels and append them to arrays. Let's call this method to extract features and labels and save them in corresponding variables. Also, convert labels into one hot vector using <code>one_hot_encode</code> method.</p>
-
-<pre><code class="language-python line-numbers">parent_dir = 'Sound-Data'
-tr_sub_dirs= ['fold1','fold2']
-tr_features,tr_labels = extract_features(parent_dir,tr_sub_dirs)
-tr_labels = one_hot_encode(tr_labels)
-
-ts_sub_dirs= ['fold3']
-ts_features,ts_labels = extract_features(parent_dir,ts_sub_dirs)
-ts_labels = one_hot_encode(ts_labels)
+<pre><code class="language-python line-numbers"># Pre-process and extract feature from the data
+parent_dir = 'UrbanSounds8K/audio/'
+save_dir = "UrbanSounds8K/processed/"
+folds = sub_dirs = np.array(['fold1','fold2','fold3','fold4',
+                  'fold5','fold6','fold7','fold8',
+                  'fold9','fold10'])
+for sub_dir in sub_dirs:
+    features, labels = extract_features(parent_dir,sub_dir)
+    np.savez("{0}{1}".format(save_dir, sub_dir), 
+             features=features, 
+             labels=labels)
 </code></pre>
 </div>
 
 <div class="text-justify">
-<p>Now we define some helper functions for the implementation of CNN. The method named <code>weight_variable</code> and <code>bias_variable</code> will return Tensorflow variable of defined shapes, where bias variable is initialized with all ones and weight variable with zero mean and standard deviation of 0.1. The <code>Conv2d</code> method is just a wrapper over Tensorflow conv2d function. It will be called by <code>apply_convolution</code> function, which takes input data, kernel/filer size, a number of channels in the input and output depth or number of channels in the output. It then gets weight and bias variables, applies convolution, adds the bias to the results and finally applies non-linearity (RELU). Max-Pooling can be applied using <code>apply_max_pool</code> function. It takes input data (usually output of convolution layer), kernel and stride size. I used the SAME padding, you can change it to VALID padding if you want.</p>
+<p>Now we define a convolutional neural network with four layers each followed by batch normalization and max pooling, after the last convolutional layer we will add a global pooling to extract embedding which are further processed by a fully-connected layer. Lastly, a dense layer with softmax activation is added to output probabilities of the sound classes. We will use Adam optimizer to minimize a sparse categorical crossentropy objective for training the network.</p>
 
-<pre><code class="language-python line-numbers">def weight_variable(shape):
-    initial = tf.truncated_normal(shape, stddev = 0.1)
-    return tf.Variable(initial)
-
-def bias_variable(shape):
-    initial = tf.constant(1.0, shape = shape)
-    return tf.Variable(initial)
-
-def conv2d(x, W):
-    return tf.nn.conv2d(x,W,strides=[1,2,2,1], padding='SAME')
-
-def apply_convolution(x,kernel_size,num_channels,depth):
-    weights = weight_variable([kernel_size, kernel_size, num_channels, depth])
-    biases = bias_variable([depth])
-    return tf.nn.relu(tf.add(conv2d(x, weights),biases))
-
-def apply_max_pool(x,kernel_size,stride_size):
-    return tf.nn.max_pool(x, ksize=[1, kernel_size, kernel_size, 1], 
-                          strides=[1, stride_size, stride_size, 1], padding='SAME')
-</code></pre>
-
-<p>The code provided below defines configuration parameters required by CNN model. Such as kernel size, total iterations, a number of neurons in each hidden layer and learning rate etc.</p>
-
-<pre><code class="language-python line-numbers">frames = 41
-bands = 60
-
-feature_size = 2460 #60x41
-num_labels = 10
-num_channels = 2
-
-batch_size = 50
-kernel_size = 30
-depth = 20
-num_hidden = 200
-
-learning_rate = 0.01
-total_iterations = 2000
-</code></pre>
-
-<p>Tensorflow placeholder for input and output data are defined next. A convolution function is applied with a filter size of 30 and depth of 20 (number of channels, we will get as output from convolution layer). Next, the convolution output is flattened out for the fully connected layer input. There are 200 neurons in the fully connected layer as defined by the above configuration. The Sigmoid function is used as non-linearity in this layer. Lastly, the Softmax layer is defined to output probabilities of the class labels.</p>
-
-<pre><code class="language-python line-numbers">X = tf.placeholder(tf.float32, shape=[None,bands,frames,num_channels])
-Y = tf.placeholder(tf.float32, shape=[None,num_labels])
-
-cov = apply_convolution(X,kernel_size,num_channels,depth)
-
-shape = cov.get_shape().as_list()
-cov_flat = tf.reshape(cov, [-1, shape[1] * shape[2] * shape[3]])
-
-f_weights = weight_variable([shape[1] * shape[2] * depth, num_hidden])
-f_biases = bias_variable([num_hidden])
-f = tf.nn.sigmoid(tf.add(tf.matmul(cov_flat, f_weights),f_biases))
-
-out_weights = weight_variable([num_hidden, num_labels])
-out_biases = bias_variable([num_labels])
-y_ = tf.nn.softmax(tf.matmul(f, out_weights) + out_biases)
-</code></pre>
-
-
-<p>The negative log-likelihood cost function will be minimised using Adam optimizer, the code provided below initialize cost function and optimizer. Also, define the code for accuracy calculation of the prediction by model.</p>
-
-<pre><code class="language-python line-numbers">loss = -tf.reduce_sum(Y * tf.log(y_))
-optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
-correct_prediction = tf.equal(tf.argmax(y_,1), tf.argmax(Y,1))
-accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-</code></pre>
-
-<p>Now the following code will train the CNN model using a batch size of 50 for 2000 iterations. After the training, it classifies testing set and prints out the achieved accuracy of the model along with plotting cost as a function of a number of iterations. </p>
-
-<pre><code class="language-python line-numbers">cost_history = np.empty(shape=[1],dtype=float)
-with tf.Session() as session:
-    tf.initialize_all_variables().run()
-
-    for itr in range(total_iterations):    
-        offset = (itr * batch_size) % (tr_labels.shape[0] - batch_size)
-        batch_x = tr_features[offset:(offset + batch_size), :, :, :]
-        batch_y = tr_labels[offset:(offset + batch_size), :]
-        
-        _, c = session.run([optimizer, loss],feed_dict={X: batch_x, Y : batch_y})
-        cost_history = np.append(cost_history,c)
+<pre><code class="language-python line-numbers">### Define convolutional network architecture ###
+def get_network():
+    num_filters = [24,32,64,128] 
+    pool_size = (2, 2) 
+    kernel_size = (3, 3)  
+    input_shape = (60, 41, 2)
+    num_classes = 10
+    keras.backend.clear_session()
     
-    print('Test accuracy: ',round(session.run(accuracy, feed_dict={X: ts_features, Y: ts_labels}) , 3))
-    fig = plt.figure(figsize=(15,10))
-    plt.plot(cost_history)
-    plt.axis([0,total_iterations,0,np.max(cost_history)])
-    plt.show()
+    model = keras.models.Sequential()
+    model.add(keras.layers.Conv2D(24, kernel_size,
+                padding="same", input_shape=input_shape))
+    model.add(keras.layers.BatchNormalization())
+    model.add(keras.layers.Activation("relu"))
+    model.add(keras.layers.MaxPooling2D(pool_size=pool_size))
+
+    model.add(keras.layers.Conv2D(32, kernel_size,
+                                  padding="same"))
+    model.add(keras.layers.BatchNormalization())
+    model.add(keras.layers.Activation("relu"))  
+    model.add(keras.layers.MaxPooling2D(pool_size=pool_size))
+    
+    model.add(keras.layers.Conv2D(64, kernel_size,
+                                  padding="same"))
+    model.add(keras.layers.BatchNormalization())
+    model.add(keras.layers.Activation("relu"))  
+    model.add(keras.layers.MaxPooling2D(pool_size=pool_size))
+    
+    model.add(keras.layers.Conv2D(128, kernel_size,
+                                  padding="same"))
+    model.add(keras.layers.BatchNormalization())
+    model.add(keras.layers.Activation("relu"))  
+
+    model.add(keras.layers.GlobalMaxPooling2D())
+    model.add(keras.layers.Dense(128, activation="relu"))
+    model.add(keras.layers.Dense(num_classes, activation="softmax"))
+
+    model.compile(optimizer=keras.optimizers.Adam(1e-4), 
+        loss=keras.losses.SparseCategoricalCrossentropy(), 
+        metrics=["accuracy"])
+    return model
 </code></pre>
 
-<p>This blog post discussed how to prepare a dataset for CNN and train a model with one convolution layer. I would encourage you to train deep models with several convolution, pooling and two or more fully connected layers on complete dataset. If you have any question or feedback, please comment below.</p>
+<p>The next step is to train and evaluate the network with 10-folds cross-validation. During evaluation on the test sound clips, we will average the predictions over all segments of the audio as clips could be of varying length. Lastly, we will average the the accuracies of all the ten folds to get an estimation of network performance.</p>
+
+<pre><code class="language-python line-numbers">### Train and evaluate via 10-Folds cross-validation ###
+accuracies = []
+folds = np.array(['fold1','fold2','fold3','fold4',
+                  'fold5','fold6','fold7','fold8',
+                  'fold9','fold10'])
+load_dir = "UrbanSounds8K/processed/"
+kf = KFold(n_splits=10)
+for train_index, test_index in kf.split(folds):
+    x_train, y_train = [], []
+    for ind in train_index:
+        # read features or segments of an audio file
+        train_data = np.load("{0}/{1}.npz".format(load_dir,folds[ind]), 
+                       allow_pickle=True)
+        # for training stack all the segments so that they are treated as an example/instance
+        features = np.concatenate(train_data["features"], axis=0) 
+        labels = np.concatenate(train_data["labels"], axis=0)
+        x_train.append(features)
+        y_train.append(labels)
+    # stack x,y pairs of all training folds 
+    x_train = np.concatenate(x_train, axis = 0).astype(np.float32)
+    y_train = np.concatenate(y_train, axis = 0).astype(np.float32)
+    
+    # for testing we will make predictions on each segment and average them to 
+    # produce signle label for an entire sound clip.
+    test_data = np.load("{0}/{1}.npz".format(load_dir,
+                   folds[test_index][0]), allow_pickle=True)
+    x_test = test_data["features"]
+    y_test = test_data["labels"]
+
+    model = get_network()
+    model.fit(x_train, y_train, epochs = 50, batch_size = 24, verbose = 0)
+    
+    # evaluate on test set/fold
+    y_true, y_pred = [], []
+    for x, y in zip(x_test, y_test):
+        # average predictions over segments of a sound clip
+        avg_p = np.argmax(np.mean(model.predict(x), axis = 0))
+        y_pred.append(avg_p) 
+        # pick single label via np.unique for a sound clip
+        y_true.append(np.unique(y)[0]) 
+    accuracies.append(accuracy_score(y_true, y_pred))    
+print("Average 10 Folds Accuracy: {0}".format(np.mean(accuracies)))
+</code></pre>
+
+<p>This blog post discussed a strategy for preparing a sound dataset for learning deep convolutional network to recognize daily-life sounds . I would encourage you to experiement with the network architecture through and train the network for several epochs to improve recognition. If you have any question or feedback, please comment below.</p>
 
 <p>The python notebook is available at the following <a href="https://github.com/aqibsaeed/Urban-Sound-Classification"><b>link</b></a>.</p>
   
