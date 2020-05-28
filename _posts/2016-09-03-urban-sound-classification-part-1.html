@@ -98,7 +98,8 @@ def extract_feature(file_name):
     mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=40).T,axis=0)
     chroma = np.mean(librosa.feature.chroma_stft(S=stft, sr=sample_rate).T,axis=0)
     mel = np.mean(librosa.feature.melspectrogram(X, sr=sample_rate).T,axis=0)
-    contrast = np.mean(librosa.feature.spectral_contrast(S=stft, sr=sample_rate).T,axis=0)
+    contrast = np.mean(librosa.feature.spectral_contrast(S=stft, 
+    	sr=sample_rate).T,axis=0)
     tonnetz = np.mean(librosa.feature.tonnetz(y=librosa.effects.harmonic(X), sr=sample_rate).T,axis=0)
     return mfccs,chroma,mel,contrast,tonnetz
 
@@ -155,7 +156,7 @@ for sub_dir in sub_dirs:
 </div>  
 
 <div class="text-justify">
-<h2>Sound Classifier based on Feedforward Neural Network</h2>
+<h2>Sound Classifier</h2>
 <p><em>Note: If you want to use another standard machine learning algorithm (such as from scikit-learn or any other library) for this purpose, feel free to use that. The goal of this tutorial is to provide an illustrative demonstration of learning network with Tensorflow/Keras. </em></p>
   
 <p>Now as we have pre-processed our dataset, it&rsquo;s time to implement a simple feedforward neural network in Keras (Tensorflow) to classify each sound clip into a different category.</p>
@@ -201,7 +202,8 @@ for train_index, test_index in kf.split(folds):
     x_test = data["features"]
     y_test = data["labels"]
     
-    # Possibly do mean normalization here on x_train and x_test but using only x_train's mean and std.
+    # Possibly do mean normalization here on x_train and 
+    # x_test but using only x_train's mean and std.
     
     model = get_network()
     model.fit(x_train, y_train, epochs = 50, batch_size = 24, verbose = 0)
