@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<!-- Template modified from https://github.com/stanfordmlgroup/stanfordmlgroup.github.io  -->
+<head>
+    <meta charset="utf-8">
+    <title>Sense and Learn: Self-Supervision for Omnipresent Sensors - Aaqib Saeed</title>
+    <meta name="description" content="Sense and Learn: Self-Supervision for Omnipresent Sensors - Aaqib Saeed">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <link href="css/sal_theme.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-transparent" id="mainNav">
+        <div class="container">
+            <div class="navbar-header"><a class="navbar-brand page-scroll" href="/">Aaqib Saeed</a></div>
+        </div>
+    </nav>
+    <section id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h1 id="page-title">Sense and Learn: Self-Supervision for Omnipresent Sensors</h1>
+                    <h3>Aaqib Saeed (<a href="https://www.tue.nl/en/" style="color:white;">TU/e</a>), Victor Ungureanu (Google Research), Beat Gfeller (Google Research)</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class = "abstract_section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2><b>Looking for a way to utilize large-scale unlabeled sensory data to improve generalization on downstream task with few-labeled instances? Use: Sense and Learn, a self-supervised learning framework.</b>
+                        <a class="btn btn-default" href="https://arxiv.org/pdf/2009.13233.pdf">Read The Paper</a>
+                    </h2>
+                    <p>Learning general-purpose representations from multisensor data produced by the omnipresent sensing systems
+                        (or IoT in general) has numerous applications in diverse use areas. Existing purely supervised end-to-end
+                        deep learning techniques depend on the availability of a massive amount of well-curated data, acquiring
+                        which is notoriously difficult but required to achieve a sufficient level of generalization on a task of interest.
+                        We propose a suite of self-supervised pretext tasks for pre-training deep neural networks without semantic labels for representation
+                        learning from raw sensory data. Our auxiliary tasks learn high-level and broadly useful features entirely from unannotated data without 
+                        any human involvement in the tedious labeling process.</p>
+                    <p>We demonstrate the efficacy of our approach on several publicly available datasets from different domains and in various settings, 
+                        including linear separability, semi-supervised or few shot learning, and transfer learning. Our methodology achieves results that are 
+                        competitive with the supervised approaches and close the gap through fine-tuning a network while learning the downstream tasks in most cases.
+                        In particular, we show that the self-supervised network can be utilized as initialization to significantly boost
+                        the performance in a low-data regime with as few as 5 labeled instances per class, which is of high practical
+                        importance to real-world problems. Likewise, the learned representations with self-supervision are found to
+                        be highly transferable between related datasets, even when few labeled instances are available from the target
+                        domains. The self-learning nature of our methodology opens up exciting possibilities for on-device continual
+                        learning.</p>
+                </div>
+            </div>
+            <div class = "row">
+                <div class="col-lg-10 img-style">
+                    <img src="assets/misc/overview_sal.svg" style="width:80%"/>
+                    <p class="figure-caption">Illustration of our Sense and Learn representation learning framework.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+        <div class="row">
+                <div class="col-lg-10">
+                    <h2>Self-Supervised Tasks</h2>
+                    <p>To learn semantic representations from unannotated sensory data, we develop eight self-supervised surrogate tasks for the deep network.</p>
+                </div>
+                <div class="col-lg-10">
+                    <ul>
+                        <li><h6>Blend Detection</h6></li>
+                        <li><h6>Fusion Magnitude Prediction</h6></li>
+                        <li><h6>Feature Prediction from Masked Window</h6></li>
+                        <li><h6>Transformation Recognition</h6></li>
+                        <li><h6>Temporal Shift Prediction</h6></li>
+                        <li><h6>Modality Denoising</h6></li>
+                        <li><h6>Odd Segment Recognition</h6></li>
+                        <li><h6>Metric Learning with Triplet Loss</h6></li>
+                    </ul>
+                </div>
+            </div>
+         </div>
+    </section>
+
+    <section>
+        <div class="container">
+        <div class="row">
+                <div class="col-lg-10">
+                    <h2>Algorithm</h2>
+                    <div class="col-lg-10 img-style"><img src="img/sal_alg.PNG" style="width:80%"/></div>
+                </div>
+            </div>
+         </div>
+    </section>
+
+
+    <section>
+        <div class="container">
+        <div class="row">
+                <div class="col-lg-10">
+                    <h2>Results</h2>
+                    <p>We assess the performance of Sense and Learn on 8 publicly available multisensor datasets from
+                        diverse domains. The brief description of each utilized data source is summarized in Table 1.</p>
+                    <div class="col-lg-10 img-style">
+                        <p class="figure-caption">Table 1. Key characteristics of the datasets used in the experiements.</p>
+                        <img src="img/sal_dataset_summary.PNG" style="width:70%"/>
+                    </div>
+                    <br>
+                    <div class="col-lg-10 img-style">
+                        <p class="figure-caption">Table 2. Performance evaluation (weighted F-score) of self-supervised representations with a linear classifier.</p>
+                        <img src="img/sal_linear_results.PNG" style="width:70%"/>
+                    </div>
+                    <br>
+                    <div class="col-lg-10 img-style">
+                        <p class="figure-caption">Figure 2. Contribution of self-supervised pre-training for improving end-task performance with few labeled data.</p>
+                        <img src="img/sal_semi_sup_results.PNG" style="width:70%"/>
+                    </div>
+                    <div class="col-lg-10 img-style">
+                        <p class="figure-caption">Figure 3. Generalization of the self-supervised representations under transfer learning setting.</p>
+                        <img src="img/sal_transfer_results.PNG" style="width:70%"/>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </section>
+
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>Citation</h2>
+                        <p style="text-align: justify;">Aaqib Saeed, Victor Ungureanu, and Beat Gfeller. "Sense and Learn: Self-Supervision for Omnipresent Sensors." arXiv preprint arXiv:2009.13233 (2020).</p>
+                    <h3>BibTeX</h3>
+<pre>@article{saeed2020sense,
+    title={Sense and Learn: Self-Supervision for Omnipresent Sensors},
+    author={Saeed, Aaqib and Ungureanu, Victor and Gfeller, Beat},
+    journal={arXiv preprint arXiv:2009.13233},
+    year={2020}
+}</pre>
+             </div>
+            </div>
+        </div>
+    </section>
+        
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <p class="text-muted small">Various icons used in the figure are created by Sriramteja SRT, Berkah Icon, Ben Davis, Eucalyp, ibrandify, Clockwise, Aenne Brielmann, Anuar Zhumaev, and Tim Madle from the Noun Project.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="text-center">
+                <p>Copyright &#169 Aaqib Saeed 2020.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79826043-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-79826043-1');
+    </script>
+</body>
+</html>
